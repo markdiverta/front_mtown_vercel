@@ -95,7 +95,7 @@
 <script>
 import SocialSharing from '~/components/social_sharing.vue';
 import Sidebar from '~/components/sidebar.vue';
-import Poll from '~/components/poll.vue';
+// import Poll from '~/components/poll.vue';
 import item from '~/components/topic_detail';
 export default {
     auth: false,
