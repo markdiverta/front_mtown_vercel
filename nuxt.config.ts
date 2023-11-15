@@ -22,6 +22,10 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
   },
+  routeRules: {
+    // all routes (by default) will be revalidated every 60 seconds, in the background
+    '/**': { isr: 60 }
+  },
 
   devtools: { enabled: true },
   css: ['@/assets/scss/style.scss'],
@@ -32,5 +36,23 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: ['/', '/404.html', '/200.html'],
     },
+  },
+
+  generate: {
+    routes: async () => {
+          const apiDomain = 'https://dev-mtown.g.kuroco.app'; //For localhost, avoid it use localhost:3000 as api domain
+          const apiPoll = apiDomain + '/rcms-api/1/content/details/47640';
+          const responsePoll = await axios.get(apiPoll);
+          const contentPoll = responsePoll.data.list;
+      
+          routes.push({
+              route: '/news/politics',
+              payload: {
+                  contentPoll
+              }
+          });
+
+        return routes
+    }
   },
 });
