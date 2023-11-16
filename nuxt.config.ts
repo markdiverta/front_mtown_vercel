@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     },
   },
 
+
   generate: {
     routes: async () => {
           const apiDomain = 'https://dev-mtown.g.kuroco.app'; //For localhost, avoid it use localhost:3000 as api domain
@@ -54,5 +55,6 @@ export default defineNuxtConfig({
 
         return routes
     }
+    interval: 60, // Regenerate every 60 second
   },
 });

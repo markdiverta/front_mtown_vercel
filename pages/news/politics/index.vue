@@ -15,6 +15,8 @@
             <span class="item">{{pageName}}</span>
         </div>
 
+        {{contentPoll}}
+
         <article class="c-article">
         <div class="l-container--large l-container--contents">
             <div v-html="response2.details.contents"></div>
