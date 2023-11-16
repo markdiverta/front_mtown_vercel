@@ -15,7 +15,7 @@
             <span class="item">{{pageName}}</span>
         </div>
 
-        {{contentPoll}}
+        {{data}}
 
         <article class="c-article">
         <div class="l-container--large l-container--contents">
@@ -33,24 +33,14 @@
 
 <script setup>
 
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
-const poll = ref(null);
+const data = ref(null);
 
-onMounted(async () => {
-  // Simulate asynchronous data fetching
-  const response = await fetchData(); // Replace with your actual data fetching logic
-  poll.value = response?.contentPoll;
-});
-
-// Simulate asynchronous data fetching function
-async function fetchData() {
-  // Replace with your actual data fetching logic
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ contentPoll: 'Your data here' });
-    }, 1000);
-  });
+async function asyncData({ payload }) {
+  if (payload) {
+    data.value = payload.testing;
+  }
 }
 
 const { data: response2 } = await useFetch(

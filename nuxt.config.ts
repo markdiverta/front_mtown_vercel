@@ -45,11 +45,12 @@ export default defineNuxtConfig({
           const apiPoll = apiDomain + '/rcms-api/1/content/details/47640';
           const responsePoll = await axios.get(apiPoll);
           const contentPoll = responsePoll.data.list;
+          const testing = "testing description content 123"
       
           routes.push({
               route: '/news/politics',
               payload: {
-                  contentPoll
+                testing
               }
           });
 
