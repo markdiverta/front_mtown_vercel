@@ -42,6 +42,14 @@ const config = useRuntimeConfig();
 
 const route = useRoute();
 
+const head = () => ({
+  title: 'testing page title',
+  meta: [
+    { hid: 'og:title', property: 'og:title', content: 'testing title' },
+    { hid: 'description', name: 'description', content: 'testing description' },
+  ],
+});
+
 const { data: news } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
   {

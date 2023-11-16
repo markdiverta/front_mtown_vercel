@@ -15,13 +15,13 @@
             <span class="item">{{pageName}}</span>
         </div>
 
-        {{data}}
+        {{response2.details.contents}}
 
-        <article class="c-article">
+        <!-- <article class="c-article">
         <div class="l-container--large l-container--contents">
             <div v-html="response2.details.contents"></div>
         </div>
-        </article>
+        </article> -->
 
     </div>
 
@@ -31,31 +31,51 @@
 </section><!--container-fluid-->
 </template>
 
-<script setup>
-
-import { ref } from 'vue';
-
-const data = ref(null);
-
-async function asyncData({ payload }) {
-  if (payload) {
-    data.value = payload.testing;
-  }
-}
-
-const { data: response2 } = await useFetch(
-    'https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium',
-    {
-        credentials: 'include',
+<script>
+console.log('enter');
+export default {
+  data() {
+    return {
+      response2: ''
+    };
+  },
+  head() {
+      return {
+        title: 'testing title',
+        meta: [
+             {
+                hid: 'og:title',
+                property: 'og:title',
+                content: 'testing title',
+            },
+            {
+                hid: 'og:url',
+                property: 'og:url',
+                content: 'testing URL',
+            },
+            {
+                hid: 'description',
+                name: 'description',
+                content: 'testing DESCRIPTION',
+            },
+            {
+                hid: 'og:description',
+                property: 'og:description',
+                content: 'testing DESCRIPTION',
+            },
+        ]
+      }
+    },
+    async mounted() {
+        console.log('enter 2');
+        try {
+            const response = await fetch('https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium');
+            const data = await response.json();
+            this.response2 = data;
+            console.log(data);
+        } catch (error) {
+            console.error('Error fetching data from API', error);
+        }
     }
-);
-
-const head = () => ({
-  title: 'testing page title',
-  meta: [
-    { hid: 'og:title', property: 'og:title', content: 'testing title' },
-    { hid: 'description', name: 'description', content: 'testing description' },
-  ],
-});
-
+};
 </script>
