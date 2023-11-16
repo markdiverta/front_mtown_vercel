@@ -54,7 +54,7 @@ export default defineNuxtConfig({
           });
 
         return routes
-    }
-    interval: 60, // Regenerate every 60 second
+    };
+    interval: 60 // Regenerate every 60 second
   },
 });
