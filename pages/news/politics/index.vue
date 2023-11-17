@@ -1,5 +1,12 @@
 <template>
 <section class="p-article l-content_maxWidth-lg l-container">
+
+<Head>
+    <Title>{{response2.details?.subject}}</Title>
+    {{metaDesc}}
+    <Meta name="description" :content="metaDesc"/>
+</Head>
+
 <section class="row l-page_content-row">
 <section class="col-md-9 col-12" fluid>
 
@@ -15,13 +22,11 @@
             <span class="item">{{pageName}}</span>
         </div>
 
-        {{response2.details.contents}}
-
-        <!-- <article class="c-article">
+        <article class="c-article">
         <div class="l-container--large l-container--contents">
-            <div v-html="response2.details.contents"></div>
+            <div v-html="response2.details?.contents"></div>
         </div>
-        </article> -->
+        </article>
 
     </div>
 
@@ -31,51 +36,57 @@
 </section><!--container-fluid-->
 </template>
 
-<script>
-console.log('enter');
-export default {
-  data() {
-    return {
-      response2: ''
-    };
-  },
-  head() {
-      return {
-        title: 'testing title',
-        meta: [
-             {
-                hid: 'og:title',
-                property: 'og:title',
-                content: 'testing title',
-            },
-            {
-                hid: 'og:url',
-                property: 'og:url',
-                content: 'testing URL',
-            },
-            {
-                hid: 'description',
-                name: 'description',
-                content: 'testing DESCRIPTION',
-            },
-            {
-                hid: 'og:description',
-                property: 'og:description',
-                content: 'testing DESCRIPTION',
-            },
-        ]
-      }
-    },
-    async mounted() {
-        console.log('enter 2');
-        try {
-            const response = await fetch('https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium');
-            const data = await response.json();
-            this.response2 = data;
-            console.log(data);
-        } catch (error) {
-            console.error('Error fetching data from API', error);
-        }
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const metaDesc = ref('');
+
+// const response2 = ref('');
+
+// onMounted(async () => {
+//   console.log('enter 2');
+//   try {
+//     const response = await fetch('https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium');
+//     const data = await response.json();
+//     response2.value = data;
+//     console.log(data);
+//     console.log(response2);
+
+//     // Set dynamic meta title
+//     document.title = response2.value.details?.subject || 'Default Title';
+
+//     const metaDescription = document.querySelector('meta[name="description"]');
+//     if (metaDescription) {
+//         let description = response2.value.details?.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
+//         if (description.length > 120) {
+//             description = description.substring(0, 120) + '...';
+//         };
+//         metaDescription.content = description;
+//     }
+
+//   } catch (error) {
+//     console.error('Error fetching data from API', error);
+//   }
+// });
+
+const { data: response2 } = await useFetch(
+    'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium',
+    {
+        credentials: 'include',
     }
-};
+);
+
+const apiContent = response2.value.details;
+
+// console.log(apiContent);
+
+// Modify content
+if (apiContent.contents) {
+  let description = apiContent.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
+  if (description.length > 120) {
+    description = description.substring(0, 120) + '...';
+  }
+  metaDesc.value = description;
+}
+
 </script>
