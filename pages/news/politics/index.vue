@@ -40,7 +40,6 @@
 import { ref, onMounted } from 'vue';
 
 const metaDesc = ref('');
-const metaTitle = response2.details?.subject;
 
 const { data: response2 } = await useFetch(
     'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium',
@@ -49,6 +48,9 @@ const { data: response2 } = await useFetch(
     }
 );
 
+const apiContent = response2.value.details;
+const metaTitle = response2.details?.subject;
+
 useHead({
   metaTitle,
   meta: [{
@@ -56,8 +58,6 @@ useHead({
     content: metaDesc.value
   }]
 });
-
-const apiContent = response2.value.details;
 
 // Shorten meta description
 if (apiContent.contents) {
