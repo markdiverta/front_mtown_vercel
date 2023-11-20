@@ -1,6 +1,12 @@
 <template>
 <section class="p-article l-content_maxWidth-lg l-container">
 
+<!-- <Head>
+    <Title>{{response2.details?.subject}}</Title>
+    {{metaDesc}}
+    <Meta name="description" :content="metaDesc"/>
+</Head> -->
+
 <section class="row l-page_content-row">
 <section class="col-md-9 col-12" fluid>
 
@@ -34,7 +40,7 @@
 import { ref, onMounted } from 'vue';
 
 const metaDesc = ref('');
-const title = ref('My App');
+const metaTitle = response2.details?.subject;
 
 const { data: response2 } = await useFetch(
     'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium',
@@ -44,10 +50,10 @@ const { data: response2 } = await useFetch(
 );
 
 useHead({
-  title,
+  metaTitle,
   meta: [{
     name: 'description',
-    content: 'testing description'
+    content: metaDesc.value
   }]
 });
 
