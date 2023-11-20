@@ -49,15 +49,7 @@ const { data: response2 } = await useFetch(
 );
 
 const apiContent = response2.value.details;
-const metaTitle = response2.details?.subject;
-
-useHead({
-  metaTitle,
-  meta: [{
-    name: 'description',
-    content: metaDesc.value
-  }]
-});
+const title = apiContent.subject;
 
 // Shorten meta description
 if (apiContent.contents) {
@@ -67,6 +59,14 @@ if (apiContent.contents) {
   }
   metaDesc.value = description;
 };
+
+useHead({
+  title,
+  meta: [{
+    name: 'description',
+    content: metaDesc.value
+  }]
+});
 
 
 // const response2 = ref('');
