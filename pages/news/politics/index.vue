@@ -1,12 +1,6 @@
 <template>
 <section class="p-article l-content_maxWidth-lg l-container">
 
-<Head>
-    <Title>{{response2.details?.subject}}</Title>
-    {{metaDesc}}
-    <Meta name="description" :content="metaDesc"/>
-</Head>
-
 <section class="row l-page_content-row">
 <section class="col-md-9 col-12" fluid>
 
@@ -40,6 +34,34 @@
 import { ref, onMounted } from 'vue';
 
 const metaDesc = ref('');
+const title = ref('My App');
+
+const { data: response2 } = await useFetch(
+    'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium',
+    {
+        credentials: 'include',
+    }
+);
+
+useHead({
+  title,
+  meta: [{
+    name: 'description',
+    content: 'testing description'
+  }]
+});
+
+const apiContent = response2.value.details;
+
+// Shorten meta description
+if (apiContent.contents) {
+  let description = apiContent.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
+  if (description.length > 120) {
+    description = description.substring(0, 120) + '...';
+  }
+  metaDesc.value = description;
+};
+
 
 // const response2 = ref('');
 
@@ -68,25 +90,5 @@ const metaDesc = ref('');
 //     console.error('Error fetching data from API', error);
 //   }
 // });
-
-const { data: response2 } = await useFetch(
-    'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium',
-    {
-        credentials: 'include',
-    }
-);
-
-const apiContent = response2.value.details;
-
-// console.log(apiContent);
-
-// Modify content
-if (apiContent.contents) {
-  let description = apiContent.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
-  if (description.length > 120) {
-    description = description.substring(0, 120) + '...';
-  }
-  metaDesc.value = description;
-}
 
 </script>
