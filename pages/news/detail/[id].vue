@@ -1,12 +1,12 @@
 <template>
   <div>
-    <UiPageHeader
+    <!-- <UiPageHeader
       :path="[{ label: 'ニュース', to: '/news' }]"
       :subject="news.details.group_nm"
       subheading="News Release"
-    />
+    /> -->
 
-    <div class="l-container--col-2 l-container--contents">
+    <!-- <div class="l-container--col-2 l-container--contents">
       <div class="l-container--col-2__main">
         <article class="c-article">
           <header>
@@ -33,7 +33,7 @@
         </article>
       </div>
       <ContentSideBar :conditions="newsConditionMaster?.list" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -42,24 +42,19 @@ const config = useRuntimeConfig();
 
 const route = useRoute();
 
-const head = () => ({
-  title: 'testing page title',
-  meta: [
-    { hid: 'og:title', property: 'og:title', content: 'testing title' },
-    { hid: 'description', name: 'description', content: 'testing description' },
-  ],
-});
-
 const { data: news } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
+  // `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
+  `https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/details/${route.params.id}`,
   {
     credentials: 'include',
   }
 );
 const { data: newsConditionMaster } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+  // `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+  'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master',
   {
     credentials: 'include',
   }
 );
+
 </script>

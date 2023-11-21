@@ -54,6 +54,26 @@
           </ul>
           <p v-else>記事が存在しません</p>
         </div>
+
+
+        <div class="u-display-flex-grow-1">
+          <ul v-if="newsTest.list.length > 0" class="c-topics-list">
+            <li v-for="newsTest in newsTest.list" :key="newsTest.topics_id">
+              <NuxtLink :to="`/news/detail/${newsTest.topics_id}`" class="c-topics">
+                <time class="c-topics__date" :datetime="newsTest.ymd">{{
+                  newsTest.ymd
+                }}</time>
+                <span class="c-badge">
+                  {{ newsTest.contents_type_nm }}
+                </span>
+                <p class="c-topics__title">
+                  {{ newsTest.subject }}
+                </p>
+              </NuxtLink>
+            </li>
+          </ul>
+          <p v-else>記事が存在しません</p>
+        </div>
       </div>
     </section>
 
@@ -302,6 +322,13 @@
 <script setup>
 const config = useRuntimeConfig();
 
+
+const { data: newsTest } = await useFetch(
+  'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/list',
+  {
+    credentials: 'include',
+  }
+);
 const { data: news } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/news/list`,
   {

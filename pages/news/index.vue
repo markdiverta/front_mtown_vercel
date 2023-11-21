@@ -40,7 +40,7 @@ const route = useRoute();
 const filter = computed(() => route.query.filter);
 
 const { data: news } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/news/list`,
+  'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/list',
   {
     credentials: 'include',
     query: {
@@ -51,7 +51,7 @@ const { data: news } = await useFetch(
   }
 );
 const { data: newsConditionMaster } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+  'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master',
   {
     credentials: 'include',
   }

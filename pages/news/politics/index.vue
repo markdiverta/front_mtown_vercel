@@ -39,10 +39,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+//Global setting
+const config = useRuntimeConfig();
+const route = useRoute();
+
+//Meta variables
 const metaDesc = ref('');
 
 const { data: response2 } = await useFetch(
     'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/saujana-villa-condominium',
+    // `${config.public.kurocoApiDomain}/rcms-api/1/content/details/saujana-villa-condominium`,
     {
         credentials: 'include',
     }
@@ -60,6 +66,7 @@ if (apiContent.contents) {
   metaDesc.value = description;
 };
 
+//Head & meta setting
 useHead({
   title,
   meta: [{
