@@ -56,7 +56,7 @@
         </div>
 
 
-        <div class="u-display-flex-grow-1">
+        <!-- <div class="u-display-flex-grow-1">
           <ul v-if="newsTest.list.length > 0" class="c-topics-list">
             <li v-for="newsTest in newsTest.list" :key="newsTest.topics_id">
               <NuxtLink :to="`/news/detail/${newsTest.topics_id}`" class="c-topics">
@@ -73,7 +73,7 @@
             </li>
           </ul>
           <p v-else>記事が存在しません</p>
-        </div>
+        </div> -->
       </div>
     </section>
 
@@ -322,13 +322,20 @@
 <script setup>
 const config = useRuntimeConfig();
 
+// const post = ref({});
 
-const { data: newsTest } = await useFetch(
-  'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/list',
-  {
-    credentials: 'include',
-  }
-);
+// export async function fetch() {
+//   const response = await fetch(`https://api.example.com/posts/${params.slug}`);
+//   post.value = await response.json();
+//   return { post };
+// };
+
+// const { data: newsTest } = await useFetch(
+//   'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/list',
+//   {
+//     credentials: 'include',
+//   }
+// );
 const { data: news } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/news/list`,
   {

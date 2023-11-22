@@ -29,6 +29,7 @@
         </div>
         <ContentSideBar :conditions="newsConditionMaster?.list" />
       </div>
+
     </section>
   </div>
 </template>
@@ -38,6 +39,13 @@ const config = useRuntimeConfig();
 
 const route = useRoute();
 const filter = computed(() => route.query.filter);
+
+// const { data: newsTest } = await useFetch(
+//   'https://mtown-vercel.g.kuroco.app/rcms-api/1/content/list',
+//   {
+//     credentials: 'include',
+//   }
+// );
 
 const { data: news } = await useFetch(
   'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/list',
