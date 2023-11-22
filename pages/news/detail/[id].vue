@@ -38,9 +38,14 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig();
+import { ref, onMounted } from 'vue';
 
+//Global setting
+const config = useRuntimeConfig(); //API route
 const route = useRoute();
+
+//Meta variables
+const metaDesc = ref('');
 
 const { data: news } = await useFetch(
   // `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
@@ -57,5 +62,27 @@ const { data: newsConditionMaster } = await useFetch(
     credentials: 'include',
   }
 );
+
+//API content assigned
+const apiContent = news.value.details;
+const title = apiContent.subject;
+
+// Shorten meta description
+if (apiContent.contents) {
+  let description = apiContent.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
+  if (description.length > 120) {
+    description = description.substring(0, 120) + '...';
+  }
+  metaDesc.value = description;
+};
+
+//Head & meta setting
+useHead({
+  title,
+  meta: [{
+    name: 'description',
+    content: metaDesc.value
+  }]
+});
 
 </script>
