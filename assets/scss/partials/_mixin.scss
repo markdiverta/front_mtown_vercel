@@ -1,0 +1,60 @@
+ // sm
+ @mixin sm() {
+  @media screen and (max-width: 576px){
+   @content;
+ }
+ }
+ // md
+ @mixin md() {
+  @media screen and (max-width: 959px){
+    @content;
+}
+ }
+ // lg
+ @mixin lg() {
+   @media screen and (max-width: 1264px){
+    @content;
+  }
+}
+ // xl
+ @mixin xl() {
+    @media screen and (max-width: 1904px){
+     @content;
+   }
+ }
+
+ // Dynamic size
+ @mixin screen($size) {
+  @media screen and (max-width: $size){
+   @content;
+ }
+}
+
+//Font Size
+//@include fz(20) {}
+
+@mixin fz($size) {
+  font-size: $size + px;
+  font-size: ($size / $text-size) * 1rem;
+}
+@mixin fz_sm($size1, $size2:$size1) {
+  font-size: $size1 + px;
+  font-size: ($size1 / $text-size) * 1rem;
+
+  @include sm() {
+    font-size: $size2 + px;
+    font-size: ($size2 / $text-size) * 1rem;
+  }
+}
+
+//Fontawsome
+@mixin fontawesome_solid($icon_name) {
+  font-family: "Font Awesome 5 Free"; 
+  font-weight: 900; 
+  content: $icon_name;
+}
+
+@mixin fontawesome_brand($icon_name) {
+  font-family: "Font Awesome 6 Brands"; 
+  content: $icon_name;
+}

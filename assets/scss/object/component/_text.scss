@@ -1,12 +1,44 @@
-.c-text {
-  line-height: 2;
-  margin: var(--spacing) 0;
+.c-heading {
 
-  &--small {
-    font-size: var(--font-size-x-small);
-  }
+    &_bg {
+        background: $color_main;
+        padding: 10px 20px;
+        color: #fff;
+        margin-bottom: 20px;
 
-  &--pre {
-    white-space: pre-line;
-  }
+        &.--bg_red {
+            background: $color_orange;
+        }
+        &.--bg_orange {
+            background: $color_orange;
+        }
+        &.--bg_green {
+            background: $color_green;
+        }
+        &.--bg_grey {
+            background: $color_greyLight2;
+            color: $text_color_dark;
+        }
+    }
+    &_h1 {
+        font-size: 20px;
+    }
+    &_h2 {
+        font-size: 18px;
+        line-height: 1.4em;
+    }
+    &_h3 {
+        font-size: 16px;
+        line-height: 1.4em;
+    }
+
+}
+
+.c-clickable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        opacity: 0.85;
+    }
 }

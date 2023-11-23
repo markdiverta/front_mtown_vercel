@@ -7,13 +7,13 @@
           すべての開発者が自由な開発に取り組める世界の実現へ
         </p>
       </div>
-      <img src="~/assets/image/top-hero.png" alt="hero" class="c-hero__image" />
+      <img src="~/assets/images/top-hero.png" alt="hero" class="c-hero__image" />
     </section>
 
     <section class="l-container--large l-container--contents">
       <div class="c-section--image-text">
         <div class="c-section--image-text__image">
-          <img src="~/assets/image/top-service.png" alt="" />
+          <img src="~/assets/images/top-service.png" alt="" />
         </div>
         <div class="u-display-flex-grow-1">
           <p class="c-heading--sub">Our Service</p>

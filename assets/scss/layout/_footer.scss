@@ -1,33 +1,83 @@
 .l-footer {
-  padding: var(--spacing-large) 0;
-  background-color: var(--color-dark-gray);
-  color: var(--color-white);
-  &__nav {
-    @include pc() {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  background: url('../assets/images/bg-footer.jpg') #28b5ce repeat-x;
+  padding: 170px 0 0px;
+
+  &_logo {
+    margin-right: 40px;
+  }
+  &_social {
+    margin-bottom: 30px;
+    padding: 20px 5px 10px;
+    text-align: center;
+    background: #ace6f1;
+    border-radius: 15px;
+    overflow: hidden;
+
+    &-first {
+      border-left: 1px solid #fff;
     }
-    &__list {
-      display: flex;
-      flex-wrap: wrap;
-      li {
-        a {
-          display: block;
-          padding: var(--spacing-small);
-          color: var(--color-white);
-          font-size: var(--font-size-small);
-          transform: var(--transition-seconds) opacity;
-          &:hover {
-            opacity: .5;
-          }
+  }
+  &_link {
+     padding: 10px 0 10px 50px;
+     top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+    display: inline-block;
+    color: $text_color_dark;
+
+    &.fb {
+      background: url('../assets/images/ic-facebook.png') no-repeat;
+    }
+    &.insta {
+      background: url('../assets/images/ic-instagram.png') no-repeat;
+    }
+    &.twitter {
+      background: url('../assets/images/ic-mail.png') no-repeat;
+    }
+  }
+  &_menu {
+    text-align: center;
+    padding: 23px 0 13px;
+    margin-bottom: 30px;
+    background: #208597;
+    border-radius: 15px;
+
+    & li {
+      display: inline-block;
+      margin: 0 0px 10px;
+      padding: 0 22px 0 20px;
+      position: relative;
+          
+      &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        right: 0;
+        top: 0;
+        width: 1px;
+        height: 20px;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.4));
+        background-position: right;
+        transform: rotate(25deg);
+
+        @at-root .l-footer_menu li:last-child:after {
+          content: inherit;
         }
+      }
+      & a {
+        color: #fff;
       }
     }
   }
-  &__copyright {
+  & p {
     margin: 0;
-    padding-top: var(--spacing);
-    font-size: .75em;
+    padding-bottom: 14px;
+  }
+}
+.v-expansion-panel--active>.v-expansion-panel-header--active .v-expansion-panel-header__icon:not(.v-expansion-panel-header__icon--disable-rotate) .v-icon {
+  transform: none!important;
+
+  &.mdi-plus::before {
+    content: "\F0374";
   }
 }

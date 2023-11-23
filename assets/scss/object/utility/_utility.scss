@@ -119,3 +119,21 @@
     padding-left: 5px * $value !important;
   }
 }
+.text-center {
+  text-align: center;
+}
+
+.py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.pt-4 {
+  padding-top: 16px!important;
+}
+
+@media (min-width: 600px){
+  .d-sm-none {
+    display: none!important;
+  }
+}
