@@ -1,0 +1,42 @@
+.c-iframe {
+    width: 100%;
+    height: 100%;
+    margin-top: -70px;
+    border: none;
+
+    @include md {
+        margin-top: -80px;
+    }
+    @at-root .p-page_password & {
+        margin-top: -80px;
+    }
+    &_wrap {
+        height: 2220px;
+        overflow: hidden;
+        margin-bottom: -150px;
+
+        @include screen(1099px) { 
+            height: 3100px;
+            margin-bottom: -280px;
+        }
+        @include screen(750px) {
+            margin-bottom: -480px;
+            
+        }
+        @include sm {
+            height: 5400px;
+            margin-bottom: -2780px;
+        }
+        @include screen(499px) {
+            margin-bottom: -200px;
+        }
+        @include screen(350px) {
+            margin-bottom: -700px;
+        }
+
+        @at-root .p-page_password & {
+            height: 1740px;
+            margin-bottom: -200px;
+        }
+    }
+}

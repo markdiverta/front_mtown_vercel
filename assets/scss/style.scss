@@ -1,6 +1,9 @@
 @import "assets/scss/_variables.scss";
 
 @import "assets/scss/partials/_media_query.scss";
+@import "assets/scss/partials/_mixin.scss";
+@import "assets/scss/partials/_var.scss";
+
 @import "assets/scss/foundation/_normalize.scss";
 @import "assets/scss/foundation/_common.scss";
 
@@ -8,6 +11,7 @@
 @import "assets/scss/layout/_header.scss";
 @import "assets/scss/layout/_footer.scss";
 @import "assets/scss/layout/_breadcrumb.scss";
+@import "assets/scss/layout/_content.scss";
 
 @import "assets/scss/object/component/_alert.scss";
 @import "assets/scss/object/component/_article.scss";
@@ -22,5 +26,17 @@
 @import "assets/scss/object/component/_text.scss";
 @import "assets/scss/object/component/_topics_list.scss";
 
+@import "assets/scss/object/component/_common.scss";
+@import "assets/scss/object/component/_button.scss";
+@import "assets/scss/object/component/_text.scss";
+@import "assets/scss/object/component/_navi.scss";
+@import "assets/scss/object/component/_icon.scss";
+@import "assets/scss/object/component/_form.scss";
+@import "assets/scss/object/component/_article.scss";
+
 
 @import "assets/scss/object/utility/_utility.scss";
+
+@import "assets/scss/object/project/_pages.scss";
+
+@import "assets/scss/vendors/bootstrap/scss/bootstrap.scss";
