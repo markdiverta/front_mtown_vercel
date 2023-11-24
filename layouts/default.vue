@@ -1,9 +1,13 @@
 <template>
   <div>
     <AppHeader/>
-    <div class="l-container">
+
+    <section class="container-fluid l-content_maxWidth-lg">
+    <section class="row l-page_content-row" ref="jscontentCheck">
       <slot />
-    </div>
+    </section>
+    </section>
+    
     <AppFooter />
   </div>
 </template>
