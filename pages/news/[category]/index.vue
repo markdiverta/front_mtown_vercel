@@ -30,6 +30,21 @@
           <p class="text-center">Sorry, content is coming soon, please come back later.</p>
       </section>
 
+      <div class="c-pagination">
+          <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1"
+                        v-model="page"
+                        :length="Math.ceil(totalCnt / perPage)"
+                        :total-visible="totalVisible"
+                        @input="next"
+          />
+      </div>
+
+      <v-pagination
+      v-model="page2"
+      :length="4"
+      prev-icon="mdi-menu-left"
+      next-icon="mdi-menu-right"
+    ></v-pagination>
 
     </div>
     
@@ -39,6 +54,9 @@
 </template>
 
 <script setup>
+import { ref, computed } from 'vue';
+
+const page2 = 1;
 
 //Get category name from URL path
 const route = useRoute();
@@ -94,14 +112,45 @@ if (news) {
           cat: item.contents_type_nm,
           catURL: catURL,
           id: item.topics_id,
-          // url: url,
+          url: url,
           thumb: item.ext_1,
       });
   };
 };
 
-console.log(topics);
 
-// console.log(news);
+//Link function
+const goTo = (url) => {
+    window.location.href = url;
+};
+// import { useRouter } from 'nuxt/router';
+// const goTo = (url) => {
+//   const router = useRouter();
+//   router.push(url);
+// };
+
+
+//Pagination
+const page = ref(1);
+const perPage = 20;
+const totalCnt = ref(0);
+const paginationMax = 15;
+const paginationMin = 8;
+
+const totalVisible = computed(() => {
+  return import.meta.env.VITE_IS_SMALL_SCREEN ? paginationMin : paginationMax;
+});
+
+// const axios = useAxios();
+
+const next = async () => {
+  await updateBlog();
+};
+
+const updateBlog = async () => {
+  console.log('execute');
+};
+
+
 
 </script>
