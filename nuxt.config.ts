@@ -1,6 +1,35 @@
 import { defineNuxtConfig } from 'nuxt/config';
+// import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'; //Vuetify
 
 export default defineNuxtConfig({
+  modules: [
+    '@nuxt/ui',
+    // (_options, nuxt) => { 
+    //   nuxt.hooks.hook('vite:extendConfig', (config) => {
+    //     config.plugins.push(vuetify({ autoImport: true }))
+    //   })
+    // },
+  ],
+  colorMode: {
+    preference: 'light'
+  },
+  typescript: {shim: false},
+  build: {transpile: ['vuetify'] },
+  // vite: { ssr: { noExternal: ["vuetify"] } },
+  // vite: {  //vuetify
+  //   vue: {
+  //     template: {
+  //       transformAssetUrls,
+  //     },
+  //   },
+  // },
+  buildModules: ['@nuxtjs/vuetify'],
+  vuetify: {
+    customVariables: ['@/assets/variables.scss'],
+    theme: {
+        disable: true
+    }
+},
   ssr: true,
   runtimeConfig: {
     public: {
@@ -30,7 +59,6 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
   css: ['@/assets/scss/style.scss'],
-
   // nitro: {
   //   // FullStaticGeneration
   //   prerender: {

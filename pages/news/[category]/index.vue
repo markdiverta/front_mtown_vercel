@@ -1,4 +1,5 @@
 <template>
+
 <section class="p-page_blog l-content_maxWidth-lg l-container">
 <section class="row l-page_content-row">
 <section class="col-md-9 col-12" fluid>
@@ -30,31 +31,30 @@
           <p class="text-center">Sorry, content is coming soon, please come back later.</p>
       </section>
 
-      <div class="c-pagination">
-          <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1"
-                        v-model="page"
-                        :length="Math.ceil(totalCnt / perPage)"
-                        :total-visible="totalVisible"
-                        @input="next"
-          />
-      </div>
 
-      <v-pagination
+      <UPagination v-model="pagee" :page-count="5" :total="items.length" />
+
+
+      <!-- <v-pagination
       v-model="page2"
       :length="4"
       prev-icon="mdi-menu-left"
       next-icon="mdi-menu-right"
-    ></v-pagination>
+    ></v-pagination> -->
 
     </div>
     
 </section>
 </section>
 </section>
+
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
+
+const pagee = ref(1)
+const items = ref(Array(55))
 
 const page2 = 1;
 

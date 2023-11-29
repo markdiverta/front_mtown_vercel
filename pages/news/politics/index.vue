@@ -40,7 +40,7 @@
 import { ref, onMounted } from 'vue';
 
 //Global setting
-const config = useRuntimeConfig();
+const config = useRuntimeConfig(); //API route
 const route = useRoute();
 
 //Meta variables
