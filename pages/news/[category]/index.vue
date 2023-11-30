@@ -32,26 +32,43 @@
       </section>
 
 
-      <UPagination v-model="pagee" :page-count="5" :total="items.length" />
+      <!-- <UPagination v-model="page" :page-count="5" :total="items.length" /> -->
+
+      <UPagination
+        v-if="Math.ceil(totalNews / itemsPerPage) > 1"
+        v-model="currentPage"
+        :length="Math.ceil(totalNews / itemsPerPage)"
+        :total-visible="paginationTotalVisible"
+        @input="loadPage"
+      />
 
 
-      <!-- <v-pagination
-      v-model="page2"
-      :length="4"
-      prev-icon="mdi-menu-left"
-      next-icon="mdi-menu-right"
-    ></v-pagination> -->
+      <!-- <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1"
+                          v-model="page"
+                          :length="Math.ceil(totalCnt / perPage)"
+                          :total-visible="totalVisible"
+                          @input="next"
+            /> -->
 
     </div>
     
 </section>
+
+<Sidebar/>
+
 </section>
 </section>
 
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import Sidebar from '~/components/sidebar.vue';
+
+const itemsPerPage = 30; // Number of items to show per page
+const currentPage = ref(1);
+const totalNews = ref(0);
+const paginationTotalVisible = ref(5); // Adjust the number of visible pagination items
 
 const pagee = ref(1)
 const items = ref(Array(55))
@@ -118,6 +135,32 @@ if (news) {
   };
 };
 
+// Function to paginate the list of news
+const paginateNews = () => {
+  const startIndex = (currentPage.value - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  return topics.slice(startIndex, endIndex);
+};
+
+// Function to load a specific page
+const loadPage = () => {
+  // Perform any additional logic if needed
+  // For example, fetch data for the selected page
+  // Update the displayed news based on the response
+};
+
+// Update the total news count after fetching
+onMounted(() => {
+  totalNews.value = topics.length;
+});
+
+// Watch for changes in the currentPage and update the displayed news accordingly
+import { watch } from 'vue';
+watch(currentPage, () => {
+  loadPage();
+});
+
+const paginatedNews = ref(paginateNews());
 
 //Link function
 const goTo = (url) => {
