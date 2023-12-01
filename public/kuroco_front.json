@@ -6,6 +6,8 @@
         }
       ],
     "redirects": [],
-    "basic":[],
+    "basic":[
+      "mtown:diverta123"
+    ],
     "ip_restrictions":[]
 }
