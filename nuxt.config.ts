@@ -3,7 +3,7 @@ import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
   serverMiddleware: [
-    '~/middleware/auth.js',
+    { path: '/*', handler: '~/serverMiddleware/auth.js' },
   ],
   modules: [
     '@nuxt/ui',
