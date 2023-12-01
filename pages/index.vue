@@ -350,13 +350,13 @@ const config = useRuntimeConfig();
 //   }
 // );
 const { data: news } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/news/list`,
+  'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/list',
   {
     credentials: 'include',
   }
 );
 const { data: ltdNews } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
+  'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/ltd-news/list',
   {
     credentials: 'include',
     server: false,

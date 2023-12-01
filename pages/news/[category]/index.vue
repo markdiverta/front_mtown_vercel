@@ -65,6 +65,10 @@
 import { ref, computed, onMounted } from 'vue';
 import Sidebar from '~/components/sidebar.vue';
 
+//Global setting
+const config = useRuntimeConfig(); //API route
+
+
 const itemsPerPage = 30; // Number of items to show per page
 const currentPage = ref(1);
 const totalNews = ref(0);
@@ -85,7 +89,7 @@ var catName = pathSegments[pathSegments.length - 1]; // Get the last path
 
 //Content logic
 const { data: news } = await useFetch(
-  `https://mtown-vercel.g.kuroco.app/rcms-api/1/content/list?contents_type=${catName}`,
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/list?contents_type=${catName}`,
   {
     credentials: 'include',
   }

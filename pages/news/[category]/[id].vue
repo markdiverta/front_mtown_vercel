@@ -48,16 +48,16 @@ const route = useRoute();
 const metaDesc = ref('');
 
 const { data: news } = await useFetch(
-  // `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${route.params.id}`,
   // `https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/details/${route.params.id}`,
-  `https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/${route.params.id}`,
+  // `https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/${route.params.id}`,
   {
     credentials: 'include',
   }
 );
 const { data: newsConditionMaster } = await useFetch(
-  // `${config.public.kurocoApiDomain}/rcms-api/1/master`,
-  'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master',
+  `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+  // 'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master',
   {
     credentials: 'include',
   }
