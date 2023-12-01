@@ -1,7 +1,0 @@
-{
-    "server": {
-      "middleware": {
-        "/": "serverMiddleware/auth.js"
-      }
-    }
-  }
