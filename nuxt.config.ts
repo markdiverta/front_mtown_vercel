@@ -2,6 +2,9 @@ import { defineNuxtConfig } from 'nuxt/config';
 // import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'; //Vuetify
 
 export default defineNuxtConfig({
+  serverMiddleware: [
+    '~/middleware/auth.js',
+  ],
   modules: [
     '@nuxt/ui',
   ],

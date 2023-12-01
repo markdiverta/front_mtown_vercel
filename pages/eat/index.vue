@@ -18,7 +18,7 @@
               <div class="row">
                   <template v-for="(item, index) in topics" :key="item.id">
                   <div class="col-sm-6 col-12 c-blog_list-item" v-if="index < 8" @click="goTo(item.url)">
-                      <div class="thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + ')' } : ''"></div>
+                      <div class="thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + '?width=400)' } : ''"></div>
                       <div>
                           <h3 class="heading">{{ item.title }}</h3>
                           <div class="mb-3">
