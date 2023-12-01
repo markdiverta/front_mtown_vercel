@@ -33,7 +33,7 @@
           <section class="container-fluid mt-4 c-blog_list" v-if="topics.length > 9">
               <template v-for="(item, index) in topics" :key="item.id">
               <div class="row c-blog_list-item" v-if="index > 7" :key="item.id" @click="goTo(item.url)">
-                  <div class="col-sm-3 col-12 thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + ')' } : ''"></div>
+                  <div class="col-sm-3 col-12 thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + '?width=250)' } : ''"></div>
                   <div class="col">
                       <h3>{{ item.title }}</h3>
                       <div class="mb-3">
