@@ -26,6 +26,46 @@
                 </div>
             </div>
         </div>
+
+        <div v-if="sidebarPR && sidebarPR.length > 0" class="l-content_padding -xs c-sidebar_ads">
+            <h2 class="c-heading_bg --bg_grey c-heading_h3">広告(PR)</h2>
+            <img class="c-img_fluid mb-3 c-clickable" 
+                v-for="(item, index) in sidebarPR" :key="index"
+                @click="windowOpen(item.url)"
+                :src="item.thumb + '?width=300'"
+                width="300"
+                height="129"
+            >
+        </div>
+
+        <!-- Facebook -->
+        <div class="l-content_padding -xs">
+        <h2 class="c-heading_bg --bg_grey c-heading_h3">SNS</h2>
+        <div class="l-sidebar_fb">
+            <div id="fb-root"></div>
+            <div class="fb-page" data-href="https://www.facebook.com/weeklymtown" data-show-posts="true"  data-width="" data-height="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false">
+            <!-- Placeholder for Facebook component -->
+            </div>
+        </div>
+        </div>
+
+        <!-- Twitter -->
+        <div class="l-content_padding -xs">
+        <div id="twitter-timeline" class="l-sidebar_twitter">
+            <!-- Placeholder for Twitter component -->
+        </div>
+        </div>
+
+        <div v-if="sidebarRelated && sidebarRelated.length > 0" class="l-content_padding -xs c-sidebar_ads">
+            <h2 class="c-heading_bg --bg_grey c-heading_h3">関連メディア</h2>
+            <img class="c-img_fluid mb-3 c-clickable" 
+                v-for="(item, index) in sidebarRelated" :key="index"
+                @click="windowOpen(item.url)"
+                :src="item.thumb + '?width=300'"
+                width="300"
+                height="129"
+            >
+        </div>
         
     </section> 
 </template>
@@ -33,10 +73,51 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-//Ebook
+//Global setting
+const config = useRuntimeConfig(); //API route
+const route = useRoute();
+
+onMounted(() => {
+  // Load Facebook SDK
+  window.fbAsyncInit = function () {
+    FB.init({
+      xfbml: true,
+      version: 'v16.0'
+    });
+  };
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = 'https://connect.facebook.net/ja_JP/sdk.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Load Twitter SDK
+  window.twttr = (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = 'https://platform.twitter.com/widgets.js';
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function (f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, 'script', 'twitter-wjs'));
+});
+
+
+//======== Ebook
 const sidebarEbook = ref({});
 const { data: news } = await useFetch(
-`https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/47641`,
+`${config.public.kurocoApiDomain}/rcms-api/1/content/details/47641`,
 {
     credentials: 'include',
 }
@@ -49,10 +130,10 @@ sidebarEbookContent.loaded = true;
 sidebarEbook.value = sidebarEbookContent;
 
 
-//Ranking
+//======== Ranking
 const sidebarRanking = ref({});
 const { data: ranking } = await useFetch(
-`https://mtown-vercel.g.kuroco.app/rcms-api/1/content/ranking?cnt=5`,
+`${config.public.kurocoApiDomain}/rcms-api/1/content/ranking?cnt=5`,
 {
     credentials: 'include',
 }
@@ -111,5 +192,42 @@ for (let key in ranking.value.list) {
     });
 };
 sidebarRanking.value = topics;
+
+
+//======== PR
+const sidebarPR = ref({});
+const sidebarRelated = ref({});
+const { data: prContent } = await useFetch(
+`${config.public.kurocoApiDomain}/rcms-api/1/content/details/47640`,
+{
+    credentials: 'include',
+}
+);
+topics = [];
+item = prContent.value.details;
+let topicsRelated = [];
+if (item.ext_2) {
+    for (let key in item.ext_2) {
+        let thumb = item.ext_2[key];
+        topics.push({
+            title: item.ext_3[key].title,
+            url: item.ext_3[key].url,
+            thumb: thumb,
+        });
+    };
+};
+if (item.ext_4) {
+    for (let key in item.ext_4) {
+        let thumb = item.ext_4[key];
+        topicsRelated.push({
+            title: item.ext_5[key].title,
+            url: item.ext_5[key].url,
+            thumb: thumb,
+        });
+    };
+};
+sidebarPR.value = topics;
+sidebarRelated.value = topicsRelated;
+
 
 </script>
