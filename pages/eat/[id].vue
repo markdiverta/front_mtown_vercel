@@ -33,64 +33,64 @@
   
   </section><!--l-page_content-row-->
   </section><!--container-fluid-->
-  </template>
+</template>
   
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  
-  //Global setting
-  const config = useRuntimeConfig(); //API route
-  const route = useRoute();
-  
-  //Meta variables
-  const metaDesc = ref('');
-  
-  const { data: news } = await useFetch(
-    // `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
-    // `https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/details/${route.params.id}`,
-    `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${route.params.id}`,
-    {
-      credentials: 'include',
-    }
-  );
-  
-  //Date format
-  const formattedDate = ref('');
-  
-  if (news.value.details && news.value.details.ymd) {
-    const rawDate = news.value.details.ymd;
-    formattedDate.value = rawDate.substring(0, 10).replaceAll('-', '.');
+<script setup>
+import { ref, onMounted } from 'vue';
+
+//Global setting
+const config = useRuntimeConfig(); //API route
+const route = useRoute();
+
+//Meta variables
+const metaDesc = ref('');
+
+const { data: news } = await useFetch(
+  // `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
+  // `https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/details/${route.params.id}`,
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${route.params.id}`,
+  {
+    credentials: 'include',
   }
+);
+
+//Date format
+const formattedDate = ref('');
+
+if (news.value.details && news.value.details.ymd) {
+  const rawDate = news.value.details.ymd;
+  formattedDate.value = rawDate.substring(0, 10).replaceAll('-', '.');
+}
+
+const { data: newsConditionMaster } = await useFetch(
+  // `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+  'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master',
+  {
+    credentials: 'include',
+  }
+);
+
+//API content assigned
+const apiContent = news.value.details;
+const title = apiContent.subject;
+
+// Shorten meta description
+if (apiContent.contents) {
+  let description = apiContent.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
+  if (description.length > 120) {
+    description = description.substring(0, 120) + '...';
+  }
+  metaDesc.value = description;
+};
+
+//Head & meta setting
+useHead({
+  title,
+  meta: [{
+    name: 'description',
+    content: metaDesc.value
+  }]
+});
   
-  const { data: newsConditionMaster } = await useFetch(
-    // `${config.public.kurocoApiDomain}/rcms-api/1/master`,
-    'https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master',
-    {
-      credentials: 'include',
-    }
-  );
-  
-  //API content assigned
-  const apiContent = news.value.details;
-  const title = apiContent.subject;
-  
-  // Shorten meta description
-  if (apiContent.contents) {
-    let description = apiContent.contents.replace(/<[^>]+>/g, '').replace(/[\r\n]+/g, '');
-    if (description.length > 120) {
-      description = description.substring(0, 120) + '...';
-    }
-    metaDesc.value = description;
-  };
-  
-  //Head & meta setting
-  useHead({
-    title,
-    meta: [{
-      name: 'description',
-      content: metaDesc.value
-    }]
-  });
-  
-  </script>
+</script>
   
