@@ -101,24 +101,55 @@ onMounted(() => {
   }(document, 'script', 'facebook-jssdk'));
 
   // Load Twitter SDK
-  window.twttr = (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0],
-      t = window.twttr || {};
-    if (d.getElementById(id)) return t;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = 'https://platform.twitter.com/widgets.js';
-    fjs.parentNode.insertBefore(js, fjs);
+//   window.twttr = (function (d, s, id) {
+//     var js, fjs = d.getElementsByTagName(s)[0],
+//       t = window.twttr || {};
+//     if (d.getElementById(id)) return t;
+//     js = d.createElement(s);
+//     js.id = id;
+//     js.src = 'https://platform.twitter.com/widgets.js';
+//     fjs.parentNode.insertBefore(js, fjs);
 
-    t._e = [];
-    t.ready = function (f) {
-      t._e.push(f);
-    };
+//     t._e = [];
+//     t.ready = function (f) {
+//       t._e.push(f);
+//     };
 
-    return t;
-  }(document, 'script', 'twitter-wjs'));
+//     return t;
+//   }(document, 'script', 'twitter-wjs'));
+
+// Load Twitter SDK
+  const script = document.createElement('script');
+  script.src = 'https://platform.twitter.com/widgets.js';
+  script.async = true;
+  script.defer = true;
+
+  document.head.appendChild(script);
+
+  script.onload = () => {
+    // Now the Twitter SDK is loaded, create the timeline
+    createTwitterTimeline();
+  };
+
+  script.onerror = (error) => {
+    console.error('Error loading Twitter SDK:', error);
+  };
+
+  function createTwitterTimeline() {
+    // Create a Twitter timeline widget
+    twttr.widgets.createTimeline(
+      {
+        sourceType: 'timeline',
+        screenName: 'weeklymtown',
+      },
+      document.getElementById('twitter-timeline'),
+      {
+        height: 500,
+        tweetLimit: 4,
+      }
+    );
+  }
 });
-
 
 //======== Ebook
 const sidebarEbook = ref({});
