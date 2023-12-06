@@ -18,60 +18,63 @@
     </div> 
 </template>
 
-<script>
-export default {
-  name: 'SocialSharing',
-  data() {
-        return {
-            title: '',
-            url: '',
-            description: '',
-        }
-  },
-  mounted() {
-        this.url = window.location.href;
-        this.title = document.title;
-  },
-  methods: {
-        shareOnFacebook() {
-            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(this.url)}`;
-            window.open(url, "facebook-share-dialog", "width=626,height=436");
-        },
-        shareOnHatena() {
-            const url = `https://b.hatena.ne.jp/add?mode=confirm&url=${encodeURIComponent(this.url)}&title=${encodeURIComponent(this.title)}`;
-            window.open(url, "hatena-bookmark-dialog", "width=550,height=420");
-        },
-        saveToPocket() {
-            const url = `https://getpocket.com/edit?url=${encodeURIComponent(this.url)}`;
-            window.open(url, "pocket-bookmark-dialog", "width=350,height=550");
-        },
-        subscribeToRSS() {
-            const url = "https://example.com/feed/";
-            window.open(url, "rss-subscribe-dialog", "width=450,height=550");
-        },
-        subscribeOnFeedly() {
-            const url = `https://feedly.com/i/subscription/feed/${encodeURIComponent(this.url)}/rss.xml`;
-            window.open(url, "feedly-subscribe-dialog", "width=550,height=420");
-        },
-        pinOnPinterest() {
-            const url = `https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(this.url)}&media=${encodeURIComponent(this.imageUrl)}&description=${encodeURIComponent(this.description)}`;
-            window.open(url, "pinterest-pin-dialog", "width=750,height=420");
-        },
-        tweetOnTwitter() {
-            const text = `${this.title} - ${this.url}`;
-            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-            window.open(url, "twitter-tweet-dialog", "width=550,height=420");
-        },
-        tweetOnTwitter2() {
-            const text = `${this.title} - ${this.url}`;
-            const url = `https://twitter.com/intent/share?url=${encodeURIComponent(this.url)}`; //old method
-            window.open(url, "twitter-tweet-dialog", "width=550,height=420");
-        },
-        tweetOnTwitterURL() {
-            const text = `${this.title} - ${this.url}`;
-            const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(text)}`;
-            window.open(url, "twitter-tweet-dialog", "width=550,height=420");
-        },
-  }
-}
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const title = ref('');
+const url = ref('');
+
+onMounted(() => {
+  url.value = window.location.href;
+  title.value = document.title;
+});
+
+const shareOnFacebook = () => {
+  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url.value)}`;
+  window.open(shareUrl, "facebook-share-dialog", "width=626,height=436");
+};
+
+const shareOnHatena = () => {
+  const hatenaUrl = `https://b.hatena.ne.jp/add?mode=confirm&url=${encodeURIComponent(url.value)}&title=${encodeURIComponent(title.value)}`;
+  window.open(hatenaUrl, "hatena-bookmark-dialog", "width=550,height=420");
+};
+
+const saveToPocket = () => {
+  const pocketUrl = `https://getpocket.com/edit?url=${encodeURIComponent(url.value)}`;
+  window.open(pocketUrl, "pocket-bookmark-dialog", "width=350,height=550");
+};
+
+const subscribeToRSS = () => {
+  const rssUrl = "https://example.com/feed/";
+  window.open(rssUrl, "rss-subscribe-dialog", "width=450,height=550");
+};
+
+const subscribeOnFeedly = () => {
+  const feedlyUrl = `https://feedly.com/i/subscription/feed/${encodeURIComponent(url.value)}/rss.xml`;
+  window.open(feedlyUrl, "feedly-subscribe-dialog", "width=550,height=420");
+};
+
+const pinOnPinterest = () => {
+  const pinterestUrl = `https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(url.value)}&media=${encodeURIComponent(imageUrl)}&description=${encodeURIComponent(description)}`;
+  window.open(pinterestUrl, "pinterest-pin-dialog", "width=750,height=420");
+};
+
+const tweetOnTwitter = () => {
+  const text = `${title.value} - ${url.value}`;
+  const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+  window.open(tweetUrl, "twitter-tweet-dialog", "width=550,height=420");
+};
+
+const tweetOnTwitter2 = () => {
+  const text = `${title.value} - ${url.value}`;
+  const tweetUrl = `https://twitter.com/intent/share?url=${encodeURIComponent(url.value)}`;
+  window.open(tweetUrl, "twitter-tweet-dialog", "width=550,height=420");
+};
+
+const tweetOnTwitterURL = () => {
+  const text = `${title.value} - ${url.value}`;
+  const tweetUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(text)}`;
+  window.open(tweetUrl, "twitter-tweet-dialog", "width=550,height=420");
+};
+
 </script>

@@ -198,3 +198,12 @@
         }
     }
 }
+
+.l-page_content {
+    & p {
+        margin-bottom: 16px;
+    }
+    & .p-heading {
+        margin-bottom: 12px !important;
+    }
+}
