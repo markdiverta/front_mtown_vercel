@@ -8,6 +8,8 @@
                 :src="sidebarEbook.thumb + '?width=300'"
                 width="300"
                 height="437"
+                alt="最新号eBook" 
+                loading="lazy"
             >
             <div class="text-center">
                 <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumber/">バックナンバーはこちら</a>
@@ -35,6 +37,8 @@
                 :src="item.thumb + '?width=300'"
                 width="300"
                 height="129"
+                alt="広告(PR)" 
+                loading="lazy"
             >
         </div>
 
@@ -64,6 +68,8 @@
                 :src="item.thumb + '?width=300'"
                 width="300"
                 height="129"
+                alt="関連メディア" 
+                loading="lazy"
             >
         </div>
         
