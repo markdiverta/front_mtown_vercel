@@ -170,6 +170,9 @@
             @at-root .c-mainmenu_hidden .activePage & {
                 display: none;
             }
+            & ul {
+                padding-left: 24px;
+            }
         }
         li {
             margin: 0;
