@@ -61,8 +61,6 @@
 </template>
 
 <script setup>
-import Sidebar from '~/components/sidebar.vue';
-
 //Global setting
 const config = useRuntimeConfig(); //API route
 const catSlug = '/eat/';
