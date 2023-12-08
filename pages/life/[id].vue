@@ -35,6 +35,21 @@ import { ref, onMounted } from 'vue';
 const config = useRuntimeConfig(); //API route
 const route = useRoute();
 
+
+//===== Getting the category path function
+var path;
+const urlPath = route.path;
+const catAmount = urlPath.split("/").length-1; //-1 due to none is equal to 1
+const lastChar = urlPath.charAt(urlPath.length - 1);
+if (catAmount > 2 && lastChar != '/') { //If there is 2 category level, then capture both
+  let pathSegments = urlPath.split("/").filter(segment => segment !== '');
+  path = `/${pathSegments[0]}/${pathSegments[1] || ''}`;
+} else {
+  path = '/' + urlPath.split("/")[1];
+};
+
+
+//======== Main API content
 const { data: news } = await useFetch(
   // `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
   // `https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/details/${route.params.id}`,
