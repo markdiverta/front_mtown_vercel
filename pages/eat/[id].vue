@@ -47,15 +47,15 @@ const { data: news } = await useFetch(
 
 
 //===== Getting the category path function
-var path;
+const path = ref("")
 const urlPath = route.path;
 const catAmount = urlPath.split("/").length-1; //-1 due to none is equal to 1
 const lastChar = urlPath.charAt(urlPath.length - 1);
 if (catAmount > 2 && lastChar != '/') { //If there is 2 category level, then capture both
   let pathSegments = urlPath.split("/").filter(segment => segment !== '');
-  path = `/${pathSegments[0]}/${pathSegments[1] || ''}`;
+  path.value = `/${pathSegments[0]}/${pathSegments[1] || ''}`;
 } else {
-  path = '/' + urlPath.split("/")[1];
+  path.value = '/' + urlPath.split("/")[1];
 };
 
 </script>
