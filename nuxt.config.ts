@@ -8,6 +8,9 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'light'
   },
+  ignore:  [
+    'pages/eat/*',
+  ],
   ssr: true,
   runtimeConfig: {
     public: {

@@ -25,18 +25,18 @@
         :page-count="pageCount" 
         :total="pagiTotal" 
       />
+
+      {{rows2}}
       
       <!-- <UTable :rows="rows" /> -->
 
       <!-- {{topics}} -->
 
-      <!-- <div v-for="row in topics" :key="row.id" class="article">
+      <div v-for="row in topics" :key="row.id" class="article">
         <h2>{{ row.title }}</h2>
         <p>{{ row.content }}</p>
-    </div> -->
+    </div>
 
-    {{rows}}
-    
     <div v-for="row in rows" :key="row.id" class="article">
         <h2>{{ row.title }}</h2>
         <p>{{ row.content }}</p>
@@ -190,24 +190,20 @@ const pagiTotal = ref('');
 
 async function fetchData(url) {
     console.log('Run function');
+    console.log('Topic check 1');
+    console.log(topics);
+    topics = topics ? [] : topics;
+    console.log('Topic check 2');
+    console.log(topics);
   try {
     apiURL.value = url ? url : apiURL.value; // replace with your API URL
     console.log("URL");
     console.log(apiURL.value);
-    // const newsData = await fetchNews(apiURL.value);
-
-    const response = await fetch(apiURL.value, {
-      credentials: 'include',
-    });
-    const newsData = await response.json();
-
+    const newsData = await fetchNews(apiURL.value);
     // const response = await fetch(url, {
     //   credentials: 'include',
     // });
-    console.log("newsData");
-    console.log(newsData);
     if (newsData) {
-        topics = topics ? [] : topics;
         console.log('enter');
         // console.log(newsData);
         pagiTotal.value = newsData.pageInfo.totalCnt;
@@ -249,7 +245,10 @@ async function fetchData(url) {
                 thumb: item.ext_1,
             });
         };
+        console.log('Topic check 3');
+        console.log(topics);
     };
+    // handle the news data here
   } catch (error) {
     // handle errors here
     console.error('Error in fetchData:', error);
@@ -259,26 +258,25 @@ async function fetchData(url) {
 const rows = computed(() => {
 //   console.log(page.value);
   console.log("row computed");
+  console.log(apiURL.value);
 //   console.log(pagiTotal.value);
 //   console.log(page.value);
   apiURL.value = apiURLBase.value + '&pageID=' + page.value;
-  console.log(apiURL.value);
-//   fetchData(apiURL.value);
-
-const { data: news } = await useFetch(
-  apiURL,
-  {
-    credentials: 'include',
-  }
-);
-
-    
-
-//   console.log('returned');
-//   console.log(topics);
-//   return "123"
+  fetchData(apiURL.value);
+  console.log(topics);
+  topics = topics;
+  console.log('returned');
+  return topics
 //   return topics.slice((page.value - 1) * pageCount, (page.value) * pageCount)
 });
+
+
+const rows2 = computed(() => {
+    var testing = page.value;
+    console.log('TRIGGER');
+});
+
+
 
 // call fetchData
 fetchData();
