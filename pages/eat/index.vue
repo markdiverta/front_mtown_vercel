@@ -117,7 +117,8 @@ const pageCount = 20
 //     credentials: 'include',
 //   }
 // );
-var topics = [];
+// var topics = [];
+const topics = ref('[]');
 var pageName;
 var contentChecked = false;
 // if (news) {
@@ -192,8 +193,8 @@ async function fetchData(url) {
     console.log('Run function');
   try {
     apiURL.value = url ? url : apiURL.value; // replace with your API URL
-    console.log("URL");
-    console.log(apiURL.value);
+    // console.log("URL");
+    // console.log(apiURL.value);
     // const newsData = await fetchNews(apiURL.value);
 
     const response = await fetch(apiURL.value, {
@@ -204,10 +205,10 @@ async function fetchData(url) {
     // const response = await fetch(url, {
     //   credentials: 'include',
     // });
-    console.log("newsData");
-    console.log(newsData);
+    // console.log("newsData");
+    // console.log(newsData);
     if (newsData) {
-        topics = topics ? [] : topics;
+        let list = topics.value ? [] : topics.value;
         console.log('enter');
         // console.log(newsData);
         pagiTotal.value = newsData.pageInfo.totalCnt;
@@ -238,7 +239,7 @@ async function fetchData(url) {
                 url += item.topics_id;
             };
 
-            topics.push({
+            list.push({
                 date: item.ymd.substring(0, 10).replaceAll('-', '.'),
                 title: item.subject,
                 desc: desc,
@@ -249,6 +250,7 @@ async function fetchData(url) {
                 thumb: item.ext_1,
             });
         };
+        topics.value = list;
     };
   } catch (error) {
     // handle errors here
@@ -262,15 +264,18 @@ const rows = computed(() => {
 //   console.log(pagiTotal.value);
 //   console.log(page.value);
   apiURL.value = apiURLBase.value + '&pageID=' + page.value;
-  console.log(apiURL.value);
-//   fetchData(apiURL.value);
+  // console.log(apiURL.value);
+ 
+  fetchData(apiURL.value);
 
-const { data: news } = await useFetch(
-  apiURL,
-  {
-    credentials: 'include',
-  }
-);
+  return '';
+
+// const { data: news } = await useFetch(
+//   apiURL,
+//   {
+//     credentials: 'include',
+//   }
+// );
 
     
 

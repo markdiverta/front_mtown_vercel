@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     preference: 'light'
   },
   ignore:  [
-    'pages/eat/*',
+    // 'pages/eat/*',
   ],
   ssr: true,
   runtimeConfig: {
