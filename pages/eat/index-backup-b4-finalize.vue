@@ -13,12 +13,34 @@
 
       <h1 class="p-heading">{{pageName}}</h1>
 
+      <!-- <UPagination 
+        v-model="page" 
+        :page-count="5" 
+        :total="items.length"
+        @click="loadPage"
+      /> -->
+
       <UPagination 
         v-model="page" 
         :page-count="pageCount" 
         :total="pagiTotal" 
-        :max="maxDisplayBtn"
       />
+      
+      <!-- <UTable :rows="rows" /> -->
+
+      <!-- {{topics}} -->
+
+      <!-- <div v-for="row in topics" :key="row.id" class="article">
+        <h2>{{ row.title }}</h2>
+        <p>{{ row.content }}</p>
+    </div> -->
+
+    {{rows}}
+    
+    <div v-for="row in rows" :key="row.id" class="article">
+        <h2>{{ row.title }}</h2>
+        <p>{{ row.content }}</p>
+    </div>
 
       <section v-if="topics.length > 0">
           <section class="container-fluid c-blog_list --list_2col">
@@ -71,7 +93,6 @@
 //Global setting
 const config = useRuntimeConfig(); //API route
 const catSlug = '/eat/';
-const topicID = '7';
 
 //Get category name from URL path
 const route = useRoute();
@@ -81,39 +102,115 @@ pathSegments = pathSegments.filter(function(segment) { // Filter out any empty s
 });
 var catName = pathSegments[pathSegments.length - 1]; // Get the last path
 
-//API Content setting
-const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id=${topicID}`);
+const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id=7`);
 const apiURL = ref(apiURLBase.value);
+
+const page = ref(1)
+const pageCount = 20
+
+// console.log(apiURL.value);
+
+//Content logic
+// const { data: news } = await useFetch(
+//   apiURL,
+//   {
+//     credentials: 'include',
+//   }
+// );
+// var topics = [];
 const topics = ref('[]');
 var pageName;
 var contentChecked = false;
+// if (news) {
+//   const content = news.value;
+//   pageName = content.list[0].group_nm;
+//   contentChecked = true;
+  
+//   for (let key in content.list) {
+//       const item = content.list[key];
+//       let url;
+//       let desc = item.contents;
+//       let catURL = item.category_parent_id ? catSlug + item.contents_type_slug : catSlug;
+//       desc = desc.replace(/<[^>]+>/g, ''); //remove HTML
+//       if (desc.length > 120) {
+//           desc = desc.substring(0, 120);
+//           desc += '...';
+//       };
 
-//Pagination setting
-const page = ref(1)
-const pagiTotal = ref('');
-const maxDisplayBtn = 10;
-const pageCount = computed(() => {
-  apiURL.value = apiURLBase.value + '&pageID=' + page.value;
-  fetchData(apiURL.value);
-  return '20';
-});
+//       //Check if has child category or just parent category
+//       if (item.contents_type_slug && item.category_parent_id) {
+//           url = catSlug + item.contents_type_slug + '/';
+//       } else {
+//           url = catSlug;
+//       };
+//       //Check if has page slug else use page id
+//       if (item.slug) {
+//           url += item.slug;
+//       } else {
+//           url += item.topics_id;
+//       };
+
+//       topics.push({
+//           date: item.ymd.substring(0, 10).replaceAll('-', '.'),
+//           title: item.subject,
+//           desc: desc,
+//           cat: item.contents_type_nm,
+//           catURL: catURL,
+//           id: item.topics_id,
+//           url: url,
+//           thumb: item.ext_1,
+//       });
+//   };
+// };
 
 //Link function
 const goTo = (url) => {
     window.location.href = url;
 };
 
-//API Content Function
-async function fetchData(url) {
+
+async function fetchNews(apiURL) {
+// console.log('fetchNews');
   try {
-    apiURL.value = url ? url : apiURL.value; 
+    const response = await fetch(apiURL, {
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching news data:', error);
+    throw error; // rethrow the error to handle it outside
+  }
+};
+
+const pagiTotal = ref('');
+
+async function fetchData(url) {
+    console.log('Run function');
+  try {
+    apiURL.value = url ? url : apiURL.value; // replace with your API URL
+    // console.log("URL");
+    // console.log(apiURL.value);
+    // const newsData = await fetchNews(apiURL.value);
+
     const response = await fetch(apiURL.value, {
       credentials: 'include',
     });
-    const newsData = await response.json(); //Convert to json to use on content structuring
+    const newsData = await response.json();
 
+    // const response = await fetch(url, {
+    //   credentials: 'include',
+    // });
+    // console.log("newsData");
+    // console.log(newsData);
     if (newsData) {
         let list = topics.value ? [] : topics.value;
+        console.log('enter');
+        // console.log(newsData);
         pagiTotal.value = newsData.pageInfo.totalCnt;
         const content = newsData;
         pageName = content.list[0].group_nm;
@@ -161,7 +258,44 @@ async function fetchData(url) {
   }
 };
 
-// call API Content Function
+const rows = computed(() => {
+//   console.log(page.value);
+  console.log("row computed");
+//   console.log(pagiTotal.value);
+//   console.log(page.value);
+  apiURL.value = apiURLBase.value + '&pageID=' + page.value;
+  // console.log(apiURL.value);
+ 
+  fetchData(apiURL.value);
+
+  return '';
+
+// const { data: news } = await useFetch(
+//   apiURL,
+//   {
+//     credentials: 'include',
+//   }
+// );
+
+    
+
+//   console.log('returned');
+//   console.log(topics);
+//   return "123"
+//   return topics.slice((page.value - 1) * pageCount, (page.value) * pageCount)
+});
+
+// call fetchData
 fetchData();
+
+
+//====== Pagination
+// const page = ref(1)
+// const items = ref(Array(55))
+
+// const loadPage = (num) => {
+//     console.log(num);
+// };
+
 
 </script>
