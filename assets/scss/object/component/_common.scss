@@ -136,7 +136,23 @@
 
 .c-pagination {
     margin: 40px auto 0;
+    justify-content: center;
 
+    & button {
+        margin: .3rem!important;
+        background: #fff;
+        color: rgba(0,0,0,.87);
+        border-radius: 4px;
+        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+        min-width: 34px;
+        height: 34px;
+        display: block;
+
+        &[class*="z-\\[1\\]"] {
+            background: $color_main;
+            color: white;
+        }
+    }
     & .theme--light.v-pagination .v-pagination__item--active {
         background: $color_main;
     }

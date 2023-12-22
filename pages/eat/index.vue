@@ -13,13 +13,6 @@
 
       <h1 class="p-heading">{{pageName}}</h1>
 
-      <UPagination 
-        v-model="page" 
-        :page-count="pageCount" 
-        :total="pagiTotal" 
-        :max="maxDisplayBtn"
-      />
-
       <section v-if="topics.length > 0">
           <section class="container-fluid c-blog_list --list_2col">
               <div class="row">
@@ -51,6 +44,16 @@
               </div>
               </template>
           </section>
+
+          <UPagination 
+            v-model="page" 
+            :page-count="pageCount" 
+            :total="pagiTotal" 
+            :max="maxDisplayBtn"
+            :active-button="{ color: 'red' }"
+            class="c-pagination"
+          />
+
       </section>
       <section v-else-if="contentChecked && !topics.length">
           <p class="text-center">Sorry, content is coming soon, please come back later.</p>
@@ -92,11 +95,22 @@ var contentChecked = false;
 const page = ref(1)
 const pagiTotal = ref('');
 const maxDisplayBtn = 10;
-const pageCount = computed(() => {
+const pageCount = computed(() => { //Trigger for pagination
   apiURL.value = apiURLBase.value + '&pageID=' + page.value;
-  fetchData(apiURL.value);
+  fetchData(apiURL.value); //Reload API function
+  scrollToTop();
   return '20';
 });
+
+//Pagination scroll to top function
+const scrollToTop = () => {
+  if (process.client) {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // Optional: animated smooth scroll
+    });
+  };
+};
 
 //Link function
 const goTo = (url) => {
@@ -161,7 +175,7 @@ async function fetchData(url) {
   }
 };
 
-// call API Content Function
+// Innitial API Content Function calling
 fetchData();
 
 </script>
