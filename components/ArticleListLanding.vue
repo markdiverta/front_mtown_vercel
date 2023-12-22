@@ -8,8 +8,8 @@
       </div>
 
       <h1 class="p-heading">{{pageName}}</h1>
-
-      <section v-if="topics.length > 0">
+      
+      <section v-if="topics[0].title">
           <section class="container-fluid c-blog_list --list_2col">
               <div class="row">
                   <template v-for="(item, index) in topics" :key="item.id">
@@ -64,8 +64,6 @@ const catSlugProps = ref(props.catSlug);
 const catSlug = catSlugProps.value
 const apiURLBase = ref(props.apiURLBase);
 const apiURL = ref(props.apiURL);
-
-console.log(catSlug);
 
 var pageName;
 var contentChecked = false;
@@ -157,4 +155,5 @@ async function fetchData(url) {
 
 // Innitial API Content Function calling
 fetchData();
+
 </script>
