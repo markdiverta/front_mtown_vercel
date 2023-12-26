@@ -74,7 +74,7 @@ const page = ref(1)
 const pagiTotal = ref('');
 const maxDisplayBtn = 10;
 const pageCount = computed(() => { //Trigger for pagination
-  apiURL.value = apiURLBase.value + '&pageID=' + page.value;
+  apiURL.value = apiURL.value.includes('?') ? apiURLBase.value + '&pageID=' + page.value : apiURLBase.value + '?pageID=' + page.value;
   fetchData(apiURL.value); //Reload API function
   scrollToTop();
   return '20';
@@ -115,8 +115,8 @@ async function fetchData(url) {
             let url;
             let desc = item.contents;
             let catURL = item.category_parent_id ? catSlug + item.contents_type_slug : catSlug;
-            desc = desc.replace(/<[^>]+>/g, ''); //remove HTML
-            if (desc.length > 120) {
+            desc = desc ? desc.replace(/<[^>]+>/g, '') : ''; //remove HTML
+            if (desc && desc.length > 120) {
                 desc = desc.substring(0, 120);
                 desc += '...';
             };
@@ -133,7 +133,6 @@ async function fetchData(url) {
             } else {
                 url += item.topics_id;
             };
-
             list.push({
                 date: item.ymd.substring(0, 10).replaceAll('-', '.'),
                 title: item.subject,
