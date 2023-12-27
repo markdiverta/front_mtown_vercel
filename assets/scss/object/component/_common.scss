@@ -223,6 +223,11 @@
     }
 }
 
+.c-loadingbar {
+    max-width: 200px;
+    margin: 50px auto;
+}
+
 .c-lightbox {
     & .arrow {
         @include fz(38);

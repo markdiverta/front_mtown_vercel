@@ -8,11 +8,13 @@
       </div>
 
       <h1 class="p-heading">{{pageName}}</h1>
+    
+      <UProgress animation="carousel" v-if="!contentChecked" size="sm" class="c-loadingbar"/>
 
       <section v-if="topics[0].title">
         <section class="container-fluid c-blog_list" v-if="topics.length > 0">
             <div class="row c-blog_list-item" v-for="item in topics" :key="item.id" @click="goTo(item.url)">
-                <div class="col-sm-3 col-12 thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + ')' } : ''"></div>
+                <div class="col-sm-3 col-12 thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb  + '?width=300)' } : ''"></div>
                 <div class="col">
                     <h3>{{ item.title }}</h3>
                     <div class="mb-3">
@@ -35,22 +37,53 @@
           />
 
       </section>
-      <section v-else-if="contentChecked && !topics.length">
-          <p class="text-center">Sorry, content is coming soon, please come back later.</p>
+      <section v-else-if="searchNotFound || contentChecked && !topics.length">
+          
+            <template v-if="searchNotFound">
+                <p class="text-center">Couldn't find any content. Please try searching for different keywords.</p>
+                <form class="c-form row pt-4" action="/search">
+                    <div class="col-auto ml-auto">
+                        <input
+                            type="text"
+                            placeholder="ニュース検索　例：マレーシア Covid-19 感染者数"
+                            class="l-header_top-search v-input"
+                            outlined
+                            name="keyword"
+                            v-model="keyword"
+                        />
+                    </div>
+                    <div class="col-auto mr-auto">
+                        <button
+                            type="submit"
+                            block
+                            class="c-btn_main-dark c-btn submit-btn"
+                        >
+                            検索
+                        </button>
+                    </div>
+                </form>
+            </template>
+            <template v-else>
+                <p class="text-center">Sorry, content is coming soon, please come back later.</p>
+            </template>
+            
       </section>
 
     </section>
 </template>
 
 <script setup>
-const props = defineProps(['catSlug', 'apiURLBase', 'apiURL']);
+const props = defineProps(['catSlug', 'apiURLBase', 'apiURL', 'isSearch']);
 const catSlugProps = ref(props.catSlug);
 const catSlug = catSlugProps.value
 const apiURLBase = ref(props.apiURLBase);
 const apiURL = ref(props.apiURL);
+const isSearchProps = ref(props.isSearch);
+const isSearch = isSearchProps.value
 
 var pageName;
 var contentChecked = false;
+const searchNotFound = ref(false);
 const topics = ref('[]');
 
 //Pagination setting
@@ -59,7 +92,6 @@ const pagiTotal = ref('');
 const maxDisplayBtn = 10;
 const pageCount = computed(() => { //Trigger for pagination
   apiURL.value = apiURL.value.includes('?') ? apiURLBase.value + '&pageID=' + page.value : apiURLBase.value + '?pageID=' + page.value;
-  console.log(apiURL.value);
   fetchData(apiURL.value); //Reload API function
   scrollToTop();
   return '20';
@@ -88,8 +120,12 @@ async function fetchData(url) {
       credentials: 'include',
     });
     const newsData = await response.json(); //Convert to json to use on content structuring
-
-    if (newsData) {
+    if (newsData.list && newsData.list.length < 1) {
+        searchNotFound.value = true;
+        contentChecked = true;
+    }
+    else if (newsData) {
+        console.log(newsData);
         let list = topics.value ? [] : topics.value;
         pagiTotal.value = newsData.pageInfo.totalCnt;
         const content = newsData;
@@ -97,7 +133,7 @@ async function fetchData(url) {
         contentChecked = true;
         for (let key in content.list) {
             const item = content.list[key];
-            let url;
+            let url, thumb;
             let desc = item.contents;
             let catURL = item.category_parent_id ? catSlug + item.contents_type_slug : catSlug;
             desc = desc ? desc.replace(/<[^>]+>/g, '') : ''; //remove HTML
@@ -117,6 +153,37 @@ async function fetchData(url) {
                 url += item.slug;
             } else {
                 url += item.topics_id;
+            };
+            //Thumbnail check
+            if (item.ext_1 && item.ext_1.includes('http://') || item.ext_1 && item.ext_1.includes('https://') ) {
+                thumb = item.ext_1;
+            } else if (item.ext_2 && item.ext_2.includes('http://') || item.ext_2 && item.ext_2.includes('https://') ) {
+                thumb = item.ext_2;
+            };
+            //For search page only
+            if (isSearch) {
+                let path;
+                if (item.topics_group_id) {
+                    let parentID = item.topics_group_id;
+                    path = parentID == '1' ? '/news/'
+                        : parentID == '7' ? '/eat/'
+                        : parentID == '8' ? '/life/'
+                        : parentID == '9' ? '/feature/'
+                        : parentID == '10' ? '/interview/'
+                        : parentID == '11' ? '/comics/'
+                        : parentID == '12' ? '/community/'
+                        : parentID == '13' ? '/malaysia-profiles/'
+                        : parentID == '14' ? '/j-league/'
+                        : parentID == '15' ? '/backnumber/'
+                        : '';
+                };
+                if (path == '/news/') {
+                    url = item.contents_type_slug ? path + item.contents_type_slug + '/' : path + 'uncategories/';
+                } else {
+                    url = path;
+                    catURL = path; //No category in others topics except news
+                };
+                url = item.slug ? url + item.slug : url + item.topics_id;
             };
             list.push({
                 date: item.ymd ? item.ymd.substring(0, 10).replaceAll('-', '.') : '',
