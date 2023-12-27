@@ -8,6 +8,8 @@
       </div>
 
       <h1 class="p-heading">{{pageName}}</h1>
+
+      <UProgress animation="carousel" v-if="!contentChecked" size="sm" class="c-loadingbar"/>
       
       <section v-if="topics[0].title">
           <section class="container-fluid c-blog_list --list_2col">
