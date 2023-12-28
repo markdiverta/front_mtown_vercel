@@ -10,6 +10,10 @@
 </template>
 
 <script setup>
+//Global setting
+const config = useRuntimeConfig(); //API route
+
+//Props
 const props = defineProps(['news']);
 const news = props.news;
 
@@ -20,12 +24,13 @@ if (news.details && news.details.ymd) {
   formattedDate.value = rawDate.substring(0, 10).replaceAll('-', '.');
 }
 
-//Meta variables
-const metaDesc = ref('');
-
 //API content assigned
 const apiContent = news.details;
 const title = apiContent.subject;
+
+//Meta variables
+const metaDesc = ref('');
+const metaOGImg = news.details.ext_1 ? news.details.ext_1 : '';
 
 // Shorten meta description
 if (apiContent.contents) {
@@ -39,9 +44,56 @@ if (apiContent.contents) {
 //Head & meta setting
 useHead({
   title,
-  meta: [{
+  meta: [
+  {
+    hid: 'og:title',
+    property: 'og:title',
+    content: title
+  },
+  {
     name: 'description',
     content: metaDesc.value
-  }]
+  },
+  {
+    hid: 'og:description',
+    property: 'og:description',
+    content: metaDesc.value
+  },
+  {
+    hid: 'og:image',
+    property: 'og:image',
+    content: metaOGImg
+  },
+  {
+    hid: 'og:image:secure_url',
+    property: 'og:image:secure_url',
+    content: metaOGImg
+  },
+  {
+    hid: 'og:image:url',
+    property: 'og:image:url',
+    content: metaOGImg
+  },
+  {
+    hid: 'twitter:card',
+    name: 'twitter:card',
+    content: 'summary_large_image'
+  },
+  {
+    hid: 'twitter:title',
+    name: 'twitter:title',
+    content: title
+  },
+  {
+    hid: 'twitter:description',
+    name: 'twitter:description',
+    content: metaDesc.value
+  },
+  {
+    hid: 'twitter:image',
+    name: 'twitter:image',
+    content: metaOGImg
+  },
+  ]
 });
 </script>

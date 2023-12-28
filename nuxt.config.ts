@@ -20,14 +20,14 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: 'front_nuxt_corporate',
+      title: 'MTown - マレーシアの週刊情報誌',
       htmlAttrs: {
         lang: 'en',
       },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: '' },
+        { hid: 'description', name: 'description', content: 'マレーシアの週刊情報誌MtownのWEBサイト。マレーシアライフをもっと楽しく豊かに、をコンセプトに、在留邦人や短期滞在者、またマレーシアに興味がある方に、実用的で生活に役立つ情報を提供しています。' },
         { name: 'format-detection', content: 'telephone=no' },
       ],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
