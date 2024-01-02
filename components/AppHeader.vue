@@ -110,17 +110,12 @@
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
                             <li :class="currentPage.includes('/comics') ? 'active' : ''"><a href="/column/comics/">4コマ</a></li>
                             <li :class="currentPage.includes('/malaysia-profiles') ? 'active' : ''"><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
-                            <!-- <li :class="currentPage.includes('/j-league/') ? 'active' : ''"><a href="/column/j-league/">Jリーグ</a></li> -->
                             
-                            <!-- <template v-if="menuColumnCategory.length > 0">
-                                <li v-for="(item, index) in menuColumnCategory" :key="index" :class="currentPage.includes('/' + item.slug + '/') ? 'active' : ''">
+                            <template v-if="dynamicMenu.length > 0">
+                                <li v-for="(item, index) in dynamicMenu" :key="index" :class="currentPage.includes('/' + item.slug + '/') ? 'active' : ''">
                                     <a :href="item.url">{{ item.title }}</a>
                                 </li>
-                            </template> -->
-
-                            <!-- Change from above dynamic menu to static, update below and at mobile menu around line 260 -->
-                            <li :class="currentPage.includes('/j-league') ? 'active' : ''"><a href="/column/j-league/">Jリーグ</a></li>
-                            <li :class="currentPage.includes('/malaysia-calendar') ? 'active' : ''"><a href="/column/malaysia-calendar/">マレーシアの暦</a></li>
+                            </template>
                         </ul>
                     </div>
                 </li>
@@ -139,9 +134,28 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const Drawer = ref(false);
 const { authUser, isLoggedIn, logout } = useAuth();
-
 const router = useRouter();
 const currentPage = computed(() => router.currentRoute.value.path);
 
+//Global setting
+const config = useRuntimeConfig(); //API route
+
+//Dynamic header menu - コラム
+const menuAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=14`);
+var response = await fetch(menuAPI.value, {
+    credentials: 'include',
+});
+const menuData = await response.json();
+var dynamicMenu = [];
+for (let key in menuData.list) {
+    let item = menuData.list[key];
+    if (item.slug) {
+        dynamicMenu.push({
+            slug: item.slug,
+            url: '/column/' + item.slug + '/',
+            title: item.category_nm,
+        });
+    };
+};
 </script>
 
