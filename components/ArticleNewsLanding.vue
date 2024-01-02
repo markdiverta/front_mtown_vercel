@@ -12,6 +12,7 @@
       <UProgress animation="carousel" v-if="!contentChecked" size="sm" class="c-loadingbar"/>
 
       <section v-if="topics[0].title">
+
         <section class="container-fluid c-blog_list" v-if="topics.length > 0">
             <div class="row c-blog_list-item" v-for="item in topics" :key="item.id" @click="goTo(item.url)">
                 <div class="col-sm-3 col-12 thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb  + '?width=300)' } : ''"></div>
@@ -27,7 +28,8 @@
             </div>
         </section>
 
-        <UPagination 
+        <UPagination
+            v-if="pagiCount > 1"
             v-model="page" 
             :page-count="pageCount" 
             :total="pagiTotal" 
@@ -37,7 +39,7 @@
           />
 
       </section>
-      <section v-else-if="searchNotFound || contentChecked && !topics.length">
+      <section v-else-if="searchNotFound || contentChecked && !topics.length || contentChecked">
           
             <template v-if="searchNotFound">
                 <p class="text-center">Couldn't find any content. Please try searching for different keywords.</p>
@@ -64,7 +66,7 @@
                 </form>
             </template>
             <template v-else>
-                <p class="text-center">Sorry, content is coming soon, please come back later.</p>
+                <p class="text-center">Sorry, content not found or is coming soon, please come back later.</p>
             </template>
             
       </section>
@@ -82,13 +84,14 @@ const isSearchProps = ref(props.isSearch);
 const isSearch = isSearchProps.value
 
 var pageName;
-var contentChecked = false;
+const contentChecked = ref(false);
 const searchNotFound = ref(false);
 const topics = ref('[]');
 
 //Pagination setting
 const page = ref(1)
 const pagiTotal = ref('');
+const pagiCount = ref('');
 const maxDisplayBtn = 10;
 const pageCount = computed(() => { //Trigger for pagination
   apiURL.value = apiURL.value.includes('?') ? apiURLBase.value + '&pageID=' + page.value : apiURLBase.value + '?pageID=' + page.value;
@@ -121,16 +124,16 @@ async function fetchData(url) {
     });
     const newsData = await response.json(); //Convert to json to use on content structuring
     if (newsData.list && newsData.list.length < 1) {
-        searchNotFound.value = true;
-        contentChecked = true;
+        searchNotFound.value = isSearch ? true : false;
+        contentChecked.value = true;
     }
     else if (newsData) {
-        console.log(newsData);
         let list = topics.value ? [] : topics.value;
         pagiTotal.value = newsData.pageInfo.totalCnt;
+        pagiCount.value = newsData.pageInfo.totalPageCnt;
         const content = newsData;
         pageName = content.list[0].group_nm;
-        contentChecked = true;
+        contentChecked.value = true;
         for (let key in content.list) {
             const item = content.list[key];
             let url, thumb;
