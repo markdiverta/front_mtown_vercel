@@ -2,9 +2,13 @@
     <section>
       
       <div class="l-breadcum">
-          <a href="/" class="item">ホーム</a>
-          <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-          <span class="item">{{pageName}}</span>
+            <a href="/" class="item">ホーム</a>
+            <template v-if="parentCat">
+                <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
+                <a :href="catSlug" class="item">{{parentCat}}</a>
+            </template>
+            <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
+            <span class="item">{{pageName}}</span>
       </div>
 
       <h1 class="p-heading">{{pageName}}</h1>
@@ -75,15 +79,17 @@
 </template>
 
 <script setup>
-const props = defineProps(['catSlug', 'apiURLBase', 'apiURL', 'isSearch']);
+const props = defineProps(['catSlug', 'apiURLBase', 'apiURL', 'isSearch', 'catName']);
 const catSlugProps = ref(props.catSlug);
 const catSlug = catSlugProps.value
 const apiURLBase = ref(props.apiURLBase);
 const apiURL = ref(props.apiURL);
 const isSearchProps = ref(props.isSearch);
 const isSearch = isSearchProps.value
+const isSubCategoryProps = ref(props.catName);
+const isSubCategory = isSubCategoryProps.value
 
-var pageName;
+var pageName, parentCat;
 const contentChecked = ref(false);
 const searchNotFound = ref(false);
 const topics = ref('[]');
@@ -132,7 +138,9 @@ async function fetchData(url) {
         pagiTotal.value = newsData.pageInfo.totalCnt;
         pagiCount.value = newsData.pageInfo.totalPageCnt;
         const content = newsData;
-        pageName = content.list[0].group_nm;
+        pageName = isSubCategory ? content.list[0].contents_type_nm : content.list[0].group_nm;
+        parentCat = isSubCategory ? content.list[0].group_nm : '';
+
         contentChecked.value = true;
         for (let key in content.list) {
             const item = content.list[key];

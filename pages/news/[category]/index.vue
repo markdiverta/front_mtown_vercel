@@ -6,7 +6,7 @@
 
     <div class="l-page_content">
 
-      <ArticleNewsLanding :catSlug="catSlug" :apiURLBase="apiURLBase" :apiURL="apiURL"/>
+      <ArticleNewsLanding :catSlug="catSlug" :apiURLBase="apiURLBase" :apiURL="apiURL" :catName="catName"/>
 
     </div>
     
