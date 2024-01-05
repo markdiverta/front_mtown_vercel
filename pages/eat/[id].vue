@@ -17,6 +17,8 @@
       </section>
   
       <SocialSharing/>
+
+      <NavNextPrev :nextPrevContent="nextPrevContent" :path="path" :apiContent="apiContent"/>
   
     </div>
   
@@ -44,6 +46,7 @@ const { data: news } = await useFetch(
     credentials: 'include',
   }
 );
+var apiContent = news.value.details;
 
 
 //===== Getting the category path function
@@ -57,6 +60,18 @@ if (catAmount > 2 && lastChar != '/') { //If there is 2 category level, then cap
 } else {
   path.value = '/' + urlPath.split("/")[1];
 };
+
+
+//===== Next & Prev link
+const { data: nextPrevContent } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id=` + 
+  `${apiContent.topics_group_id}&contents_type=` + 
+  `${apiContent.contents_type}&cnt=1&central_id=` +
+  `${apiContent.topics_id}`,
+  {
+    credentials: 'include',
+  }
+);
 
 </script>
   

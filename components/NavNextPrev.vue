@@ -22,21 +22,25 @@
 <script setup>
 const props = defineProps(['nextPrevContent', 'path', 'apiContent']);
 const data = props.nextPrevContent;
-const path = props.path;
+const pathProps = ref(props.path);
+var path = pathProps.value;
 const apiContent = props.apiContent;
 var link_next, link_prev;
 
 for (const key in data.list) {
     var item = data.list[key];
     let url = "";
-    let category = "";
-    if (item.contents_type_slug) {
-        category = item.contents_type_slug + '/';
+    // let category = "";
+    // if (item.contents_type_slug) {
+    //     category = item.contents_type_slug + '/';
+    // };
+    if (path.substr(path.length - 1) !== '/') {
+        path += '/';
     };
     if (item.slug) {
-        url = path + category + item.slug;
+        url = path + item.slug;
     } else {
-        url = path + category + item.topics_id;
+        url = path + item.topics_id;
     };
     let topicID = apiContent.topics_id ? apiContent.topics_id.toString() : "";
     let topicSlug= apiContent.topic_slug ? apiContent.topic_slug.toString() : "";

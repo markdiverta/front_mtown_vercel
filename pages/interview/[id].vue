@@ -18,6 +18,8 @@
 
     <SocialSharing/>
 
+    <NavNextPrev :nextPrevContent="nextPrevContent" :path="path" :apiContent="apiContent"/>
+
   </div>
 
 </section>
@@ -54,6 +56,19 @@ const { data: news } = await useFetch(
   // `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
   // `https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/details/${route.params.id}`,
   `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${route.params.id}`,
+  {
+    credentials: 'include',
+  }
+);
+var apiContent = news.value.details;
+
+
+//===== Next & Prev link
+const { data: nextPrevContent } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id=` + 
+  `${apiContent.topics_group_id}&contents_type=` + 
+  `${apiContent.contents_type}&cnt=1&central_id=` +
+  `${apiContent.topics_id}`,
   {
     credentials: 'include',
   }

@@ -1,10 +1,20 @@
 <template>
     <section class="p-article_wrap">
+
+          <template v-if="headingTop">
+            <h1 class="p-heading mb-3">{{ news.details.subject }}</h1>
+            {{ formattedDate }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ news.details.contents_type_nm }}</span>
+          </template>
+
           <div class="p-article_featureIMG">
             <img v-if="news.details.ext_1" :src="news.details.ext_1" width="620" height="413">
           </div>
-          <h1 class="p-heading mb-3">{{ news.details.subject }}</h1>
-          {{ formattedDate }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ news.details.contents_type_nm }}</span>
+
+          <template v-if="!headingTop">
+            <h1 class="p-heading mb-3">{{ news.details.subject }}</h1>
+            {{ formattedDate }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ news.details.contents_type_nm }}</span>
+          </template>
+
           <div class="p-article_content" v-if="news.details.contents" v-html="news.details.contents"></div>
     </section>
 </template>
@@ -14,8 +24,9 @@
 const config = useRuntimeConfig(); //API route
 
 //Props
-const props = defineProps(['news']);
+const props = defineProps(['news', 'headingTop']);
 const news = props.news;
+const headingTop = props.headingTop;  //This parameter to change layout to heading at top for page like comics & malaysia-profiles
 
 //Date format
 const formattedDate = ref('');
