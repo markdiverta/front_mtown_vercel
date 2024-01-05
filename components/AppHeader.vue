@@ -48,12 +48,12 @@
             </div>
         </section>
 
-        <section class="c-mainmenu_wrap">
+        <section class="c-mainmenu_wrap" :class="noDropdown">
             <div class="l-content_maxWidth-lg c-mainmenu_outer">
             <!-- <button class="c-mainmenu_trigger" @click="showMenu"><i aria-hidden="true" class="icon mdi mdi-menu" style="color"></i></button> -->
             <!-- <ul class="c-mainmenu" :class="{ 'c-mainmenu_open' : menuOpen }"> -->
             <ul class="c-mainmenu">
-                <li :class="currentPage.includes('/news') || currentURL == '/' ? 'activePage' : ''">
+                <li :class="currentPage('/news') || currentURL == '/' ? 'activePage' : ''">
                     <a href="/news">マレーシアニュース</a>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
@@ -66,25 +66,25 @@
                         </ul>
                     </div>
                 </li>
-                <li :class="currentPage.includes('/eat') ? 'activePage' : ''">
+                <li :class="currentPage('/eat') ? 'activePage' : ''" clas="1232">
                     <a href="/eat/">グルメ</a>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li :class="currentPage.includes('/eat') ? 'active' : ''"><a href="/eat/">グルメ記事</a></li>
+                            <li :class="currentPage('/eat') ? 'active' : ''"><a href="/eat/">グルメ記事</a></li>
                             <li><a href="https://gourmesian.com/" target="_blank">レストラン検索</a></li>
                         </ul>
                     </div>
                 </li>
-                <li :class="currentPage.includes('/life')  || currentPage.includes('/community') ? 'activePage' : ''">
+                <li :class="currentPage('/life')  || currentPage('/community') ? 'activePage' : ''">
                     <a href="/life/">タウン情報</a>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li :class="currentPage.includes('/life') ? 'active' : ''"><a href="/life/">街ぶらブログ</a></li>
-                            <li :class="currentPage.includes('/community') ? 'active' : ''"><a href="/community/">コミュニティ</a></li>
+                            <li :class="currentPage('/life') ? 'active' : ''"><a href="/life/">街ぶらブログ</a></li>
+                            <li :class="currentPage('/community') ? 'active' : ''"><a href="/community/">コミュニティ</a></li>
                         </ul>
                     </div>
                 </li>
-                <li :class="currentPage.includes('/interview') ? 'activePage' : ''">
+                <li :class="currentPage('/interview') ? 'activePage' : ''">
                     <a href="/interview">インタビュー</a>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
@@ -92,7 +92,7 @@
                         </ul>
                     </div>
                 </li>
-                <li :class="currentPage.includes('/feature') ? 'activePage' : ''">
+                <li :class="currentPage('/feature') ? 'activePage' : ''">
                     <a href="/feature/">特集</a>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
@@ -104,15 +104,15 @@
                     <a href="https://job.mtown.my/" target="_blank">求人・求職情報一覧</a>
                     <div class="c-mainmenu_dropdown-wrap"></div>
                 </li>
-                <li :class="currentPage.includes('/column/') ? 'activePage' : ''">
+                <li :class="currentPage('/column/') ? 'activePage' : ''">
                     <a href="/column/comics">コラム</a>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li :class="currentPage.includes('/comics') ? 'active' : ''"><a href="/column/comics/">4コマ</a></li>
-                            <li :class="currentPage.includes('/malaysia-profiles') ? 'active' : ''"><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
+                            <li :class="currentPage('/comics') ? 'active' : ''"><a href="/column/comics/">4コマ</a></li>
+                            <li :class="currentPage('/malaysia-profiles') ? 'active' : ''"><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
                             
                             <template v-if="dynamicMenu.length > 0">
-                                <li v-for="(item, index) in dynamicMenu" :key="index" :class="currentPage.includes('/' + item.slug + '/') ? 'active' : ''">
+                                <li v-for="(item, index) in dynamicMenu" :key="index" :class="currentPage('/' + item.slug + '/') ? 'active' : ''">
                                     <a :href="item.url">{{ item.title }}</a>
                                 </li>
                             </template>
@@ -135,10 +135,23 @@ import { useRouter } from 'vue-router';
 const Drawer = ref(false);
 const { authUser, isLoggedIn, logout } = useAuth();
 const router = useRouter();
-const currentPage = computed(() => router.currentRoute.value.path);
 
 //Global setting
 const config = useRuntimeConfig(); //API route
+
+//Main menu dropdown menu
+//const currentPage = computed(() => router.currentRoute.value.path);  Depreciate old solution with redundance JS
+const noDropdown = ref("--noDropdown");
+const menuCheck = ref("");
+const currentPage = (url) => {
+    let currentPath = router.currentRoute.value.path;
+    if (currentPath.includes(url)) {
+        noDropdown.value = "";
+        return true;
+    } else {        
+        return false;
+    };
+};
 
 //Dynamic header menu - コラム
 const menuAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=14`);

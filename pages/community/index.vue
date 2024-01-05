@@ -180,13 +180,10 @@ const goTo = (url) => {
 async function fetchData(url) {
   try {
     apiURL.value = url ? url : apiURL.value; 
-    console.log("apiURL.value");
-    console.log(apiURL.value);
     const response = await fetch(apiURL.value, {
       credentials: 'include',
     });
     const newsData = await response.json(); //Convert to json to use on content structuring
-     console.log(newsData);
     if (newsData && newsData.list.length > 0) {
         let list = topics.value ? [] : topics.value;
         pagiTotal.value = newsData.pageInfo.totalCnt;
@@ -231,7 +228,6 @@ async function fetchData(url) {
         };
         topics.value = list;
     } else {
-        console.log('enter');
         contentChecked.value = true;
         searchNotFound.value = true;
     }
