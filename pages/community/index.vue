@@ -189,7 +189,7 @@ async function fetchData(url) {
         pagiTotal.value = newsData.pageInfo.totalCnt;
         pagiCount.value = newsData.pageInfo.totalPageCnt;
         const content = newsData;
-        // pageName = content.list[0].group_nm;
+        pageName = pageName ? pageName : (content.list[0].contents_type_nm ? content.list[0].contents_type_nm : content.list[0].group_nm);
         contentChecked.value = true;
         searchNotFound.value = false;
         for (let key in content.list) {

@@ -9,6 +9,13 @@
         &_wrap { 
             max-width: 620px;
             margin: 0 auto;
+
+            & p {
+                margin-bottom: 16px;
+            }
+            & .p-heading {
+                margin-bottom: 12px !important;
+            }
         }
         &_imgList {
             & img {
@@ -157,7 +164,7 @@
                 transition: all 0.2s ease;
                 padding-bottom: 15px;
                 &:hover {
-                    transform: scale(1.08);
+                    transform: scale(1.06);
                 }
             }
             & img {
@@ -196,14 +203,5 @@
                 font-size: 1.15em;
             }
         }
-    }
-}
-
-.l-page_content {
-    & p {
-        margin-bottom: 16px;
-    }
-    & .p-heading {
-        margin-bottom: 12px !important;
     }
 }
