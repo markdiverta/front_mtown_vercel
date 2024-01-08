@@ -63,6 +63,7 @@
 const config = useRuntimeConfig(); //API route
 const catSlug = '/column/comics/';
 const topicID = '11';
+const pageCnt = '15';
 
 
 //Get category name from URL path
@@ -77,7 +78,7 @@ var catName = pathSegments[pathSegments.length - 1]; // Get the last path
 //API Content setting
 var pageName = 'KLキンジョーのボレボレ奮闘記';
 var parentCat;
-const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id=${topicID}`);
+const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id=${topicID}&cnt=${pageCnt}`);
 const apiURL = ref(apiURLBase.value);
 const topics = ref('[]');
 const contentChecked = ref(false);
@@ -92,7 +93,7 @@ const pageCount = computed(() => { //Trigger for pagination
   apiURL.value = apiURL.value.includes('?') ? apiURLBase.value + '&pageID=' + page.value : apiURLBase.value + '?pageID=' + page.value;
   fetchData(apiURL.value); //Reload API function
   scrollToTop();
-  return '20';
+  return pageCnt;
 });
 
 //Pagination scroll to top function
