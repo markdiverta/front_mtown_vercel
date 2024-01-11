@@ -25,7 +25,7 @@
         <section class="container-fluid p-gallery_list">
             <div class="row">
                 <div class="col-sm-4 col-6 item" v-for="item in topics" :key="item.id" @click="goTo(item.url)">
-                    <div class="p-gallery_list-thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + ')' } : ''">
+                    <div class="p-gallery_list-thumb" :class="{ '--noIMG': !item.thumb }" :style="item.thumb ? {backgroundImage: 'url(' + item.thumb + '?width=300)' } : ''">
                         <h3 class="p-gallery_list-title">{{ item.title }}</h3>
                     </div>
                 </div>

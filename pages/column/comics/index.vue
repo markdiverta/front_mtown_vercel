@@ -169,7 +169,7 @@ async function fetchData(url) {
                 catURL: catURL,
                 id: item.topics_id,
                 url: url,
-                thumb: item.ext_1,
+                thumb: item.ext_1 + '?width=350',
             });
         };
         topics.value = list;
