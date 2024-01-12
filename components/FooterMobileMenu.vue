@@ -217,7 +217,7 @@ const item = {
 };
 const items = [{
   label: 'マレーシアニュース',
-  defaultOpen: true,
+  defaultOpen: false,
   slot: 'tab1',
 }, {
   label: 'グルメ',
