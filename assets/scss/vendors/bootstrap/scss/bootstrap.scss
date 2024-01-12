@@ -7,7 +7,7 @@
 @import "variables";
 @import "maps";
 @import "mixins";
-// @import "utilities";
+@import "utilities";
 
 // Layout & components
 // @import "root";
@@ -46,5 +46,5 @@
 // @import "helpers";
 
 // Utilities
-// @import "utilities/api";
+@import "utilities/api";
 // scss-docs-end import-stack

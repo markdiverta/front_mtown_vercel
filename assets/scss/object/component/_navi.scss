@@ -343,14 +343,23 @@
     }
     &-list {
         & .menu {
-            & .v-expansion-panel-header {
+            & .v-expansion-panel-header,
+            & button {
                 background: $color_main_dark;
                 min-height: inherit;
                 color: #fff;
                 font-weight: bold;
                 padding: 10px 12px;
+                margin: 0;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(0,0,0,.12);
             }
-            & .v-expansion-panel-content__wrap {
+            & button + div > div {
+                padding: 0;
+                padding-bottom: 0!important;
+            }
+            & .v-expansion-panel-content__wrap,
+            & .menu-wrap {
                 background: #f1f1f1;
                 padding: 10px 13px;
             }
@@ -388,6 +397,7 @@
         & p {
             padding: 0 0 0 12px;
             margin: 0;
+            margin-top: 10px;
         }
     }
     &-footer {
