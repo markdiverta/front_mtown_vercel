@@ -5,6 +5,28 @@
 
     <div class="l-page_content">
       
+        carousel testing
+        <Carousel v-bind="settings" :breakpoints="breakpoints">
+            <Slide v-for="slide in 10" :key="slide">
+            <div class="carousel__item">{{ slide }}</div>
+            </Slide>
+
+            <template #addons>
+            <Navigation />
+            </template>
+        </Carousel>
+      
+        <!-- <template v-if="ssgCarousel && ssgCarousel.length > 0"> -->
+            <!-- <carousel class="c-carousel_ssg c-carousel l-content_padding -xs pb-0" 
+                :autoplay="true" :nav="false" :dots="false" :loop="true" navClass=""
+            >
+                <div v-for="(slide, index) in articleCarousel" :key="index" @click="goTo(slide.url)" class="c-carousel_slide" :style="{backgroundImage: 'url(' + slide.thumb + ')' }">
+                    <span class="c-carousel_title">{{slide.title}}</span>
+                </div>
+                <template slot="prev"><i aria-hidden="true" class="c-carousel_nav nav-prev v-icon mdi mdi-chevron-left"></i></template>
+                <template slot="next"><i aria-hidden="true" class="c-carousel_nav nav-next v-icon mdi mdi-chevron-right"></i></template>
+            </carousel> -->
+
         <section class="l-content_padding pt-2 c-blog_list" v-if="articleNews.length > 0">
             <h2 class="c-heading_bg c-heading_h3">新着マレーシアニュース</h2>
             <div class="container">
@@ -156,6 +178,56 @@ const goTo = (url) => {
     window.location.href = url;
 };
 
+//======== Carousel
+import { ref } from 'vue'
+import 'vue3-carousel/dist/carousel.css'
+
+// carousel settings
+const settings = ref({
+  itemsToShow: 1,
+  snapAlign: 'center',
+})
+
+const breakpoints = ref({
+  700: {
+    itemsToShow: 3.5,
+    snapAlign: 'center',
+  },
+  1024: {
+    itemsToShow: 5,
+    snapAlign: 'start',
+  },
+})
+
+// const articleCarousel = ref({});
+
+// try {
+//   const { data: carouselContent } = await useFetch(
+//     `${config.public.kurocoApiDomain}/rcms-api/1/content/details/47640`,
+//     {
+//       credentials: 'include',
+//     }
+//   );
+
+//   if (carouselContent && carouselContent.value) {
+//     const carousel = [];
+//     const fetchedData = carouselContent.value;
+
+//     for (let key in fetchedData.list) {
+//       const item = fetchedData.list[key];
+//       let title = item.title;
+//       carousel.push({
+//         title: title,
+//         url: item.url,
+//         thumb: fetchedData.list.ext_6[key],
+//       });
+//     }
+
+//     articleCarousel.value = carousel;
+//   }
+// } catch (error) {
+//   console.error('Error fetching carousel content:', error);
+// }
 
 //======== News Listing
 const articleNews = ref({});
@@ -321,3 +393,26 @@ for (let key in data.list) {
 articleInterview.value = topics;
 
 </script>
+
+<!-- <style>
+.carousel__item {
+  min-height: 200px;
+  width: 100%;
+  background-color: var(--vc-clr-primary);
+  color: var(--vc-clr-white);
+  font-size: 20px;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel__slide {
+  padding: 10px;
+}
+
+.carousel__prev,
+.carousel__next {
+  box-sizing: content-box;
+  border: 5px solid white;
+}
+</style> -->
