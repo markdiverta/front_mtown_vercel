@@ -25,7 +25,7 @@
             <li><a href="/about-us/">会社情報</a></li>
             <li><a href="/media/">関連メディア</a></li>
             <li><a href="/inquiry/">お問い合わせ</a></li>
-          </ul>  
+          </ul>
         </div>
 
         <p class="text-center">Copyright &copy; {{ currentYear }} mtown.my All right reserved.</p>
@@ -34,25 +34,30 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
-  const currentYear = ref(null);
-  const scrollPosition = 0;
+const currentYear = ref(null);
+const scrollPosition = ref("0");
 
-  const handleScroll = () => {
-    scrollPosition.value = window.scrollY;
-  };
 
-  const scrollToTop = () => {
-    const c = document.documentElement.scrollTop || document.body.scrollTop;
-    if (c > 0) {
-      window.requestAnimationFrame(scrollToTop);
-      window.scrollTo(0, c - c / 8);
-    }
-  };
+const displayBackToTop = () => {
+  scrollPosition.value = window.scrollY;
+};
 
-  onMounted(() => {
-    const year = new Date().getFullYear();
-    currentYear.value = year;
-  });
+if (process.client) {
+  window.addEventListener('scroll', displayBackToTop);
+};
+
+const scrollToTop = () => {
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  if (c > 0) {
+    window.requestAnimationFrame(scrollToTop);
+    window.scrollTo(0, c - c / 8);
+  }
+};
+
+onMounted(() => {
+  const year = new Date().getFullYear();
+  currentYear.value = year;
+});
 </script>
