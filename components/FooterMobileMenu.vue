@@ -90,79 +90,6 @@
                 
             </UAccordion>
 
-            <!-- <v-expansion-panels class="menu" accordion>
-                <v-expansion-panel>
-                    <v-expansion-panel-header expand-icon="mdi-plus">
-                        マレーシアニュース
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        <ul class="innermenu">
-                            <li><a href="/news/">新着</a></li>
-                            <li><a href="/news/economic/">経済・現地企業</a></li>
-                            <li><a href="/news/politics/">政治・社会</a></li>
-                            <li><a href="/news/nikkei/">日系企業動向</a></li>
-                            <li><a href="/news/others/">芸能・スポーツ</a></li>
-                            <li><a href="/news/covid-19/">コロナ</a></li>
-                        </ul>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-                <v-expansion-panel>
-                    <v-expansion-panel-header expand-icon="mdi-plus">
-                        グルメ
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        <ul class="innermenu">
-                            <li><a href="/eat/">グルメ記事</a></li>
-                            <li><a href="https://gourmesian.com/" target="_blank">レストラン検索</a></li>
-                        </ul>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-                <v-expansion-panel>
-                    <v-expansion-panel-header expand-icon="mdi-plus">
-                        タウン情報
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        <ul class="innermenu">
-                            <li><a href="/life/">街ぶらブログ</a></li>
-                            <li><a href="/community/">コミュニティ</a></li>
-                        </ul>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-                <v-expansion-panel @click="windowOpen('/interview/')">
-                    <v-expansion-panel-header expand-icon="mdi-chevron-right">
-                        インタビュー
-                    </v-expansion-panel-header>
-                </v-expansion-panel>
-                <v-expansion-panel @click="windowOpen('/feature/')">
-                    <v-expansion-panel-header expand-icon="mdi-chevron-right">
-                        特集
-                    </v-expansion-panel-header>
-                </v-expansion-panel>
-                <v-expansion-panel @click="goTo('https://job.mtown.my/')">
-                    <v-expansion-panel-header expand-icon="mdi-chevron-right">
-                        求人・求職情報
-                    </v-expansion-panel-header>
-                </v-expansion-panel>
-                <v-expansion-panel>
-                    <v-expansion-panel-header expand-icon="mdi-plus">
-                        コラム
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        <ul class="innermenu">
-                            <li><a href="/column/comics/">4コマ</a></li>
-                            <li><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
-                            <li><a href="/column/j-league/">Jリーグ</a></li>
-                            <li><a href="/column/malaysia-calendar/">マレーシアの暦</a></li>
-                        </ul>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-                <v-expansion-panel @click="goTo('https://malaysialife.mtown.my/')">
-                    <v-expansion-panel-header expand-icon="mdi-chevron-right" collapse-icon="mdi-chevron-right">
-                        暮らしのガイド
-                    </v-expansion-panel-header>
-                </v-expansion-panel>
-            </v-expansion-panels> -->
-
           </div>
 
           <div class="c-menu_footerfloat-social section">    
@@ -174,7 +101,7 @@
               </ul>
           </div>
 
-          <div class="section">    
+          <div class="section">
               <p class="section_heading">関連メディア</p>
               <div class="c-menu_footerfloat-related">
                   <p>グルメシアン[<a href="https://gourmesian.com/" target="_blank">外食・グルメ情報はこちら</a>]</p>
@@ -196,6 +123,7 @@
 const menuOpen = ref(false);
 const menuOpenFooter = ref(false);
 
+//Slide-in menu open & close function
 const showMenu = () => {
   if (menuOpen.value) {
       menuOpen.value = false;
@@ -203,7 +131,6 @@ const showMenu = () => {
       menuOpen.value = true;
   }
 };
-
 const showMenuFooter = () => {
   if (menuOpenFooter.value) {
       menuOpenFooter.value = false;
@@ -212,39 +139,57 @@ const showMenuFooter = () => {
   }
 };
 
-const item = {
-    "padding": "0",
+//Link menu tab function
+if (process.client) {
+    const menuTabLink = document.getElementsByClassName('menuLink');
+    for (var i = 0; i < menuTabLink.length; i++) {
+        menuTabLink[i].addEventListener('click', function(event){
+            event.preventDefault(); //Prevent deafault open tab
+            let url = this.getAttribute('jsClass');
+            let target = url.includes('http') ? '_blank' : '_self';
+            if (url) {
+                window.open(url, target);
+            }
+        })
+    };
 };
+
+//Accordian menu setting
 const items = [{
-  label: 'マレーシアニュース',
-  defaultOpen: false,
-  slot: 'tab1',
-}, {
-  label: 'グルメ',
-//   label: (
-//       <a href="https://example.com" target="_blank">
-//         グルメ
-//       </a>
-//     ),
-  type: 'link',
-  href: '/about/',
-  external: true,
-  slot: 'tab2',
-  trailingIcon: 'i-heroicons-arrow-up-tray',
-}, {
-  label: 'タウン情報',
-  slot: 'tab3',
-  content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.'
-}, {
-  label: 'インタビュー',
-}, {
-  label: '特集',
-}, {
-  label: '求人・求職情報',
-}, {
-  label: 'コラム',
-  slot: 'tab4',
-}, {
-  label: '暮らしのガイド',
+    label: 'マレーシアニュース',
+    defaultOpen: true,
+    slot: 'tab1',
+}, 
+{
+    label: 'グルメ',
+    slot: 'tab2',
+}, 
+{
+    label: 'タウン情報',
+    slot: 'tab3',
+}, 
+{
+    label: 'インタビュー',
+    class: 'menuLink',
+    jsClass: '/interview/',
+}, 
+{
+    label: '特集',
+    class: 'menuLink',
+    jsClass: '/feature/',
+}, 
+{
+    label: '求人・求職情報',
+    class: 'menuLink',
+    jsClass: 'https://job.mtown.my/',
+}, 
+{
+    label: 'コラム',
+    slot: 'tab4',
+}, 
+{
+    label: '暮らしのガイド',
+    class: 'menuLink',
+    jsClass: 'https://malaysialife.mtown.my/',
 }]
 </script>
