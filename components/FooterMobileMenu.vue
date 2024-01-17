@@ -42,7 +42,11 @@
           <div class="c-menu_footerfloat-list section">
               <p class="section_heading">カテゴリ</p>
 
-              <UAccordion :items="items" class="menu">
+              <UAccordion 
+                open-icon="i-heroicons-plus"
+                close-icon="i-heroicons-minus"
+                :items="items" 
+                class="menu">
                 <template #item="{ item }">
                     <div class="menu-wrap">
                         {{ item.content }}
@@ -157,7 +161,7 @@ if (process.client) {
 //Accordian menu setting
 const items = [{
     label: 'マレーシアニュース',
-    defaultOpen: true,
+    // defaultOpen: true,
     slot: 'tab1',
 }, 
 {

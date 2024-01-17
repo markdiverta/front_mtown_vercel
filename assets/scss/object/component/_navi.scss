@@ -353,6 +353,19 @@
                 margin: 0;
                 border-radius: 0;
                 border-bottom: 1px solid rgba(0,0,0,.12);
+                
+                &.menuLink {
+                    position: relative;
+
+                    & .i-heroicons-plus {
+                        display: none;
+                    }
+                    &::before {
+                        position: absolute;
+                        right: 18px;
+                        @include fontawesome_solid('\f054');
+                    }
+                }
             }
             & button + div > div {
                 padding: 0;
