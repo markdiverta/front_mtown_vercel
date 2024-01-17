@@ -18,8 +18,6 @@
   
       <SocialSharing/>
 
-      <Poll/>
-
       <NavNextPrev :nextPrevContent="nextPrevContent" :path="path" :apiContent="apiContent"/>
   
     </div>
