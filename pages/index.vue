@@ -180,7 +180,7 @@ const goTo = (url) => {
 
 //======== Carousel
 import { ref } from 'vue'
-import 'vue3-carousel/dist/carousel.css'
+// import 'vue3-carousel/dist/carousel.css'
 
 // carousel settings
 const settings = ref({
