@@ -31,12 +31,16 @@ if (typeof route.query?.keyword != 'undefined' && route.query?.keyword != ''){
     searchKeyword = route.query.keyword;
 };
 
-
 //API Content setting
 const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_keyword=${searchKeyword}`);
 const apiURL = ref(apiURLBase.value);
 const topics = ref('[]');
 
+
+//If coming from footer mobile menu
+if (typeof route.query?.filter != 'undefined' && route.query?.filter == 'topics') {
+    apiURL.value = `${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id%5B%5D=10&topics_group_id%5B%5D=7&topics_group_id%5B%5D=8`;
+};
 
 //Link function
 const goTo = (url) => {
