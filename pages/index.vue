@@ -181,7 +181,6 @@ const goTo = (url) => {
 //======== Carousel
 import { ref } from 'vue'
 
-// carousel settings
 const settings = ref({
   itemsToShow: 1,
   snapAlign: 'center',
