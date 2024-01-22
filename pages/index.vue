@@ -5,7 +5,7 @@
 
     <div class="l-page_content">
       
-        carousel testing
+        <!-- carousel testing
         <Carousel v-bind="settings" :breakpoints="breakpoints">
             <Slide v-for="slide in 10" :key="slide">
             <div class="carousel__item">{{ slide }}</div>
@@ -14,7 +14,12 @@
             <template #addons>
             <Navigation />
             </template>
-        </Carousel>
+        </Carousel> -->
+
+        <!-- API test -->
+        <div v-for="(item, index) in articleCarousel" :key="index" @click="goTo(item.url)">
+            {{item.title}}
+        </div>
       
         <!-- <template v-if="ssgCarousel && ssgCarousel.length > 0"> -->
             <!-- <carousel class="c-carousel_ssg c-carousel l-content_padding -xs pb-0" 
@@ -197,35 +202,35 @@ const breakpoints = ref({
   },
 })
 
-// const articleCarousel = ref({});
+const articleCarousel = ref({});
+const { data: carouselContent } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/details/47640`,
+  {
+    credentials: 'include',
+  }
+);
+let carousel = [];
+let dataa = carouselContent.value;
+for (let key in dataa.list) {
+    const item = dataa.list[key];
+    let desc, url;
+    let catURL = item.category_parent_id ? '/news/' + item.contents_type_slug : '/news/';
+    if (item.contents) {
+        desc = item.contents;
+        desc = desc.replace(/<[^>]+>/g, ''); //remove HTML
+        if (desc.length > 120) {
+            desc = desc.substring(0, 120);
+            desc += '...';
+        };
+    };
 
-// try {
-//   const { data: carouselContent } = await useFetch(
-//     `${config.public.kurocoApiDomain}/rcms-api/1/content/details/47640`,
-//     {
-//       credentials: 'include',
-//     }
-//   );
-
-//   if (carouselContent && carouselContent.value) {
-//     const carousel = [];
-//     const fetchedData = carouselContent.value;
-
-//     for (let key in fetchedData.list) {
-//       const item = fetchedData.list[key];
-//       let title = item.title;
-//       carousel.push({
-//         title: title,
-//         url: item.url,
-//         thumb: fetchedData.list.ext_6[key],
-//       });
-//     }
-
-//     articleCarousel.value = carousel;
-//   }
-// } catch (error) {
-//   console.error('Error fetching carousel content:', error);
-// }
+    carousel.push({
+        title: item.title,
+        url: item.url,
+        thumb: item.ext_6[key],
+    });
+}
+articleCarousel.value = carousel;
 
 //======== News Listing
 const articleNews = ref({});
