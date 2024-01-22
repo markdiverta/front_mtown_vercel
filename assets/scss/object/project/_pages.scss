@@ -173,6 +173,17 @@
             }
         }
     }
+    &-about {
+        & .table,
+        & .c-table {
+            width: 100%;
+        }
+        & .c-table {
+            & td {
+                padding-bottom: 10px;
+            }
+        }
+    }
     &-gallery {
         &_list {
             & .item {
