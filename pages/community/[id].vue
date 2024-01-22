@@ -3,7 +3,7 @@
   <section class="row l-page_content-row">
   <section class="col-md-9 col-12" fluid>
   
-    <div class="l-page_content">
+    <div class="l-page_content" v-if="news">
       <div class="l-breadcum">
         <a href="/" class="item">ホーム</a>
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
@@ -18,6 +18,10 @@
   
       <SocialSharing/>
   
+    </div>
+    <div v-else class="text-center py-5">
+        <p class="c-heading_h3 pb-2">Content not available</p>
+        <p>Go to <a href="/">top page</a></p>
     </div>
   
   </section>

@@ -53,7 +53,7 @@
             <!-- <button class="c-mainmenu_trigger" @click="showMenu"><i aria-hidden="true" class="icon mdi mdi-menu" style="color"></i></button> -->
             <!-- <ul class="c-mainmenu" :class="{ 'c-mainmenu_open' : menuOpen }"> -->
             <ul class="c-mainmenu">
-                <li :class="currentPage('/news') || currentURL == '/' ? 'activePage' : ''">
+                <li :class="currentPage('/news') || currentPage('/') ? 'activePage' : ''">
                     <a href="/news">マレーシアニュース</a>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
