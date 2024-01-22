@@ -1,5 +1,27 @@
 .c-form {
     
+    & input {
+        &.form-input {
+            box-shadow: none!important;
+            border: 1px solid #b5b5b5!important;
+        }
+    }
+    & textarea {
+        &.form-textarea {
+            box-shadow: none!important;
+            border: 1px solid #b5b5b5!important;
+        }
+    }
+    &_error {
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        border: 1px solid red;
+        color: red;
+
+        & .c-alert__icon {
+            display: none;
+        }
+    }
     &_subheading {
         & label {
             width: 100%!important;

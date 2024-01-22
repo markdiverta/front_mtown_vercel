@@ -19,7 +19,7 @@
         </template>
         <template v-else>
 
-            <p class="c-heading_h3 mb-5 pb-5">週刊Mtownでは最新のニュースやお得なクーポン情報を<br>
+            <p class="c-heading_h3 pb-5">週刊Mtownでは最新のニュースやお得なクーポン情報を<br>
             メールマガジンでもお届けしています。<br>
             ご希望の方は下記フォームよりご登録下さいませ。<br>
             皆様のご登録、心よりお待ちしております。</p>
@@ -28,6 +28,7 @@
                 ref="errorRef"
                 v-show="errors.length > 0"
                 :error="errors"
+                class="c-form_error"
             />
 
             <form class="c-form">
@@ -298,17 +299,16 @@
                     <p v-if="n.msg" class="c-form_notes pt-2">{{n.msg}}</p>
                 </div>
                 <div class="text-center">
-                    <UButton 
+                    <button 
                         type="submit"
                         id="inquiry_item_button_confirm"
                         :loading="loading"
                         @click.prevent="handleOnSubmit"
                         size="xl"
-                        color="black"
-                        class="c-btn c-btn_main c-btn_lg mt-5"
+                        class="c-btn c-btn_main c-btn_lg"
                     >
                         送信
-                    </UButton>
+                    </button>
                 </div> 
             </form>
 
