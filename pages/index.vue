@@ -16,7 +16,11 @@
             <div class="c-carousel_slide" @click="goTo(item.url)" :style="{backgroundImage: 'url(' + item.thumb + ')' }">
                 <span class="c-carousel_title">{{item.title}}</span>
             </div>
+            </Slide>
 
+            <template #addons>
+                <Navigation class="c-carousel_nav"/>
+            </template>
         </Carousel>
 
         <section class="l-content_padding pt-2 c-blog_list" v-if="articleNews.length > 0">
