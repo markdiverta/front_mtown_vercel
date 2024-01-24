@@ -37,7 +37,7 @@
                 :key="n.key"
                 class="form-group"
                 >
-                    <label :for="n.key" class="pb-3">{{ n.title }}</label>
+                    <label :for="n.key" class="pb-2">{{ n.title }}</label>
                     <span v-if="n.required === 2" class="c-form-label__required"
                     >*</span
                     >

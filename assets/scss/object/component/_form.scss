@@ -402,6 +402,7 @@
     }
     & label {
         font-weight: bold;
+        display: inline-block;
         @include fz(16);
 
         @include md {
