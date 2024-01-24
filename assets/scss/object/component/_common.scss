@@ -1,8 +1,27 @@
 .c-carousel {
     position: relative;
 
+    &_nav {
+        &.carousel__prev {
+            color: #fff;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            &:hover {
+                color: #bb3939;
+            }
+        }
+        &.carousel__next {
+            color: #fff;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
     &_slide {
         min-height: 154px;
+        width: 100%;
         display: block;
         // background-color: #ccc;
         background-repeat: no-repeat;

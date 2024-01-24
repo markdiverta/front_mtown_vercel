@@ -19,6 +19,7 @@
     "@nuxt/ui": "^2.11.0",
     "@vercel/analytics": "^1.1.1",
     "axios": "^1.6.2",
-    "vue-axios": "^3.5.2"
+    "vue-axios": "^3.5.2",
+    "vue3-carousel": "^0.3.1"
   }
 }

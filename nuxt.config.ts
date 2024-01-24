@@ -5,6 +5,9 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
   ],
+  carousel: {
+    prefix: 'MyPrefix'
+  },
   colorMode: {
     preference: 'light'
   },
