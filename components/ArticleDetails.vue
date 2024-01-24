@@ -7,7 +7,7 @@
           </template>
 
           <div class="p-article_featureIMG">
-            <img v-if="news.details.ext_1" :src="news.details.ext_1" width="620" height="413">
+            <img v-if="news.details.ext_1" :src="news.details.ext_1 + '?width=650'" width="620" height="413">
           </div>
 
           <template v-if="!headingTop">

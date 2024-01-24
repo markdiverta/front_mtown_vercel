@@ -4,14 +4,14 @@
             <div class="col-6 text-left item" v-if="link_prev" @click="goTo(link_prev.url)">
                 <div class="row">
                     <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-left"></i></div>
-                    <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + ')' }"></div>
+                    <div class="col-3 thumb" v-if="link_prev.img" :style="{backgroundImage: 'url(' + link_prev.img + '?width=200)' }"></div>
                     <div class="col"><span class="link">{{ link_prev.title }}</span></div>
                 </div>
             </div>
             <div class="col-6 text-right item" v-if="link_next" @click="goTo(link_next.url)">
                 <div class="row">
                     <div class="col"><span class="link">{{ link_next.title }}</span></div>
-                    <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + ')' }"></div>
+                    <div class="col-3 thumb" v-if="link_next.img" :style="{backgroundImage: 'url(' + link_next.img + '?width=200)' }"></div>
                     <div class="col-auto p-article_nextprev-arrow"><i aria-hidden="true" class="icon mdi mdi-chevron-right"></i></div>
                 </div>
             </div>
