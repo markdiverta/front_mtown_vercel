@@ -43,32 +43,4 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
   css: ['@/assets/scss/style.scss'],
-  // nitro: {
-  //   // FullStaticGeneration
-  //   prerender: {
-  //     crawlLinks: true,
-  //     routes: ['/', '/404.html', '/200.html'],
-  //   },
-  // },
-  
-  // generate: {
-  //   routes: async () => {
-  //         console.log('Fetching data...');
-  //         const apiDomain = 'https://dev-mtown.g.kuroco.app'; //For localhost, avoid it use localhost:3000 as api domain
-  //         const apiContent = apiDomain + '/rcms-api/1/content/details/47640';
-  //         const responseContent = await axios.get(apiContent);
-  //         const finalContent = responseContent.data.list;
-  //         const testing = "testing description content 123"
-      
-  //         routes.push({
-  //             route: '/news/politics',
-  //             payload: {
-  //               testing
-  //             }
-  //         });
-
-  //       return routes
-  //   },
-  //   interval: 60 // Regenerate every 60 second
-  // },
 });
