@@ -119,7 +119,6 @@
                         :value="option.key"
                         v-model="submitData[n.key]"
                         :label="option.value"
-                        color="rose"
                         class="c-form-checkbox-item my-1"
                       >
                       </UCheckbox>

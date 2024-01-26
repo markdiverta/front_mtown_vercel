@@ -190,7 +190,6 @@ async function featureCarousel() {
     for (const key in newsData.details.ext_1) {
         const item = newsData.details.ext_1[key];
         const title = item.title;
-        console.log(item.url);
         topics2.push({
             title,
             url: item.url,
