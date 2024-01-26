@@ -133,7 +133,6 @@
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const Drawer = ref(false);
-const { authUser, isLoggedIn, logout } = useAuth();
 const router = useRouter();
 
 //Global setting

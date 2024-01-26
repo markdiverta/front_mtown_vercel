@@ -62,6 +62,6 @@ export const useAuth = () => {
     isLoggedIn,
     login,
     logout,
-    profile,
+    // profile,
   };
 };
