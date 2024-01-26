@@ -7,26 +7,26 @@
           <span class="item">お問い合わせ</span>
       </div>
 
-      <h1 class="p-heading">お問い合わせ</h1>
+      <h1 class="p-heading mb-2">お問い合わせ</h1>
         <!-- <UiPageHeader subject="お問い合わせ" subheading="Inquiry" /> -->
       </section>
 
       <section class="l-content_maxWidth-xs">
           <template v-if="submitted">
-            <!-- <p class="c-text--pre" v-html="thanksText" />
-            <NuxtLink to="/" class="c-button text-center">トップページ</NuxtLink> -->
-            <div class="my-5 pt-6 text-center" v-html="thanksText" />
-            <UButton
-              to="/"
-              :color="primaryColor"
-              variant="solid"
-              size="xl"
-              class="primaryBtn"
-            >
-              トップページ
-            </UButton>
+              <div class="text-center mt-10">
+                <h2>あなたのメッセージは送信されました。ありがとうございました。</h2>
+                <NuxtLink to="/" class="c-button">トップページ</NuxtLink>
+              </div>
           </template>
           <template v-else>
+
+            <UiAlertError
+                ref="errorRef"
+                v-show="errors.length > 0"
+                :error="errors"
+                class="c-form_error"
+            />
+
             <div class="c-form_border mt-4">
               <!-- <div class="c-form-group">
                 <p
@@ -37,11 +37,7 @@
                   <span class="c-form-label__required">*</span>は必須項目です。
                 </p>
               </div> -->
-              <UiAlertError
-                ref="errorRef"
-                v-show="errors.length > 0"
-                :error="errors"
-              />
+
               <form class="c-form">
                 <div
                   v-for="n in response.details.cols"
@@ -123,7 +119,7 @@
                         :value="option.key"
                         v-model="submitData[n.key]"
                         :label="option.value"
-                        color="gray"
+                        color="rose"
                         class="c-form-checkbox-item my-1"
                       >
                       </UCheckbox>
@@ -317,17 +313,16 @@
                   </template>
                 </div>
                 <div class="text-center">
-                  <UButton 
-                    type="submit"
-                    id="inquiry_item_button_confirm"
-                    :loading="loading"
-                    @click.prevent="handleOnSubmit"
-                    size="xl"
-                    color="black"
-                    class="px-8 py-3 submitBtn"
+                  <button 
+                      type="submit"
+                      id="inquiry_item_button_confirm"
+                      :loading="loading"
+                      @click.prevent="handleOnSubmit"
+                      size="xl"
+                      class="c-btn c-btn_main c-btn_lg"
                   >
                     送信
-                  </UButton>  
+                  </button>
                 </div>
               </form>
             </div>

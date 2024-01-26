@@ -12,6 +12,15 @@
             border: 1px solid #b5b5b5!important;
         }
     }
+    &-checkbox {
+        & input {
+            border: 1px solid #b5b5b5!important;
+
+            &.form-checkbox:checked {
+                background-color: $color_main !important;
+            }
+        }
+    }
     &_error {
         margin-bottom: 20px;
         padding: 10px 15px;
@@ -331,6 +340,11 @@
                 content: "* ";
             }
         }
+    }
+    & .c-form-label__required {
+        color: red;
+        padding-left: 4px;
+        font-weight: bold;
     }
     & .v-select {
         @at-root .c-form.after-submit .required .v-select {
