@@ -86,8 +86,12 @@
                     <ul class="innermenu">
                         <li><a href="/column/comics/">4コマ</a></li>
                         <li><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
-                        <li><a href="/column/j-league/">Jリーグ</a></li>
-                        <li><a href="/column/malaysia-calendar/">マレーシアの暦</a></li>
+                        
+                        <template v-if="dynamicMenu.length > 0">
+                            <li v-for="(item, index) in dynamicMenu" :key="index">
+                                <a :href="item.url">{{ item.title }}</a>
+                            </li>
+                        </template>
                     </ul>
                     </div>
                 </template>
@@ -124,10 +128,12 @@
 </template>
 
 <script setup>
-const menuOpen = ref(false);
-const menuOpenFooter = ref(false);
+//Global setting
+const config = useRuntimeConfig(); //API route
 
 //Slide-in menu open & close function
+const menuOpen = ref(false);
+const menuOpenFooter = ref(false);
 const showMenu = () => {
   if (menuOpen.value) {
       menuOpen.value = false;
@@ -195,5 +201,25 @@ const items = [{
     label: '暮らしのガイド',
     class: 'menuLink',
     jsClass: 'https://malaysialife.mtown.my/',
-}]
+}];
+
+
+//Dynamic header menu - コラム
+const menuAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=14`);
+var response = await fetch(menuAPI.value, {
+    credentials: 'include',
+});
+const menuData = await response.json();
+console.log(menuData);
+var dynamicMenu = [];
+for (let key in menuData.list) {
+    let item = menuData.list[key];
+    if (item.slug) {
+        dynamicMenu.push({
+            slug: item.slug,
+            url: '/column/' + item.slug + '/',
+            title: item.category_nm,
+        });
+    };
+};
 </script>
