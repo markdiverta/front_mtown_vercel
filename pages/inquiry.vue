@@ -14,7 +14,7 @@
       <section class="l-content_maxWidth-xs">
           <template v-if="submitted">
               <div class="text-center mt-10">
-                <h2>あなたのメッセージは送信されました。ありがとうございました。</h2>
+                <h2>メッセージは送信されました。ありがとうございました。</h2>
                 <NuxtLink to="/" class="c-button">トップページ</NuxtLink>
               </div>
           </template>
