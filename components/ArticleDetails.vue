@@ -22,6 +22,9 @@
 <script setup>
 //Global setting
 const config = useRuntimeConfig(); //API route
+import { useRouter } from 'vue-router';
+const router = useRouter();
+import { onMounted } from 'vue';
 
 //Props
 const props = defineProps(['news', 'headingTop']);
@@ -107,4 +110,28 @@ useHead({
   },
   ]
 });
+
+//GA4 Custom Dimension setup
+// if (process.browser) {
+//     var slug = this.GAslug ? this.GAslug : this.$route.params.id;
+//     this.$gtag('event', 'page_view', {
+//         'detail_page_slug': slug
+        
+//     })
+// };
+
+const { gtag } = useGtag();
+const slug = router.currentRoute.value.params.id ? router.currentRoute.value.params.id : router.currentRoute.value.path;
+gtag('event', 'page_view', {
+  'detail_page_slug': slug
+});
+
+// GA4 custom dimension
+// onMounted(() => {  
+//   var slug = router.currentRoute.value.params.id ? router.currentRoute.value.params.id : router.currentRoute.value.path;
+//   this.$gtag.set('event', 'page_view', {
+//       'detail_page_slug': slug
+      
+//   });
+// });
 </script>
