@@ -4,7 +4,7 @@
         <div v-if="sidebarEbook.loaded && sidebarEbook.url" class="l-content_padding -sm pt-0 c-sidebar_ebook">
             <h2 class="c-heading_bg --bg_grey c-heading_h3">最新号eBook</h2>
             <img class="c-img_fluid c-clickable mb-3" 
-                @click="windowOpen(sidebarEbook.url)"
+                @click="goTo(sidebarEbook.url)"
                 :src="sidebarEbook.thumb + '?width=300'"
                 width="300"
                 height="437"
@@ -19,7 +19,7 @@
         <div v-if="sidebarRanking && sidebarRanking.length > 0" class="l-content_padding -xs">
             <h2 class="c-heading_bg --bg_grey c-heading_h3">アクセスランキング</h2>
             <div class="container c-sidebar_list">
-                <div class="row c-sidebar_list-item c-clickable" v-for="(item, index) in sidebarRanking" :key="index" @click="windowOpen(item.url)">
+                <div class="row c-sidebar_list-item c-clickable" v-for="(item, index) in sidebarRanking" :key="index" @click="goTo(item.url)">
                     <div class="col-5 thumb" :style="{backgroundImage: 'url(' + item.thumb + '?width=206)' }">
                     </div>
                     <div class="col">
@@ -33,7 +33,7 @@
             <h2 class="c-heading_bg --bg_grey c-heading_h3">広告(PR)</h2>
             <img class="c-img_fluid mb-3 c-clickable" 
                 v-for="(item, index) in sidebarPR" :key="index"
-                @click="windowOpen(item.url)"
+                @click="goTo(item.url)"
                 :src="item.thumb + '?width=300'"
                 width="300"
                 height="129"
@@ -64,7 +64,7 @@
             <h2 class="c-heading_bg --bg_grey c-heading_h3">関連メディア</h2>
             <img class="c-img_fluid mb-3 c-clickable" 
                 v-for="(item, index) in sidebarRelated" :key="index"
-                @click="windowOpen(item.url)"
+                @click="goTo(item.url)"
                 :src="item.thumb + '?width=300'"
                 width="300"
                 height="129"
@@ -83,6 +83,12 @@ import { ref, onMounted } from 'vue';
 const config = useRuntimeConfig(); //API route
 const route = useRoute();
 
+//Function
+const goTo = (url) => {
+    window.location.href = url;
+};
+
+//Social Media feed
 onMounted(() => {
   // Load Facebook SDK
   window.fbAsyncInit = function () {

@@ -86,7 +86,7 @@
                     <ul class="innermenu">
                         <li><a href="/column/comics/">4コマ</a></li>
                         <li><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
-                        
+
                         <template v-if="dynamicMenu.length > 0">
                             <li v-for="(item, index) in dynamicMenu" :key="index">
                                 <a :href="item.url">{{ item.title }}</a>
@@ -210,7 +210,6 @@ var response = await fetch(menuAPI.value, {
     credentials: 'include',
 });
 const menuData = await response.json();
-console.log(menuData);
 var dynamicMenu = [];
 for (let key in menuData.list) {
     let item = menuData.list[key];

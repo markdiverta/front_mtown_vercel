@@ -33,7 +33,7 @@ export default defineNuxtConfig({
     head: {
       title: 'MTown - マレーシアの週刊情報誌',
       htmlAttrs: {
-        lang: 'en',
+        lang: 'ja',
       },
       meta: [
         { charset: 'utf-8' },
