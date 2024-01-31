@@ -55,9 +55,16 @@ if (apiContent.contents) {
   metaDesc.value = description;
 };
 
+const currentURL = process.client ? window.location.href : '';
 //Head & meta setting
 useHead({
   title,
+  link: [
+    {
+      rel: 'canonical',
+      href: currentURL,
+    },
+  ],
   meta: [
   {
     hid: 'og:title',

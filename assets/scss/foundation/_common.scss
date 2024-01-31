@@ -8,7 +8,7 @@
 }
 
 html, .v-application {
-  font-family: 'Yu Gothic', 'メイリオ', 'Meiryo', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', sans-serif !important;
+  font-family: 'メイリオ', 'Meiryo', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', sans-serif !important;
 }
 
 body {
@@ -94,3 +94,38 @@ a {
        url('../assets/fonts/noto-serif-jp-v19-latin_japanese-900.woff') format('woff'), /* Modern Browsers */
        url('../assets/fonts/noto-serif-jp-v19-latin_japanese-900.svg#NotoSerifJP') format('svg'); /* Legacy iOS */
 }
+/* Meiryo */
+@font-face {
+  font-family: 'メイリオ';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../assets/fonts/meiryo.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../assets/fonts/meiryo.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../assets/fonts/meiryo.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../assets/fonts/meiryo.woff') format('woff'), /* Modern Browsers */
+       url('../assets/fonts/meiryo.svg') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'メイリオ';
+  font-style: bold;
+  font-weight: 900;
+  src: url('../assets/fonts/meiryo-bold.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../assets/fonts/meiryo-bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../assets/fonts/meiryo-bold.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../assets/fonts/meiryo-bold.woff') format('woff'), /* Modern Browsers */
+       url('../assets/fonts/meiryo-bold.svg') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'メイリオ';
+  font-style: italic;
+  font-weight: 500;
+  src: url('../assets/fonts/meiryo-italic.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../assets/fonts/meiryo-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../assets/fonts/meiryo-italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../assets/fonts/meiryo-italic.woff') format('woff'), /* Modern Browsers */
+       url('../assets/fonts/meiryo-italic.svg') format('svg'); /* Legacy iOS */
+}
+
