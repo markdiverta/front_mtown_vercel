@@ -13,6 +13,7 @@
     "@nuxtjs/vuetify": "^1.12.3",
     "nuxt": "^3.8.0",
     "nuxt-gtag": "^1.1.2",
+    "nuxt-simple-sitemap": "^4.4.1",
     "sass": "^1.66.1"
   },
   "dependencies": {

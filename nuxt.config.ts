@@ -5,7 +5,11 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     'nuxt-gtag',
+    'nuxt-simple-sitemap'
   ],
+  site: {
+    url: 'https://example.com',
+  },
   gtag: {
     id: 'G-50K7BNS543',
     config: {
