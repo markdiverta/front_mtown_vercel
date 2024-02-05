@@ -1,5 +1,11 @@
 <template>
     <section>
+
+    <TestingParent/>
+
+      <PageMeta/>
+
+        <h1>{{ sharedState.pageTitle }}</h1>
       
       <div class="l-breadcum">
             <a href="/" class="item">ホーム</a>
@@ -79,6 +85,15 @@
 </template>
 
 <script setup>
+import { provide, ref } from 'vue';
+
+const sharedState = ref({
+  pageTitle: 'Heading',
+});
+
+provide('sharedState', sharedState);
+
+
 const props = defineProps(['catSlug', 'apiURLBase', 'apiURL', 'isSearch', 'catName']);
 const catSlugProps = ref(props.catSlug);
 const catSlug = catSlugProps.value
