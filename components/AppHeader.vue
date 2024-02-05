@@ -3,7 +3,7 @@
         <section class="l-header_top">
             <div class="l-content_maxWidth-lg">
             <div class="row">
-                <div class="col-sm-6 col-12 d-sm-block d-none">
+                <div class="col-sm-6 col-12 d-sm-block d-none"> 
                     <a href="/" title="MTown"> 
                         <img src="~/assets/images/logo.png" alt="MTown - マレーシアの週刊情報誌 Logo" class="l-header_logo" width="279" height="100">
                     </a>
