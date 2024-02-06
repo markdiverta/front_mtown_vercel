@@ -10,7 +10,7 @@
 //   }
 
 
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware((to, from) => { 
 
     
     const hasTrailingSlash = to.fullPath.endsWith('/');
