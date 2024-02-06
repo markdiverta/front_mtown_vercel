@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@nuxtjs/sitemap',
   ],
+  buildModules: ['@nuxt/router'],
   gtag: {
     id: 'G-50K7BNS543',
     config: {
@@ -19,6 +20,14 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'light'
   },
+  experimental: {
+    defaults: {
+      nuxtLink: {
+        componentName: 'NuxtLink',
+        trailingSlash: 'append' // can be 'append' or 'remove'
+      }
+    }
+  },
   ignore:  [
     // 'pages/eat/*',
   ],
@@ -26,7 +35,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       kurocoApiDomain: 'https://api.mtown.my',
-      // kurocoApiDomain: 'https://mtown-vercel.g.kuroco.app',
+      //kurocoApiDomain: 'https://mtown-vercel.g.kuroco.app',
       // kurocoApiDomain: 'https://dev-nuxt-corporate.g.kuroco.app',
     },
   },
