@@ -15,7 +15,7 @@
             <a class="l-footer_link insta" href="https://www.instagram.com/weeklymtown/" target="_blank">Instagram</a>
           </div>
           <div class="col">
-            <a class="l-footer_link twitter" href="https://twitter.com/WeeklyMtown" target="_blank">Twitter</a>
+            <a class="l-footer_link twitter" href="https://twitter.com/WeeklyMtown" target="_blank">X</a>
           </div>
           </div>
         </div>
