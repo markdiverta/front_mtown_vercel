@@ -1,40 +1,26 @@
 <script setup>
 const props = defineProps({
   modelValue: {
-    type: Boolean,
-    default: false
+    default: "false"
   }
 })
-const emit = defineEmits(['update:modelValue'])
+
+props.modelValue = '123123';
+
+// const emit = defineEmits(['update:modelValue'])
+const setModelValueTrue = () => {
+  modelValue.value = 'false'
+}
 </script>
 
 <template>
   <div>
-    <div  class="child">
-      <h3>
-        Child component
-      </h3>
-      <div v-if="modelValue">
-        <strong>
-          Model value is true! ✅
-        </strong>
-      </div>
-      <div v-else>
-        <strong>
-          Model value is false! ❌
-        </strong>
-      </div>
-      <button @click="$emit('update:modelValue', false)">
+
+      <button @click="setModelValueFalse">
         Set model value false
       </button>
-    </div>
+
+      <h1>{{modelValue}}</h1>
+      
   </div>
 </template>
-
-<style scoped>
-.child {
-  border: 1px solid #00bd7e;
-  margin: 10px 0;
-  padding: 24px;
-}
-</style>

@@ -1,12 +1,25 @@
 import { defineNuxtConfig } from 'nuxt/config';
+import generateSitemap from './sitemap';
 // import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'; //Vuetify
 
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     'nuxt-gtag',
-    '@nuxtjs/sitemap',
+    // '@nuxtjs/sitemap',
   ],
+  hooks: {
+    // Run the sitemap generation script before the build process
+    'build:before': async () => {
+      try {
+        // Generate the sitemap.xml file
+        await generateSitemap();
+      } catch (error) {
+        console.error('Error generating sitemap:', error);
+        process.exit(1); // Exit the process with an error code
+      }
+    },
+  },
   buildModules: ['@nuxt/router'],
   gtag: {
     id: 'G-50K7BNS543',
