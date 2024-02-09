@@ -17,14 +17,46 @@ async function fetchDynamicRoutes() {
       {
           catSlug: '/eat/',
           catID: 7
-      }
+      },
+      {
+          catSlug: '/life/',
+          catID: 8
+      },
+      {
+          catSlug: '/feature/',
+          catID: 9
+      },
+      {
+          catSlug: '/interview/',
+          catID: 10
+      },
+      {
+          catSlug: '/column/comics/',
+          catID: 11
+      },
+      {
+          catSlug: '/community/',
+          catID: 12
+      },
+      {
+          catSlug: '/column/malaysia-profiles/', //マレーシア美人ライフ
+          catID: 13
+      },
+      {
+          catSlug: '/column/', //columns
+          catID: 14
+      },
+      {
+          catSlug: '/backnumber/', //バックナンバー
+          catID: 15
+      },
   ];
   try {
     for (const topic of topics) {
       var index = topics.indexOf(topic)+1;
       var apiUrl;
       apiUrl = apiDomain + '/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit;
-
+      
       // Category landing page
       routes.push(
           topic.catSlug
@@ -91,6 +123,7 @@ async function fetchDynamicRoutes() {
   } catch (error) {
     console.error(`Error fetching dynamic routes for ${topic.catSlug}:`, error);
   }
+  console.log(routes);
 };
 fetchDynamicRoutes();
 
@@ -100,7 +133,6 @@ routes.push(
   '/about/',
   '/products/',
   '/contact/',
-  // Add more routes as needed
 );
 
 console.log(routes);
