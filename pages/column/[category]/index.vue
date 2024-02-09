@@ -5,7 +5,7 @@
 <section class="col-md-9 col-12" fluid>
 
     <div class="l-page_content">
-
+    
       <ArticleNewsLanding :catSlug="catSlug" :apiURLBase="apiURLBase" :apiURL="apiURL" :catName="catName"/>
 
     </div>

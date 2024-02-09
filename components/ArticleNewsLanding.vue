@@ -167,12 +167,15 @@ async function fetchData(url) {
                 desc = desc.substring(0, 120);
                 desc += '...';
             };
-
             //Check if has child category or just parent category
             if (item.contents_type_slug && item.category_parent_id) {
                 url = catSlug + item.contents_type_slug + '/';
             } else {
                 url = catSlug;
+            };
+            //Check if is parent & has specific category props  *for columns landing page, not for news as news has parent
+            if (isSubCategory && !item.category_parent_id) {
+                url += isSubCategory + '/';
             };
             //Check if has page slug else use page id
             if (item.slug) {

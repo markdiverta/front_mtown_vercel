@@ -36,6 +36,7 @@ import { ref, onMounted } from 'vue';
 //===== Global setting
 const config = useRuntimeConfig(); //API route
 const route = useRoute();
+const catSlug = '/malaysia-profiles'; //Manual specific cat name due to this cat technically not under column in Kuroco backend
 
 //===== Link function
 const goTo = (url) => {
@@ -54,6 +55,8 @@ if (catAmount > 2 && lastChar != '/') { //If there is 2 category level, then cap
 } else {
   path.value = '/' + urlPath.split("/")[1];
 };
+//If there is manual specific category name
+path.value = catSlug ? path.value + catSlug : path.value;
 
 
 //===== Main API content

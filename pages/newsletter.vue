@@ -375,8 +375,6 @@ const response = ref({
   }
 });
 
-console.log(response);
-
 Object.keys(response.value.details.cols).forEach((key) => {
   const object = response.value.details.cols[key];
 
