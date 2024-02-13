@@ -28,12 +28,30 @@ routes.push(
   '/media/',
   '/newsletter/',
   '/inquiry/',
-  '/search/',
+  '/search/'
 );
 
 // Dynamic routes setup
 async function fetchDynamicRoutes() {
-  const listGenerate = [];
+  
+  //News categories landing
+  const apiNewsCategory = apiDomain + '/rcms-api/1/content/category?topics_group_id=1';
+  try {
+      const responseNewsCat = await axios.get(apiNewsCategory);
+      var newsCat = responseNewsCat.data.list;
+      for (const topic of newsCat) {
+          if (topic.slug && topic.child_level == 2) {
+              let url = '/news/' + topic.slug + '/';
+              routes.push(
+                  url
+              );
+          }
+      };
+  } catch (error) {
+      console.error('API ERROR:', apiEbook + ' - ' + error.message);
+  };
+
+  //News details single page
   const topics = [
       {
           catSlug: '/news/',
@@ -84,7 +102,7 @@ async function fetchDynamicRoutes() {
       // Category landing page
       routes.push(
           topic.catSlug
-      ); 
+      );
       
       // Normal loop without pagination
       try {
