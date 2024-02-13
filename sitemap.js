@@ -6,6 +6,31 @@ var testMode = false; //Change to true or false if you want to enable dev mode f
 const generateLimit = testMode ? 50 : 999; //Maximum topics per pagination is 999
 const routes = [];
 
+// Generate sitemap.xml content
+function generateSitemapXml() {
+  const sitemapXml = `
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      ${routes.map(route => `
+        <url>
+          <loc>${siteURL}${route}</loc>
+        </url>
+      `).join('')}
+    </urlset>
+  `;
+
+  return sitemapXml;
+};
+
+// Static routes setup
+routes.push(
+  '/',
+  '/about-us/',
+  '/media/',
+  '/newsletter/',
+  '/inquiry/',
+  '/search/',
+);
+
 // Dynamic routes setup
 async function fetchDynamicRoutes() {
   const listGenerate = [];
@@ -53,7 +78,6 @@ async function fetchDynamicRoutes() {
   ];
   try {
     for (const topic of topics) {
-      var index = topics.indexOf(topic)+1;
       var apiUrl;
       apiUrl = apiDomain + '/rcms-api/1/content/list?topics_group_id=' + topic.catID + '&cnt=' + generateLimit;
       
@@ -123,40 +147,25 @@ async function fetchDynamicRoutes() {
   } catch (error) {
     console.error(`Error fetching dynamic routes for ${topic.catSlug}:`, error);
   }
-  console.log(routes);
 };
-fetchDynamicRoutes();
 
-// Static routes setup
-routes.push(
-  '/',
-  '/about/',
-  '/products/',
-  '/contact/',
-);
-
-console.log(routes);
-
-// Generate sitemap.xml content
-function generateSitemapXml() {
-  const sitemapXml = `
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${routes.map(route => `
-        <url>
-          <loc>${siteURL}${route}</loc>
-        </url>
-      `).join('')}
-    </urlset>
-  `;
-
-  return sitemapXml;
-}
 
 // Function to write the sitemap.xml file to the public directory
-function writeSitemapXml() {
-  const sitemapXmlContent = generateSitemapXml();
-  fs.writeFileSync('public/sitemap.xml', sitemapXmlContent);
-}
+async function writeSitemapXml() {
+  try {
+    // Wait for dynamic routes to be fetched and populated
+    await fetchDynamicRoutes();
+
+    // Generate sitemap.xml content
+    const sitemapXmlContent = generateSitemapXml();
+
+    // Write sitemap.xml to the public directory
+    fs.writeFileSync('public/sitemap.xml', sitemapXmlContent);
+  } catch (error) {
+    console.error('Error writing sitemap.xml:', error);
+  }
+};
+
 
 // Export the function to generate the sitemap
 module.exports = writeSitemapXml;
