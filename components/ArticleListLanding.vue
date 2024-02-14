@@ -61,6 +61,9 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 const props = defineProps(['catSlug', 'apiURLBase', 'apiURL']);
 const catSlugProps = ref(props.catSlug);
 const catSlug = catSlugProps.value
@@ -94,7 +97,8 @@ const scrollToTop = () => {
 
 //Link function
 const goTo = (url) => {
-    window.location.href = url;
+    // window.location.href = url;
+    router.push(url);
 };
 
 //API Content Function

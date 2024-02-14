@@ -31,7 +31,7 @@ for (const key in data.list) {
     var item = data.list[key];
     let url = "";
     let category = "";
-    console.log(item);
+    
     if (item.contents_type_slug) {
         category = item.contents_type_slug + '/';
     };
@@ -66,7 +66,10 @@ for (const key in data.list) {
 
 
 //Link function
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const goTo = (url) => {
-    window.location.href = url;
+    // window.location.href = url;
+    router.push(url);
 };
 </script>

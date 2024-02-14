@@ -86,6 +86,8 @@
 
 <script setup>
 import { provide, ref } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const sharedState = ref({
   pageTitle: 'Heading',
@@ -133,7 +135,8 @@ const scrollToTop = () => {
 
 //Link function
 const goTo = (url) => {
-    window.location.href = url;
+    // window.location.href = url;
+    router.push(url);
 };
 
 //API Content Function

@@ -109,8 +109,10 @@ const scrollToTop = () => {
 };
 
 //Link function
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const goTo = (url) => {
-    window.location.href = url;
+    router.push(url);
 };
 
 //API Content Function

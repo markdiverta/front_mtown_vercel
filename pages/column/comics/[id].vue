@@ -5,9 +5,9 @@
   
     <div class="l-page_content">
       <div class="l-breadcum">
-        <a href="/" class="item">ホーム</a>
+        <NuxtLink to="/" class="item">ホーム</nuxtlink>
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-        <a :href="path" class="item">{{ news.details.group_nm }}</a>
+        <NuxtLink :to="path" class="item">{{ news.details.group_nm }}</nuxtlink>
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
         <span class="item">{{ news.details.subject }}</span>
       </div>
@@ -36,7 +36,7 @@ import { ref, onMounted } from 'vue';
 //===== Global setting
 const config = useRuntimeConfig(); //API route
 const route = useRoute();
-const catSlug = '/comic'; //Manual specific cat name due to this cat technically not under column in Kuroco backend
+const catSlug = '/comics'; //Manual specific cat name due to this cat technically not under column in Kuroco backend
 
 //===== Link function
 const goTo = (url) => {

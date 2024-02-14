@@ -12,7 +12,7 @@
                 loading="lazy"
             >
             <div class="text-center">
-                <a class="c-btn c-btn_md c-btn_main-dark" href="/backnumber/">バックナンバーはこちら</a>
+                <NuxtLink class="c-btn c-btn_md c-btn_main-dark" to="/backnumber/">バックナンバーはこちら</NuxtLink>
             </div>
         </div>
 
@@ -78,14 +78,20 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 //Global setting
 const config = useRuntimeConfig(); //API route
 const route = useRoute();
+const router = useRouter();
 
 //Function
 const goTo = (url) => {
-    window.location.href = url;
+    if (url.includes('http')) {
+        window.location.href = url;
+    } else {
+        router.push(url);
+    }
 };
 
 //Social Media feed

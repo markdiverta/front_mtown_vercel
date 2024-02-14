@@ -5,9 +5,9 @@
   
     <div class="l-page_content">
       <div class="l-breadcum">
-        <a href="/" class="item">ホーム</a>
+        <NuxtLink to="/" class="item">ホーム</nuxtlink>
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-        <a :href="path" class="item">{{ news.details.group_nm }}</a>
+        <NuxtLink :to="catSlug" class="item">{{ news.details.contents_type_nm }}</nuxtlink>
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
         <span class="item">{{ news.details.subject }}</span>
       </div>
@@ -36,6 +36,7 @@ import { ref, onMounted } from 'vue';
 //===== Global setting
 const config = useRuntimeConfig(); //API route
 const route = useRoute();
+const catSlug = ref("");
 
 //===== Link function
 const goTo = (url) => {
@@ -66,6 +67,13 @@ const { data: news } = await useFetch(
   }
 );
 var apiContent = news.value.details;
+
+//Category path *for column page only
+if (apiContent.contents_type_slug) {
+  catSlug.value = path.value + '/' + apiContent.contents_type_slug;
+} else {
+  catSlug.value = path.value;
+};
 
 
 //===== Next & Prev link

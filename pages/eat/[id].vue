@@ -5,9 +5,9 @@
   
     <div class="l-page_content">
       <div class="l-breadcum">
-        <a href="/" class="item">ホーム</a>
+        <NuxtLink to="/" class="item">ホーム</nuxtlink>
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-        <a :href="path" class="item">{{ news.details.group_nm }}</a>
+        <NuxtLink :to="path" class="item">{{ news.details.group_nm }}</nuxtlink>
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
         <span class="item">{{ news.details.subject }}</span>
       </div>

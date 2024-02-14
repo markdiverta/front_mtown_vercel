@@ -4,20 +4,20 @@
             <div class="l-content_maxWidth-lg">
             <div class="row">
                 <div class="col-sm-6 col-12 d-sm-block d-none"> 
-                    <a href="/" title="MTown"> 
+                    <NuxtLink to="/" title="MTown"> 
                         <img src="~/assets/images/logo.png" alt="MTown - マレーシアの週刊情報誌 Logo" class="l-header_logo" width="279" height="100">
-                    </a>
+                    </NuxtLink>
                 </div>
                 <div class="col l-header_top-right">
                 <div class="row">
                     <div class="col-5 d-sm-none d-block py-0">
-                        <a href="/" title="MTown"> 
+                        <NuxtLink to="/" title="MTown"> 
                             <img src="~/assets/images/logo.png" alt="MTown - マレーシアの週刊情報誌 Logo" class="l-header_logo" width="160" height="57">
-                        </a>
+                        </NuxtLink>
                     </div>
                     <div class="col pb-0">
-                        <a href="/newsletter/" class="c-btn c-btn_main">メルマガ登録</a>
-                        <a href="/inquiry/" class="c-btn c-btn_main-dark">お問い合わせ<span class="d-sm-inline d-none">はこちら</span></a>
+                        <NuxtLink to="/newsletter/" class="c-btn c-btn_main">メルマガ登録</NuxtLink>
+                        <NuxtLink to="/inquiry/" class="c-btn c-btn_main-dark">お問い合わせ<span class="d-sm-inline d-none">はこちら</span></NuxtLink>
                     </div>
                     <div class="col-12 pt-0">
                         <form class="c-form row pt-4" action="/search">
@@ -54,73 +54,73 @@
             <!-- <ul class="c-mainmenu" :class="{ 'c-mainmenu_open' : menuOpen }"> -->
             <ul class="c-mainmenu">
                 <li :class="currentPage('/news') ? 'activePage' : ''">
-                    <a href="/news">マレーシアニュース</a>
+                    <NuxtLink to="/news">マレーシアニュース</NuxtLink>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li><a href="/news">新着</a></li>
-                            <li :class="searchCatPath('economic') ? 'active' : ''"><a href="/news/economic">経済・現地企業</a></li>
-                            <li :class="searchCatPath('politics') ? 'active' : ''"><a href="/news/politics">政治・社会</a></li>
-                            <li :class="searchCatPath('nikkei') ? 'active' : ''"><a href="/news/nikkei">日系企業動向</a></li>
-                            <li :class="searchCatPath('others') ? 'active' : ''"><a href="/news/others">芸能・スポーツ</a></li>
-                            <li :class="searchCatPath('covid-19') ? 'active' : ''"><a href="/news/covid-19">コロナ</a></li>
+                            <li><NuxtLink to="/news">新着</NuxtLink></li>
+                            <li :class="searchCatPath('economic') ? 'active' : ''"><NuxtLink to="/news/economic">経済・現地企業</NuxtLink></li>
+                            <li :class="searchCatPath('politics') ? 'active' : ''"><NuxtLink to="/news/politics">政治・社会</NuxtLink></li>
+                            <li :class="searchCatPath('nikkei') ? 'active' : ''"><NuxtLink to="/news/nikkei">日系企業動向</NuxtLink></li>
+                            <li :class="searchCatPath('others') ? 'active' : ''"><NuxtLink to="/news/others">芸能・スポーツ</NuxtLink></li>
+                            <li :class="searchCatPath('covid-19') ? 'active' : ''"><NuxtLink to="/news/covid-19">コロナ</NuxtLink></li>
                         </ul>
                     </div>
                 </li>
                 <li :class="currentPage('/eat') ? 'activePage' : ''" clas="1232">
-                    <a href="/eat/">グルメ</a>
+                    <NuxtLink to="/eat/">グルメ</NuxtLink>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li :class="currentPage('/eat') ? 'active' : ''"><a href="/eat/">グルメ記事</a></li>
-                            <li><a href="https://gourmesian.com/" target="_blank">レストラン検索</a></li>
+                            <li :class="currentPage('/eat') ? 'active' : ''"><NuxtLink to="/eat/">グルメ記事</NuxtLink></li>
+                            <li><NuxtLink to="https://gourmesian.com/" target="_blank">レストラン検索</NuxtLink></li>
                         </ul>
                     </div>
                 </li>
                 <li :class="currentPage('/life')  || currentPage('/community') ? 'activePage' : ''">
-                    <a href="/life/">タウン情報</a>
+                    <NuxtLink to="/life/">タウン情報</NuxtLink>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li :class="currentPage('/life') ? 'active' : ''"><a href="/life/">街ぶらブログ</a></li>
-                            <li :class="currentPage('/community') ? 'active' : ''"><a href="/community/">コミュニティ</a></li>
+                            <li :class="currentPage('/life') ? 'active' : ''"><NuxtLink to="/life/">街ぶらブログ</NuxtLink></li>
+                            <li :class="currentPage('/community') ? 'active' : ''"><NuxtLink to="/community/">コミュニティ</NuxtLink></li>
                         </ul>
                     </div>
                 </li>
                 <li :class="currentPage('/interview') ? 'activePage' : ''">
-                    <a href="/interview">インタビュー</a>
+                    <NuxtLink to="/interview">インタビュー</NuxtLink>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li><a href="/interview">新着</a></li>
+                            <li><NuxtLink to="/interview">新着</NuxtLink></li>
                         </ul>
                     </div>
                 </li>
                 <li :class="currentPage('/feature') ? 'activePage' : ''">
-                    <a href="/feature/">特集</a>
+                    <NuxtLink to="/feature/">特集</NuxtLink>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li><a href="/feature">新着</a></li>
+                            <li><NuxtLink to="/feature">新着</NuxtLink></li>
                         </ul>
                     </div>
                 </li>
                 <li>
-                    <a href="https://job.mtown.my/" target="_blank">求人・求職情報一覧</a>
+                    <NuxtLink to="https://job.mtown.my/" target="_blank">求人・求職情報一覧</NuxtLink>
                     <div class="c-mainmenu_dropdown-wrap"></div>
                 </li>
                 <li :class="currentPage('/column/') ? 'activePage' : ''">
-                    <a href="/column/comics">コラム</a>
+                    <NuxtLink to="/column/comics">コラム</NuxtLink>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
-                            <li :class="currentPage('/comics') ? 'active' : ''"><a href="/column/comics/">4コマ</a></li>
-                            <li :class="currentPage('/malaysia-profiles') ? 'active' : ''"><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
+                            <li :class="currentPage('/comics') ? 'active' : ''"><NuxtLink to="/column/comics/">4コマ</NuxtLink></li>
+                            <li :class="currentPage('/malaysia-profiles') ? 'active' : ''"><NuxtLink to="/column/malaysia-profiles/">マレーシア美人ライフ</NuxtLink></li>
                             
                             <template v-if="dynamicMenu.length > 0">
                                 <li v-for="(item, index) in dynamicMenu" :key="index" :class="currentPage('/' + item.slug + '/') ? 'active' : ''">
-                                    <a :href="item.url">{{ item.title }}</a>
+                                    <NuxtLink :to="item.url">{{ item.title }}</NuxtLink>
                                 </li>
                             </template>
                         </ul>
                     </div>
                 </li>
                 <li>
-                    <a href="https://malaysialife.mtown.my/" target="_blank">暮らしのガイド</a>
+                    <NuxtLink to="https://malaysialife.mtown.my/" target="_blank">暮らしのガイド</NuxtLink>
                     <div class="c-mainmenu_dropdown-wrap"></div>
                 </li>
             </ul>

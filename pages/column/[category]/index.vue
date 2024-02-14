@@ -39,11 +39,4 @@ var catName = pathSegments[pathSegments.length - 1]; // Get the last path
 const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id=${topicID}&contents_type=${catName}`);
 const apiURL = ref(apiURLBase.value);
 const topics = ref('[]');
-
-
-//Link function
-const goTo = (url) => {
-    window.location.href = url;
-};
-
 </script>
