@@ -58,11 +58,11 @@
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
                             <li><a href="/news">新着</a></li>
-                            <li :class="searchCat == '23' || searchCatPath == 'economic' ? 'active' : ''"><a href="/news/economic">経済・現地企業</a></li>
-                            <li :class="searchCat == '21' || searchCatPath == 'politics' ? 'active' : ''"><a href="/news/politics">政治・社会</a></li>
-                            <li :class="searchCat == '22' || searchCatPath == 'nikkei' ? 'active' : ''"><a href="/news/nikkei">日系企業動向</a></li>
-                            <li :class="searchCat == '24' || searchCatPath == 'others' ? 'active' : ''"><a href="/news/others">芸能・スポーツ</a></li>
-                            <li :class="searchCat == '1' || searchCatPath == 'covid-19' ? 'active' : ''"><a href="/news/covid-19">コロナ</a></li>
+                            <li :class="searchCatPath('economic') ? 'active' : ''"><a href="/news/economic">経済・現地企業</a></li>
+                            <li :class="searchCatPath('politics') ? 'active' : ''"><a href="/news/politics">政治・社会</a></li>
+                            <li :class="searchCatPath('nikkei') ? 'active' : ''"><a href="/news/nikkei">日系企業動向</a></li>
+                            <li :class="searchCatPath('others') ? 'active' : ''"><a href="/news/others">芸能・スポーツ</a></li>
+                            <li :class="searchCatPath('covid-19') ? 'active' : ''"><a href="/news/covid-19">コロナ</a></li>
                         </ul>
                     </div>
                 </li>
@@ -155,6 +155,11 @@ const currentPage = (url) => {
     else {        
         return false;
     };
+};
+const searchCatPath = (url) => {
+    if (url == router.currentRoute.value.params.category) {
+        return true
+    }
 };
 
 //Dynamic header menu - コラム
