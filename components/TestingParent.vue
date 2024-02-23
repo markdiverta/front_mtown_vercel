@@ -11,10 +11,8 @@
   <template>
     <div>
 
-      <button @click="setModelValueTrue">Set model value true</button>
+      <button @click="setModelValueTrue" style="background:#ccc; border: 1px solid #000">Set model value true</button>
       <TestingChild v-model="childComponentState"/>
-
-      {{childComponentState}}
       
     </div>
   </template>

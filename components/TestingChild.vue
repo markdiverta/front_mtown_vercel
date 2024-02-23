@@ -16,7 +16,7 @@ const setModelValueTrue = () => {
 <template>
   <div>
 
-      <button @click="setModelValueFalse">
+      <button @click="setModelValueFalse" style="background:#ccc; border: 1px solid #000">
         Set model value false
       </button>
 

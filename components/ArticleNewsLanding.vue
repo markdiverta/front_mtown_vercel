@@ -1,11 +1,11 @@
 <template>
     <section>
-
-    <!-- <TestingParent/>
-
-      <PageMeta/>
-
-        <h1>{{ sharedState.pageTitle }}</h1> -->
+    
+    <div style="padding:30px; border:1px solid #ccc">
+        <!-- <TestingParent/> -->
+        <PageMeta/>
+        <!-- <h1>{{ sharedState.pageTitle }}</h1> -->
+    </div>
       
       <div class="l-breadcum">
             <a href="/" class="item">ホーム</a>

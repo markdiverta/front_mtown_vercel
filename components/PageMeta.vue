@@ -1,11 +1,20 @@
-<template>
-  <div>
-    <!-- Modify the shared state -->
-    <button @click="updatePageTitle">Update Page Title</button>
-  </div>
-</template>
+
 
 <script setup>
+
+const description = ref('Testing desciption');
+
+const route = useRoute();
+console.log(route.href);
+
+if (route.href == '/news/') {
+    description.value = 'Testing news';
+};
+
+
+
+
+
 import { inject } from 'vue';
 
 const sharedState = inject('sharedState');
