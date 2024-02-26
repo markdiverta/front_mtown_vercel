@@ -1,11 +1,5 @@
 <template>
     <section>
-    
-    <div style="padding:30px; border:1px solid #ccc">
-        <!-- <TestingParent/> -->
-        <PageMeta/>
-        <!-- <h1>{{ sharedState.pageTitle }}</h1> -->
-    </div>
       
       <div class="l-breadcum">
             <a href="/" class="item">ホーム</a>
@@ -82,12 +76,14 @@
       </section>
 
     </section>
+    <PageMeta/>
 </template>
 
 <script setup>
 import { provide, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const config = useRuntimeConfig(); //API route
 
 const sharedState = ref({
   pageTitle: 'Heading',
@@ -104,7 +100,7 @@ const apiURL = ref(props.apiURL);
 const isSearchProps = ref(props.isSearch);
 const isSearch = isSearchProps.value
 const isSubCategoryProps = ref(props.catName);
-const isSubCategory = isSubCategoryProps.value
+const isSubCategory = isSubCategoryProps.value;
 
 var pageName, parentCat;
 const contentChecked = ref(false);
@@ -156,7 +152,9 @@ async function fetchData(url) {
         pagiTotal.value = newsData.pageInfo.totalCnt;
         pagiCount.value = newsData.pageInfo.totalPageCnt;
         const content = newsData;
+        if (!pageName) {
         pageName = isSubCategory ? content.list[0].contents_type_nm : content.list[0].group_nm;
+        };
         parentCat = isSubCategory ? content.list[0].group_nm : '';
 
         contentChecked.value = true;
@@ -235,8 +233,33 @@ async function fetchData(url) {
     console.error('Error in fetchData:', error);
   }
 };
-
 // Innitial API Content Function calling
 fetchData();
+
+
+//Get Category info for custom meta & page title setup
+const urlData = router ? router.currentRoute.value : '';console.log(urlData);
+async function fetchCatData(catAPIGroupID) {
+    try {
+        const catAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=${catAPIGroupID}`);
+        let response = await fetch(catAPI.value, {
+            credentials: 'include',
+        });
+        const catData = await response.json();
+        for (let key in catData.list) {
+            if (urlData.params.category == catData.list[key].slug && catData.list[key].ext_col_01 || urlData.name == catData.list[key].slug && catData.list[key].ext_col_01) {			
+                pageName = catData.list[key].ext_col_01;
+            };
+        }
+    } catch (error) {
+        console.error('Error in fetchData:', error);
+    }
+};
+if (apiURLBase.value.includes('topics_group_id=')) {
+    let locate = apiURLBase.value.indexOf('topics_group_id=');
+    let textCount = 'topics_group_id='.length;
+    let catAPIGroupID = apiURLBase.value.slice(locate+textCount, 99);
+    fetchCatData(catAPIGroupID);
+};
 
 </script>

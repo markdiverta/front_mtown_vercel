@@ -1,40 +1,10 @@
 
 
 <script setup>
-
-const description = ref('Testing desciption');
-
-const route = useRoute();
-console.log(route.href);
-
-if (route.href == '/news/') {
-    description.value = 'Testing news';
-};
-
-
-
-
-
-import { inject } from 'vue';
-
-const sharedState = inject('sharedState');
-
-const updatePageTitle = () => {
-  // Modify the shared state
-  sharedState.pageTitle = 'Heading modify';
-};
-
-
-
-
-
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const urlData = router.currentRoute.value;
 var pageTitle;
-
-// console.log(router.currentRoute.value.path);
-// console.log(router.currentRoute);
 
 //News category
 if (urlData.params.category) {
@@ -61,15 +31,15 @@ if (urlData.params.category) {
     }
 };
 
-useHead({
-    title: pageTitle,
-    meta: [
-        {
-            hid: 'og:title',
-            property: 'og:title',
-            content: 'hahahahahhahah'
-        },
-    ]
-});
+    useHead({
+        title: pageTitle ? pageTitle : '',
+        meta: [
+            {
+                hid: 'og:title',
+                property: 'og:title',
+                content: 'hahahahahhahah'
+            },
+        ]
+    });
 
 </script>
