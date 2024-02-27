@@ -1,5 +1,7 @@
 <template>
     <section>
+
+        {{catAPIContent}}
       
       <div class="l-breadcum">
             <a href="/" class="item">ホーム</a>
@@ -76,7 +78,7 @@
       </section>
 
     </section>
-    <PageMeta/>
+    <PageMeta v-if="catAPILoaded" :apiContent="catAPIContent"/>
 </template>
 
 <script setup>
@@ -90,6 +92,8 @@ const sharedState = ref({
 });
 
 provide('sharedState', sharedState);
+
+const testing = 'hahahahha';
 
 
 const props = defineProps(['catSlug', 'apiURLBase', 'apiURL', 'isSearch', 'catName']);
@@ -238,7 +242,9 @@ fetchData();
 
 
 //Get Category info for custom meta & page title setup
-const urlData = router ? router.currentRoute.value : '';console.log(urlData);
+const urlData = router ? router.currentRoute.value : '';
+const catAPIContent = ref('');
+const catAPILoaded = ref(false);
 async function fetchCatData(catAPIGroupID) {
     try {
         const catAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=${catAPIGroupID}`);
@@ -247,15 +253,20 @@ async function fetchCatData(catAPIGroupID) {
         });
         const catData = await response.json();
         for (let key in catData.list) {
-            if (urlData.params.category == catData.list[key].slug && catData.list[key].ext_col_01 || urlData.name == catData.list[key].slug && catData.list[key].ext_col_01) {			
-                pageName = catData.list[key].ext_col_01;
-            };
+            //Check if API slug match URL address param / category name or parent name (without category)
+            if (urlData.params.category == catData.list[key].slug || urlData.name == catData.list[key].slug) {
+                if (catData.list[key].ext_col_01) {			
+                    pageName = catData.list[key].ext_col_01;
+                };
+                catAPIContent.value = catData.list[key];
+            }
         }
+        catAPILoaded.value = true;
     } catch (error) {
         console.error('Error in fetchData:', error);
     }
 };
-if (apiURLBase.value.includes('topics_group_id=')) {
+if (apiURLBase.value.includes('topics_group_id=')) { //Get topics ID
     let locate = apiURLBase.value.indexOf('topics_group_id=');
     let textCount = 'topics_group_id='.length;
     let catAPIGroupID = apiURLBase.value.slice(locate+textCount, 99);
