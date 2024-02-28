@@ -1,7 +1,5 @@
 <template>
     <section>
-
-        {{catAPIContent}}
       
       <div class="l-breadcum">
             <a href="/" class="item">ホーム</a>
