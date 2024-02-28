@@ -91,9 +91,6 @@ const sharedState = ref({
 
 provide('sharedState', sharedState);
 
-const testing = 'hahahahha';
-
-
 const props = defineProps(['catSlug', 'apiURLBase', 'apiURL', 'isSearch', 'catName']);
 const catSlugProps = ref(props.catSlug);
 const catSlug = catSlugProps.value
@@ -137,7 +134,7 @@ const goTo = (url) => {
     router.push(url);
 };
 
-//API Content Function
+// API Content Function
 async function fetchData(url) {
   try {
     apiURL.value = url ? url : apiURL.value; 
@@ -238,37 +235,188 @@ async function fetchData(url) {
 // Innitial API Content Function calling
 fetchData();
 
+// try {
+//     // apiURL.value = url ? url : apiURL.value; 
+//     const { data: response } = await useFetch(apiURL.value,
+//         {
+//             credentials: 'include',
+//         }
+//     );
+//     const newsData = response.value;
+//     if (newsData.list && newsData.list.length < 1) {
+//         console.log('enter');
+//         searchNotFound.value = isSearch ? true : false;
+//         contentChecked.value = true;
+//     }
+//     else if (newsData) {
+//         console.log('enter 2');
+//         let list = topics.value ? [] : topics.value;
+//         console.log('access 1');
+//         console.log(newsData);
+//         pagiTotal.value = newsData.pageInfo.totalCnt;
+//         pagiCount.value = newsData.pageInfo.totalPageCnt;
+//         console.log('access 2');
+//         const content = newsData;
+//         if (!pageName) {
+//         pageName = isSubCategory ? content.list[0].contents_type_nm : content.list[0].group_nm;
+//         };
+//         console.log('access 3');
+//         parentCat = isSubCategory ? content.list[0].group_nm : '';
+//         contentChecked.value = true;
+//         for (let key in content.list) {
+//             console.log(key);
+//             const item = content.list[key];
+//             let url, thumb;
+//             let desc = item.contents;
+//             let catURL = item.category_parent_id ? catSlug + item.contents_type_slug : catSlug;
+//             desc = desc ? desc.replace(/<[^>]+>/g, '') : ''; //remove HTML
+//             if (desc && desc.length > 120) {
+//                 desc = desc.substring(0, 120);
+//                 desc += '...';
+//             };
+//             //Check if has child category or just parent category
+//             if (item.contents_type_slug && item.category_parent_id) {
+//                 url = catSlug + item.contents_type_slug + '/';
+//             } else {
+//                 url = catSlug;
+//             };
+//             //Check if is parent & has specific category props  *for columns landing page, not for news as news has parent
+//             if (isSubCategory && !item.category_parent_id) {
+//                 url += isSubCategory + '/';
+//             };
+//             //Check if has page slug else use page id
+//             if (item.slug) {
+//                 url += item.slug;
+//             } else {
+//                 url += item.topics_id;
+//             };
+//             //Thumbnail check
+//             if (item.ext_1 && item.ext_1.includes('http://') || item.ext_1 && item.ext_1.includes('https://') ) {
+//                 thumb = item.ext_1;
+//             } else if (item.ext_2 && item.ext_2.includes('http://') || item.ext_2 && item.ext_2.includes('https://') ) {
+//                 thumb = item.ext_2;
+//             };
+//             //For search page only
+//             if (isSearch) {
+//                 let path;
+//                 if (item.topics_group_id) {
+//                     let parentID = item.topics_group_id;
+//                     path = parentID == '1' ? '/news/'
+//                         : parentID == '7' ? '/eat/'
+//                         : parentID == '8' ? '/life/'
+//                         : parentID == '9' ? '/feature/'
+//                         : parentID == '10' ? '/interview/'
+//                         : parentID == '11' ? '/comics/'
+//                         : parentID == '12' ? '/community/'
+//                         : parentID == '13' ? '/malaysia-profiles/'
+//                         : parentID == '14' ? '/j-league/'
+//                         : parentID == '15' ? '/backnumber/'
+//                         : '';
+//                 };
+//                 if (path == '/news/') {
+//                     url = item.contents_type_slug ? path + item.contents_type_slug + '/' : path + 'uncategories/';
+//                 } else {
+//                     url = path;
+//                     catURL = path; //No category in others topics except news
+//                 };
+//                 url = item.slug ? url + item.slug : url + item.topics_id;
+//             };
+//             list.push({
+//                 date: item.ymd ? item.ymd.substring(0, 10).replaceAll('-', '.') : '',
+//                 title: item.subject,
+//                 desc: desc,
+//                 cat: item.contents_type_nm,
+//                 catURL: catURL,
+//                 id: item.topics_id,
+//                 url: url,
+//                 thumb: item.ext_1,
+//             });
+//         };
+//         topics.value = list;
+//         console.log(topics.value);
+//     };
+// }
+// catch (error) {
+//     console.error('An error occurred while fetching data:', error);
+// };
 
-//Get Category info for custom meta & page title setup
-const urlData = router ? router.currentRoute.value : '';
+var catAPIGroupID;
 const catAPIContent = ref('');
 const catAPILoaded = ref(false);
-async function fetchCatData(catAPIGroupID) {
-    try {
-        const catAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=${catAPIGroupID}`);
-        let response = await fetch(catAPI.value, {
-            credentials: 'include',
-        });
-        const catData = await response.json();
-        for (let key in catData.list) {
-            //Check if API slug match URL address param / category name or parent name (without category)
-            if (urlData.params.category == catData.list[key].slug || urlData.name == catData.list[key].slug) {
-                if (catData.list[key].ext_col_01) {			
-                    pageName = catData.list[key].ext_col_01;
-                };
-                catAPIContent.value = catData.list[key];
-            }
-        }
-        catAPILoaded.value = true;
-    } catch (error) {
-        console.error('Error in fetchData:', error);
-    }
-};
 if (apiURLBase.value.includes('topics_group_id=')) { //Get topics ID
     let locate = apiURLBase.value.indexOf('topics_group_id=');
     let textCount = 'topics_group_id='.length;
-    let catAPIGroupID = apiURLBase.value.slice(locate+textCount, 99);
-    fetchCatData(catAPIGroupID);
+    catAPIGroupID = apiURLBase.value.slice(locate+textCount, 99);
+
+    //In case URL last parameter is not topics_group_id
+    if (catAPIGroupID.indexOf('&')) {
+        let locate = catAPIGroupID.indexOf('&');
+        catAPIGroupID = catAPIGroupID.slice(0, locate);
+    };
 };
+// const { data: news } = await useFetch(
+//     `${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=${catAPIGroupID}`,
+//     {
+//         credentials: 'include',
+//     }
+// );
+try {
+    const { data: news } = await useFetch(
+        `${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=${catAPIGroupID}`,
+        {
+            credentials: 'include',
+        }
+    );
+    const urlData = router ? router.currentRoute.value : '';
+    if (news.value.list) {
+        let content = news.value.list;
+        for (let key in content) {
+            //Check if API slug match URL address param / category name or parent name (without category)
+            if (urlData.params.category == content[key].slug || urlData.name == content[key].slug) {
+                if (content[key].ext_col_01) {			
+                    pageName = content[key].ext_col_01;
+                };
+                catAPIContent.value = content[key];
+            }
+        }
+        catAPILoaded.value = true;
+    };
+} catch (error) {
+  console.error('An error occurred while fetching data:', error);
+}
+
+
+
+//Get Category info for custom meta & page title setup
+// const urlData = router ? router.currentRoute.value : '';
+// const catAPIContent = ref('');
+// const catAPILoaded = ref(false);
+// async function fetchCatData(catAPIGroupID) {
+//     try {
+//         const catAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=${catAPIGroupID}`);
+//         let response = await fetch(catAPI.value, {
+//             credentials: 'include',
+//         });
+//         const catData = await response.json();
+//         for (let key in catData.list) {
+//             //Check if API slug match URL address param / category name or parent name (without category)
+//             if (urlData.params.category == catData.list[key].slug || urlData.name == catData.list[key].slug) {
+//                 if (catData.list[key].ext_col_01) {			
+//                     pageName = catData.list[key].ext_col_01;
+//                 };
+//                 catAPIContent.value = catData.list[key];
+//             }
+//         }
+//         catAPILoaded.value = true;
+//     } catch (error) {
+//         console.error('Error in fetchData:', error);
+//     }
+// };
+// if (apiURLBase.value.includes('topics_group_id=')) { //Get topics ID
+//     let locate = apiURLBase.value.indexOf('topics_group_id=');
+//     let textCount = 'topics_group_id='.length;
+//     let catAPIGroupID = apiURLBase.value.slice(locate+textCount, 99);
+//     fetchCatData(catAPIGroupID);
+// };
 
 </script>
