@@ -58,11 +58,13 @@
       </section>
 
     </section>
+    <PageMeta v-if="catAPILoaded" :apiContent="catAPIContent"/>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const config = useRuntimeConfig(); //API route
 
 const props = defineProps(['catSlug', 'apiURLBase', 'apiURL']);
 const catSlugProps = ref(props.catSlug);
@@ -109,12 +111,14 @@ async function fetchData(url) {
       credentials: 'include',
     });
     const newsData = await response.json(); //Convert to json to use on content structuring
-
+    
     if (newsData) {
         let list = topics.value ? [] : topics.value;
         pagiTotal.value = newsData.pageInfo.totalCnt;
         const content = newsData;
-        pageName = content.list[0].group_nm;
+        if (!pageName) { //In case page name already set in server meta
+            pageName = content.list[0].group_nm;
+        };
         contentChecked = true;
         for (let key in content.list) {
             const item = content.list[key];
@@ -157,8 +161,55 @@ async function fetchData(url) {
     console.error('Error in fetchData:', error);
   }
 };
-
 // Innitial API Content Function calling
 fetchData();
 
+
+
+//Get Category info for custom meta & page title setup
+var catAPIGroupID;
+const catAPIContent = ref('');
+const catAPILoaded = ref(false);
+if (apiURLBase.value.includes('topics_group_id=')) { //Get topics ID
+    let locate = apiURLBase.value.indexOf('topics_group_id=');
+    let textCount = 'topics_group_id='.length;
+    catAPIGroupID = apiURLBase.value.slice(locate+textCount, 99);
+
+    //In case URL last parameter is not topics_group_id
+    if (catAPIGroupID.includes('&')) {
+        let locate = catAPIGroupID.indexOf('&');
+        catAPIGroupID = catAPIGroupID.slice(0, locate);
+    };
+}
+try { //Not using async function as it run on frontend, this need run on backend for meta setting
+    const { data: news } = await useFetch(
+        `${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=${catAPIGroupID}`,
+        {
+            credentials: 'include',
+        }
+    );
+    const urlData = router ? router.currentRoute.value : '';
+    if (news.value.list) {
+        let content = news.value.list;
+        for (let key in content) {
+            //Check if API slug match URL address param / category name or parent name (without category)
+            if (
+            urlData.params.category == content[key].slug || //For news subcategory
+            urlData.name == content[key].slug || 
+            catAPIGroupID == content[key].topics_group_id //For eat topics group etc
+            ) {
+                if (content[key].ext_col_01 || content[key].ext_col_02 || content[key].ext_col_03) {
+                    if (content[key].ext_col_01) {
+                        pageName = content[key].ext_col_01;
+                    };
+                    catAPIContent.value = content[key];
+                    break;
+                }
+            }
+        }
+        catAPILoaded.value = true;
+    };
+} catch (error) {
+  console.error('An error occurred while fetching data:', error);
+}
 </script>

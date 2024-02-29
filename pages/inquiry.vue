@@ -4,10 +4,10 @@
         <div class="l-breadcum">
           <a href="/" class="item">ホーム</a>
           <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-          <span class="item">お問い合わせ</span>
+          <span class="item">マレーシアでの広告掲載や資料請求、その他お問い合わせはこちら | MTown(エムタウン)</span>
       </div>
 
-      <h1 class="p-heading mb-2">お問い合わせ</h1>
+      <h1 class="p-heading mb-2">マレーシアでの広告掲載や資料請求、その他お問い合わせはこちら | MTown(エムタウン)</h1>
         <!-- <UiPageHeader subject="お問い合わせ" subheading="Inquiry" /> -->
       </section>
 
@@ -443,6 +443,28 @@
     }
     loading.value = false;
   };
+
+
+  useHead({
+      title: 'お問い合わせ',
+      meta: [
+          {
+              hid: 'og:title',
+              property: 'og:title',
+              content: 'お問い合わせ'
+          },
+          {
+              hid: 'og:description',
+              property: 'og:description',
+              content: '広告掲載や資料請求、その他ご意見・ご感想等、下記のお問い合わせフォームにご記入の上ご送信ください。いつもMTown(エムタウン)をご覧いただきありがとうございます。'
+          },
+          {
+              hid: 'description',
+              name: 'description',
+              content: '広告掲載や資料請求、その他ご意見・ご感想等、下記のお問い合わせフォームにご記入の上ご送信ください。いつもMTown(エムタウン)をご覧いただきありがとうございます。'
+          }
+      ]
+  });
   </script>
 
 <style scoped>

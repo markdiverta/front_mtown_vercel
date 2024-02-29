@@ -35,6 +35,7 @@ const config = useRuntimeConfig(); //API route
 const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/details/47639`);
 const apiURL = ref(apiURLBase.value);
 const topics = ref('[]');
+const pageTitle = '会社概要 | MTown(エムタウン)';
 
 async function mainContent() {
   try {
@@ -46,7 +47,7 @@ async function mainContent() {
     let content = [];
 
     content.date = item.ymd.substring(0, 10).replaceAll('-', '.');
-    content.title = item.subject;
+    content.title = pageTitle ? pageTitle : item.subject;
     content.desc = item.contents;
     content.cat = item.contents_type_nm;
     content.id = item.topics_id;
@@ -64,4 +65,24 @@ const goTo = (url) => {
     window.location.href = url;
 };
 
+useHead({
+    title: '会社概要',
+    meta: [
+        {
+            hid: 'og:title',
+            property: 'og:title',
+            content: '会社概要'
+        },
+        {
+            hid: 'og:description',
+            property: 'og:description',
+            content: 'マレーシアの週刊フリーペーパー＆WEBのMTown(エムタウン)を運営するMega Global Media Malaysia Sdn. Bhd.（メガグループ）の会社概要です。'
+        },
+        {
+            hid: 'description',
+            name: 'description',
+            content: 'マレーシアの週刊フリーペーパー＆WEBのMTown(エムタウン)を運営するMega Global Media Malaysia Sdn. Bhd.（メガグループ）の会社概要です。'
+        }
+    ]
+});
 </script>

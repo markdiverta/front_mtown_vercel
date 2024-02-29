@@ -4,10 +4,10 @@
     <div class="l-breadcum">
         <a href="/" class="item">ホーム</a>
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-        <span class="item">週刊Mtownメールマガジン配信中！</span>
+        <span class="item">マレーシアの最新情報発信中！メルマガ登録はこちら | MTown(エムタウン)</span>
     </div>
 
-    <h1 class="p-heading">週刊Mtownメールマガジン配信中！</h1>
+    <h1 class="p-heading">マレーシアの最新情報発信中！メルマガ登録はこちら | MTown(エムタウン)</h1>
 
     <section class="l-content_maxWidth-xs pt-5">
 
@@ -320,6 +320,27 @@
 </template>
 
 <script setup>
+useHead({
+  title: 'マレーシアの最新情報発信中！メルマガ登録はこちら',
+  meta: [
+      {
+          hid: 'og:title',
+          property: 'og:title',
+          content: 'マレーシアの最新情報発信中！メルマガ登録はこちら'
+      },
+      {
+          hid: 'og:description',
+          property: 'og:description',
+          content: 'マレーシアの週刊フリーペーパー＆WEBメディアのMTown(エムタウン)のメールマガジンでは、"マレーシアライフをもっと楽しく豊かに"をコンセプトに、現地に住む日本人や旅行者、またマレーシアに興味がある方に、実用的で生活に役立つニュースや観光情報を毎週定期でお届けしています。'
+      },
+      {
+          hid: 'description',
+          name: 'description',
+          content: 'マレーシアの週刊フリーペーパー＆WEBメディアのMTown(エムタウン)のメールマガジンでは、"マレーシアライフをもっと楽しく豊かに"をコンセプトに、現地に住む日本人や旅行者、またマレーシアに興味がある方に、実用的で生活に役立つニュースや観光情報を毎週定期でお届けしています。'
+      }
+  ]
+});
+
 const config = useRuntimeConfig();
 
 const submitted = ref(false);
