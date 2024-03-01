@@ -168,6 +168,26 @@
 //======== Global setting
 const config = useRuntimeConfig();
 
+useHead({
+    title: 'マレーシア総合情報メディアMTown(エムタウン)',
+    meta: [
+        {
+            hid: 'og:title',
+            property: 'og:title',
+            content: 'マレーシア総合情報メディアMTown(エムタウン)'
+        },
+        {
+            hid: 'og:description',
+            property: 'og:description',
+            content: 'マレーシアの週刊フリーペーパー＆WEBのMTown(エムタウン)は、"マレーシアライフをもっと楽しく豊かに"をコンセプトに、現地の日本人や旅行者、マレーシアに興味がある方に、生活に役立つニュースや観光情報、ビジネス情報を毎日発信する総合メディアです。'
+        },
+        {
+            hid: 'description',
+            name: 'description',
+            content: 'マレーシアの週刊フリーペーパー＆WEBのMTown(エムタウン)は、"マレーシアライフをもっと楽しく豊かに"をコンセプトに、現地の日本人や旅行者、マレーシアに興味がある方に、生活に役立つニュースや観光情報、ビジネス情報を毎日発信する総合メディアです。'
+        }
+    ]
+});
 
 //Link function
 const goTo = (url) => {
