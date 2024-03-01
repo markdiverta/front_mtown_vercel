@@ -29,8 +29,9 @@ var link_next, link_prev;
 
 for (const key in data.list) {
     var item = data.list[key];
-    let url = "";
-    let category = "";
+    let url = '';
+    let category = '';
+    let thumb;
     
     if (item.contents_type_slug) {
         category = item.contents_type_slug + '/';
@@ -43,6 +44,11 @@ for (const key in data.list) {
     } else {
         url = path + category + item.topics_id;
     };
+    if (Array.isArray(item.ext_1)) {
+        thumb = item.ext_2;
+    } else {
+        thumb = item.ext_1;
+    };
     let topicID = apiContent.topics_id ? apiContent.topics_id.toString() : "";
     let topicSlug= apiContent.topic_slug ? apiContent.topic_slug.toString() : "";
     if (item.topics_id.toString() !== topicID && item.slug.toString() !== topicSlug) {
@@ -50,14 +56,14 @@ for (const key in data.list) {
             let container = {};
             container.title = item.subject;
             container.id = item.topics_id;
-            container.img = item.ext_1;
+            container.img = thumb;
             container.url = url;
             link_next = container;
         } else {
             let container = {};
             container.title = item.subject;
             container.id = item.topics_id;
-            container.img = item.ext_1;
+            container.img = thumb;
             container.url = url;
             link_prev = container;
         }

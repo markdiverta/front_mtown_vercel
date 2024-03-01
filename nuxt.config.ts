@@ -65,6 +65,7 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' },
       ],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+      script: [{ src: '/_nuxt/assets/js/lightbox-plus-jquery.min.js' }],
     },
   },
   routeRules: {
@@ -73,5 +74,7 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: true },
-  css: ['@/assets/scss/style.scss'],
+  css: [
+    '@/assets/scss/style.scss',
+  ],
 });
