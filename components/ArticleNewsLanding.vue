@@ -363,23 +363,27 @@ try { //Not using async function as it run on frontend, this need run on backend
             credentials: 'include',
         }
     );
-    console.log(news.value.list);
     const urlData = router ? router.currentRoute.value : '';
     if (news.value.list) {
         let content = news.value.list;
+        console.log(content);
         for (let key in content) {
             //Check if API slug match URL address param / category name or parent name (without category)
+            console.log(urlData.params.category + ' == ' + content[key].slug);
+            console.log(urlData.name + ' == ' + content[key].slug);
+            console.log(catAPIGroupID + ' == ' + content[key].topics_group_id);
             if (
-            urlData.params.category == content[key].slug || //For news subcategory
-            urlData.name == content[key].slug || 
-            catAPIGroupID == content[key].topics_group_id //For eat topics group etc
-            ) {
-                console.log(key);
+                urlData.params.category == content[key].slug || 
+                urlData.name == content[key].slug || 
+                content.length <= '1' && catAPIGroupID == content[key].topics_group_id //Only for topics group tat do not have sub category, default cat will be use
+            ){
                 if (content[key].ext_col_01) {			
                     pageName = content[key].ext_col_01;
                 };
                 catAPIContent.value = content[key];
-                break;
+                if (content.length) {
+                    break;
+                }
             }
         }
         catAPILoaded.value = true;

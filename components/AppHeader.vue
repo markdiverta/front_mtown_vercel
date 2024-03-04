@@ -160,10 +160,7 @@ const currentPage = (url) => {
 };
 //Whenever page route changed
 router.afterEach((to, from) => {
-    console.log(noDropdown.value);
-  console.log('clicked');
   noDropdown.value = "--noDropdown";
-  console.log(noDropdown.value);
 });
 
 // const currentPage = (url) => {
