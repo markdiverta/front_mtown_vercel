@@ -380,9 +380,7 @@ try { //Not using async function as it run on frontend, this need run on backend
                     pageName = content[key].ext_col_01;
                 };
                 catAPIContent.value = content[key];
-                if (content.length) {
-                    break;
-                }
+                break;
             }
         }
         catAPILoaded.value = true;
