@@ -366,12 +366,11 @@ try { //Not using async function as it run on frontend, this need run on backend
     const urlData = router ? router.currentRoute.value : '';
     if (news.value.list) {
         let content = news.value.list;
-        console.log(content);
         for (let key in content) {
             //Check if API slug match URL address param / category name or parent name (without category)
-            console.log(urlData.params.category + ' == ' + content[key].slug);
-            console.log(urlData.name + ' == ' + content[key].slug);
-            console.log(catAPIGroupID + ' == ' + content[key].topics_group_id);
+            // console.log(urlData.params.category + ' == ' + content[key].slug);
+            // console.log(urlData.name + ' == ' + content[key].slug);
+            // console.log(catAPIGroupID + ' == ' + content[key].topics_group_id);
             if (
                 urlData.params.category == content[key].slug || 
                 urlData.name == content[key].slug || 
