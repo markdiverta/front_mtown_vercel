@@ -66,7 +66,7 @@
                         </ul>
                     </div>
                 </li>
-                <li :class="currentPage('/eat') ? 'activePage' : ''" clas="1232">
+                <li :class="currentPage('/eat') ? 'activePage' : ''">
                     <NuxtLink to="/eat/">グルメ</NuxtLink>
                     <div class="c-mainmenu_dropdown-wrap">
                         <ul class="c-mainmenu_dropdown l-content_maxWidth-lg">
@@ -146,16 +146,50 @@ const currentPage = (url) => {
     let currentPath = router.currentRoute.value.path;
     if (currentPath.includes(url) && currentPath !== '/') { //if is not home page and path is match or if is home page
         noDropdown.value = "";
+        menuCheck.value = '1';
         return true;
     } 
     else if (currentPath == '/' && url == '/news') {
         noDropdown.value = "";
+        menuCheck.value = '1';
         return true;
     }
-    else {        
+    else {
         return false;
     };
 };
+//Whenever page route changed
+router.afterEach((to, from) => {
+    console.log(noDropdown.value);
+  console.log('clicked');
+  noDropdown.value = "--noDropdown";
+  console.log(noDropdown.value);
+});
+
+// const currentPage = (url) => {
+//     let currentPath = router.currentRoute.value.path;
+//     console.log(currentPath == '/' && url == '/news');
+//     if (!menuCheck.value) {
+//         console.log('access');
+//         if (currentPath.includes(url) && currentPath !== '/') { //if is not home page and path is match or if is home page
+//             console.log('1');
+//             noDropdown.value = "";
+//             menuCheck.value = '1';
+//             return true;
+//         } 
+//         else if (currentPath == '/' && url == '/news') {
+//             console.log('2');
+//             noDropdown.value = "";
+//             menuCheck.value = '1';
+//             return true;
+//         }
+//         else {
+//             console.log('3');
+//             noDropdown.value = "--noDropdown";
+//             return false;
+//         };
+//     }
+// };
 const searchCatPath = (url) => {
     if (url == router.currentRoute.value.params.category) {
         return true
