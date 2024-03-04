@@ -171,6 +171,10 @@ async function fetchData(url) {
             if (isSubCategory && !item.category_parent_id) {
                 url += isSubCategory + '/';
             };
+            //For column landing (static *above is dynamic category folder)
+            if (isSubCategory == 'column' && item.contents_type_slug) {
+                url = item.contents_type_slug + '/';
+            };
             //Check if has page slug else use page id
             if (item.slug) {
                 url += item.slug;
