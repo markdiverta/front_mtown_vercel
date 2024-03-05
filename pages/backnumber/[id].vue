@@ -9,15 +9,15 @@
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
         <NuxtLink :to="path" class="item">バックナンバー</nuxtlink>
         <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-        <span class="item">{{ news.details.subject }}</span>
+        <span class="item">{{ pageTitle }}</span>
       </div>
       
       <section>
 
         <client-only>
           <section class="p-article_wrap">
-              <h1 class="p-heading mb-3">{{ items.title }}</h1>
-              {{ items.date }} <span class="c-btn c-btn_main c-btn_sm c-btn_disable ml-4">{{ items.category }}</span>
+              <h1 class="p-heading mb-3">{{ pageTitle }}</h1>
+              <span class="c-btn c-btn_main c-btn_sm c-btn_disable">{{ items.category }}</span>
              
               <div class="row p-article_imgList l-content_padding">
                   <div v-for="(image, imageIndex) in items.img" :key="imageIndex" class="col-md-4 col-sm-6 col-12 p-2">
@@ -56,6 +56,7 @@ import { ref, onMounted } from 'vue';
 const config = useRuntimeConfig(); //API route
 const route = useRoute();
 const catSlug = '/comics'; //Manual specific cat name due to this cat technically not under column in Kuroco backend
+var pageTitle;
 
 //===== Link function
 const goTo = (url) => {
@@ -93,10 +94,11 @@ if (apiContent) {
   };
   item.category = content.contents_type_nm;
   item.title = content.subject;
+  pageTitle = content.subject;
   item.date = content.ymd
       .substring(0, 10)
       .replaceAll('-', '.');
-
+  
   items.value = item;
 };
 
@@ -111,6 +113,40 @@ const { data: nextPrevContent } = await useFetch(
     credentials: 'include',
   }
 );
+
+//===== Custom Meta & formatted Title
+if (items.value) {
+  let content = items.value;
+  if (content.date) {
+    var date = content.date ? content.date : '';
+    var formattedDate = date.replace(/\./g, (match, index) => {
+      return index === 4 ? '年' : index === 7 ? '月' : '年';
+    }) + '日号';
+    pageTitle = formattedDate + ' vol.' + content.title;
+    var pageDesc = `マレーシアMTown(エムタウン)の紙面バックナンバー。${formattedDate} vol.${content.title}をEbookで読めます。`;
+
+    useHead({
+      title: pageTitle,
+      meta: [
+          {
+              hid: 'og:title',
+              property: 'og:title',
+              content: pageTitle
+          },
+          {
+              hid: 'og:description',
+              property: 'og:description',
+              content: pageDesc
+          },
+          {
+              hid: 'description',
+              name: 'description',
+              content: pageDesc
+          }
+      ]
+    });
+  }
+}
 </script>
 
 <style>

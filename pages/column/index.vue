@@ -38,5 +38,5 @@ var catName = pathSegments[pathSegments.length - 1]; // Get the last path
 //API Content setting
 const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id=${topicID}`);
 const apiURL = ref(apiURLBase.value);
-const topics = ref('[]');console.log(apiURLBase.value);
+const topics = ref('[]');
 </script>
