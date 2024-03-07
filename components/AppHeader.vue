@@ -28,7 +28,6 @@
                                     class="l-header_top-search v-input"
                                     outlined
                                     name="keyword"
-                                    v-model="keyword"
                                 />
                             </div>
                             <div class="col-auto">
