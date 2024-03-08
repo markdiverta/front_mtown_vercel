@@ -4,11 +4,21 @@
       <div v-for="item in questionaire">
         <template v-if="item.title">
           {{item.title}} = {{item.vote}}
+          <div class="progress" :style="{ width: `${item.percentage}%` }"></div>
         </template>
       </div>
 
     </section> 
 </template>
+
+<style scoped>
+.progress {
+  width: 100%;
+  height: 15px;
+  background-color: blue;
+  /* background: linear-gradient(to right, #000 0%, #000 calc(attr(--percent) + 2px), #FFFFFF00 0%) no-repeat; */
+}
+</style>
 
 <script setup>
 //Global setting
@@ -20,7 +30,9 @@ import { onMounted } from 'vue';
 //Props
 const props = defineProps(['pollContent']);
 const apiContent = props.pollContent;
-const questionaire = ref(''); 
+const questionaire = ref('');
+const votePercentage = ref('');
+
 if (apiContent.module_id) {
   try {
       const { data: content } = await useFetch(
@@ -31,6 +43,8 @@ if (apiContent.module_id) {
       );
       let contentDetails = content.value.details;
       let loop = [];
+      let totalVote = 0; 
+
       console.log(contentDetails);
       // for (let item in contentDetails) {
       //   let question, vote;
@@ -61,9 +75,17 @@ if (apiContent.module_id) {
           title: contentDetails[variableNameTitle],
           vote: contentDetails[variableNameVote],
         });
+        
+        totalVote = totalVote + Number(contentDetails[variableNameVote]);
       };
-      questionaire.value = loop; 
-      // console.log(questionnaire);
+      votePercentage.value = 100/totalVote; 
+
+      for (let item in loop) {
+        let roundUp = Math.round;
+        loop[item].percentage = roundUp(votePercentage.value*loop[item].vote);
+        console.log(loop[item]);
+      };
+      questionaire.value = loop;
 
   } catch (error) {
     console.error('An error occurred while fetching data:', error);
