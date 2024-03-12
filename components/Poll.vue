@@ -3,48 +3,56 @@
 
       {{questionaire.subject}}
 
-      <div v-for="item in questionaire">
-        <template v-if="item.title">
-          {{item.title}} = {{item.vote}}
-          <div class="progress" :style="{ width: `${item.percentage}%` }"></div>
-          {{item.percentage}}%
-        </template>
-      </div>
+      <section v-if="mode === 'result'">
 
+        <div v-for="item in questionaire">
+          <template v-if="item.title">
+            {{item.title}} = {{item.vote}}
+            <div class="progress" :style="{ width: `${item.percentage}%` }"></div>
+            {{item.percentage}}%
+          </template>
+        </div>
+        <button type="button" class="c-btn_main-dark c-btn submit-btn" @click="changeMode('vote')" :disabled='disabled'>あなたの意見を投票する</button>
 
-      <form @submit.prevent="submitVote">
-          <div v-for="item in questionaire" :key="index">
-              <label>
-                  <input
-                      type="radio"
-                      :value="item.ext"
-                      v-model="selectedOption"
-                      name="question"
-                  >
-                  {{ item.title }}
-              </label>
-          </div>
-          <div v-if="!hasVoted">
-              <div class="pollBtn">
-                  <button type="submit" class="c-btn_main-dark c-btn submit-btn" @click="preventMultipleClicks" :disabled="isPollExpired || isSubmitting">
-                      {{ isPollExpired ? '投票期限切れ' : 'あなたの意見を投票する' }}
-                  </button>
-              </div>
-              <p v-if="isPollExpired" class="expired-text">この投票は期限切れです。</p>
-              <div v-if="voteSubmitted">
-                  <p class="thank-you-message">投票ありがとうございます。集計結果は24時間内に反映されます。</p>
-              </div>
-          </div>
-          <div v-else>
-              <div class="pollBtn">
-                  <button type="submit" class="c-btn_main-dark c-btn submit-btn" :disabled="hasVoted">
-                      {{ isPollExpired ? '投票期限切れ' : 'あなたの意見を投票する' }}
-                  </button>
-              </div>
-              <p v-if="isPollExpired" class="expired-text">この投票は期限切れです。</p>
-              <p v-if="hasVoted" class="voted-text">投票済みです</p>
-          </div>
-      </form>
+      </section>
+      <section v-if="mode === 'vote'">
+
+        <form @submit.prevent="submitVote">
+            <div v-for="item in questionaire" :key="index">
+                <label>
+                    <input
+                        type="radio"
+                        :value="item.ext"
+                        v-model="selectedOption"
+                        name="question"
+                    >
+                    {{ item.title }}
+                </label>
+            </div>
+
+            <div v-if="!hasVoted">
+                <div class="pollBtn">
+                    <button type="submit" class="c-btn_main-dark c-btn submit-btn" @click="preventMultipleClicks" :disabled='disabled'>
+                        {{ isPollExpired ? '投票期限切れ' : 'あなたの意見を投票する' }}
+                    </button>
+                </div>
+                <p v-if="isPollExpired" class="expired-text">この投票は期限切れです。</p>
+                <div v-if="voteSubmitted">
+                    <p class="thank-you-message">投票ありがとうございます。集計結果は24時間内に反映されます。</p>
+                </div>
+            </div>
+            <div v-else>
+                <div class="pollBtn">
+                    <button type="submit" class="c-btn_main-dark c-btn submit-btn" :disabled='disabled'>
+                        {{ isPollExpired ? '投票期限切れ' : 'あなたの意見を投票する' }}
+                    </button>
+                </div>
+                <p v-if="isPollExpired" class="expired-text">この投票は期限切れです。</p>
+                <p v-if="hasVoted" class="voted-text">投票済みです</p>
+            </div>
+        </form>
+      
+      </section>
 
     </section> 
 </template>
@@ -64,6 +72,7 @@ const config = useRuntimeConfig(); //API route
 import { useRouter } from 'vue-router';
 const router = useRouter();
 import { onMounted } from 'vue';
+const disabled = ref(false);
 
 //Props
 const props = defineProps(['pollContent']);
@@ -81,7 +90,11 @@ if (apiContent.module_id) {
       );
       let contentDetails = content.value.details;
       let loop = [];
-      let totalVote = 0; 
+      let totalVote = 0;
+
+      //Check if poll date expired
+      let currentDate = new Date();
+      disabled.value = contentDetails.ext_1 ? new Date(contentDetails.ext_1) < currentDate : false;
 
       console.log(contentDetails);
       // for (let item in contentDetails) {
@@ -153,10 +166,26 @@ const submitVote = async () => {
               body: JSON.stringify(payload),
             }
         );
+        changeMode('result');
+        disabled.value = true;
+
         console.log('submited');
       }
     } catch (e) {
       errors.value = e?.data?.errors || [];
     }
+};
+
+const mode = ref('result');
+
+const changeMode = (modeToChange) => {
+    mode.value = modeToChange;
+};
+const status = (data) => {
+  //If poll date is expired
+  console.log();
+
+  //If already voted
+  mode.value = modeToChange;
 };
 </script>

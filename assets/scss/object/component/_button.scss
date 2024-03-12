@@ -16,7 +16,8 @@
     @at-root .p-inveek & {
         font-weight: 500;
     }
-    &[disabled="disabled"] {
+    &[disabled="disabled"],
+    &[disabled] {
         background: #ccc;
         cursor: not-allowed;
         &:hover {
