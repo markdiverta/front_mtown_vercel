@@ -18,8 +18,6 @@
   
       <SocialSharing/>
 
-      <Poll v-if="pollAvailable" :pollContent="pollContent"/>
-
       <NavNextPrev :nextPrevContent="nextPrevContent" :path="path" :apiContent="apiContent"/>
 
     </div>
@@ -59,26 +57,24 @@ if (catAmount > 2 && lastChar != '/') { //If there is 2 category level, then cap
 
 
 //===== Main API content
-
-  const { data: news } = await useFetch(
-    // `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${route.params.id}`,
-    `https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/${route.params.id}`,
-    // `https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/${route.params.id}`,
-    {
-      credentials: 'include',
-    }
-  );
-  var apiContent = news.value.details;
-
+const { data: news } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${route.params.id}`,
+  // `https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/${route.params.id}`,
+  // `https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/${route.params.id}`,
+  {
+    credentials: 'include',
+  }
+);
+var apiContent = news.value.details;
 
 
 //===== Poll (Enable poll if any)
-  const pollAvailable = ref(false);
-  const pollContent = ref('');
-  if (apiContent && apiContent.questionnaire.module_id) {
-    pollAvailable.value = true;
-    pollContent.value = apiContent.questionnaire;
-  };
+const pollAvailable = ref(false);
+const pollContent = ref('');
+if (apiContent && apiContent.questionnaire && apiContent.questionnaire.module_id) {
+  pollAvailable.value = true;
+  pollContent.value = apiContent.questionnaire;
+};
 
 
 //===== Next & Prev link
