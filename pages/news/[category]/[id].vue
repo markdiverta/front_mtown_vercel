@@ -18,6 +18,8 @@
   
       <SocialSharing/>
 
+      <Poll v-if="pollAvailable" :pollContent="pollContent"/>
+
       <NavNextPrev :nextPrevContent="nextPrevContent" :path="path" :apiContent="apiContent"/>
 
     </div>
@@ -71,6 +73,7 @@ var apiContent = news.value.details;
 //===== Poll (Enable poll if any)
 const pollAvailable = ref(false);
 const pollContent = ref('');
+
 if (apiContent && apiContent.questionnaire && apiContent.questionnaire.module_id) {
   pollAvailable.value = true;
   pollContent.value = apiContent.questionnaire;
