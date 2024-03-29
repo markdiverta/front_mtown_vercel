@@ -1,89 +1,72 @@
 <template>
-    <section class="p-article_share l-content_padding -sm">
+    <section class="p-article_share l-content_padding -sm pb-5">
+    <client-only>
 
-      {{questionaire.subject}}
+      <h3 class="c-poll_heading">{{questionaire.subject}}</h3>
 
-      <section v-if="mode === 'result' || mode === 'submited'">
+      <section class="c-poll pt-3" v-if="mode === 'result' || mode === 'submited' || mode === 'voted'">
 
-        <div v-for="item in questionaire">
+        <div class="row c-poll_item align-items-center" v-for="item in questionaire">
           <template v-if="item.title">
-            {{item.title}} = {{item.vote}}
-            <div class="progress" :style="{ width: `${item.percentage}%` }"></div>
-            {{item.percentage}}%
+            <div class="col-4 heading">
+              {{item.title}}
+              <!--{{item.vote}}-->
+            </div>
+            <div class="col c-poll_progress-wrap">
+              <div class="row align-items-center">
+                <div class="col"><div class="c-poll_progress" :style="{ width: `${item.percentage}%` }"></div></div>
+                <div class="col-auto">{{item.percentage}}%</div>
+              </div>
+            </div>
           </template>
         </div>
-        <button type="button" class="c-btn_main-dark c-btn submit-btn" @click="changeMode('vote')" :disabled='disabled'>あなたの意見を投票する</button>
+
+        <div class="text-center pt-4">
+          <button type="button" class="c-btn_main-dark c-btn submit-btn" @click="changeMode('vote')" :disabled='disabled'>あなたの意見を投票する</button>
+        </div>
 
       </section>
       <section v-if="mode === 'vote'">
 
-        <form @submit.prevent="submitVote">
-            <div v-for="item in questionaire" :key="index">
+        <form @submit.prevent="submitVote" class="c-poll_form">
+            <div class="c-poll_form-item" v-for="item in questionaire" :key="index">
                 <label>
                     <input
                         type="radio"
                         :value="item.ext"
                         v-model="selectedOption"
                         name="question"
+                        class="form-control"
                     >
                     {{ item.title }}
                 </label>
             </div>
 
-            <button type="submit" class="c-btn_main-dark c-btn submit-btn" :disabled='disabled'>
-                {{ isPollExpired ? '投票期限切れ' : 'あなたの意見を投票する' }}
-            </button>
-
-            <!--
-            <div v-if="!hasVoted">
-                <div class="pollBtn">
-                    <button type="submit" class="c-btn_main-dark c-btn submit-btn" @click="preventMultipleClicks" :disabled='disabled'>
-                        {{ isPollExpired ? '投票期限切れ' : 'あなたの意見を投票する' }}
-                    </button>
-                </div>
-                <p v-if="isPollExpired" class="expired-text">この投票は期限切れです。</p>
-                <div v-if="voteSubmitted">
-                    <p class="thank-you-message">投票ありがとうございます。集計結果は24時間内に反映されます。</p>
-                </div>
+            <div class="text-center pt-4">
+              <button type="submit" class="c-btn_main-dark c-btn submit-btn" :disabled='disabled'>
+                  {{ isPollExpired ? '投票期限切れ' : 'あなたの意見を投票する' }}
+              </button>
             </div>
-            <div v-else>
-                <div class="pollBtn">
-                    <button type="submit" class="c-btn_main-dark c-btn submit-btn" :disabled='disabled'>
-                        {{ isPollExpired ? '投票期限切れ' : 'あなたの意見を投票する' }}
-                    </button>
-                </div>
-                <p v-if="isPollExpired" class="expired-text">この投票は期限切れです。</p>
-                <p v-if="hasVoted" class="voted-text">投票済みです</p>
-            </div>
-            -->
 
         </form>
       
       </section>
 
-      <section class="c-poll_msg">
+      <section class="c-poll_msg text-center pt-2">
         <template v-if="mode === 'submited'">
           投票ありがとうございます。集計結果は24時間内に反映されます。
         </template>
         <template v-else-if="mode === 'expired'">
           この投票は期限切れです。
         </template>
-        <template v-else="mode === 'voted'">
+        <template v-else-if="mode === 'voted'">
           投票済みです
         </template>
       </section>
 
+    </client-only>
     </section> 
 </template>
-
-<style scoped>
-.progress {
-  width: 100%;
-  height: 15px;
-  background-color: blue;
-  /* background: linear-gradient(to right, #000 0%, #000 calc(attr(--percent) + 2px), #FFFFFF00 0%) no-repeat; */
-}
-</style>
 
 <script setup>
 //Global setting
@@ -100,7 +83,7 @@ const questionaire = ref('');
 const votePercentage = ref('');
 var voteID;
 
-if (apiContent.module_id) {
+if (apiContent && apiContent.module_id) {
   try {
       const { data: content } = await useFetch(
           `https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/${apiContent.module_id}`,
@@ -119,30 +102,6 @@ if (apiContent.module_id) {
         disabled.value = true;
         changeMode('expired');
       };
-
-      console.log(contentDetails);
-      // for (let item in contentDetails) {
-      //   let question, vote;
-
-      //   // if (item.includes('questionnaire_') && !item.includes('questionnaire_title_')) {
-      //   //   vote = contentDetails[item];
-      //   // };
-      //   if (item.includes('questionnaire_title_')) {
-      //     question = contentDetails[item];
-
-      //     loop.push({
-      //         title: question,
-      //     });
-      //   };
-      // };
-      // for (let item in contentDetails) {
-      //   let vote;
-
-      //   if (item.includes('questionnaire_') && !item.includes('questionnaire_title_')) {
-      //     loop[i].vote = contentDetails[item];
-      //   };
-      // };
-
 
       for (let i = 1; i <= 10; i++) {
         const variableNameTitle = `questionnaire_title_${i}`;
@@ -167,7 +126,6 @@ if (apiContent.module_id) {
       };
       loop.subject = contentDetails.subject;
       questionaire.value = loop;
-      console.log(loop);
 
   } catch (error) {
     console.error('An error occurred while fetching data:', error);
@@ -176,34 +134,27 @@ if (apiContent.module_id) {
 
 var selectedOption = null;
 const submitVote = async () => {
-  console.log(selectedOption);
     try {
       if (selectedOption) {
-        console.log('submitting');
         const payload = { num: 1 };
-        /*
-        const response = await $fetch(
-            // `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/submit`,
-            `https://dev-mtown.g.kuroco.app/rcms-api/3/${selectedOption}/${apiContent.module_id}`,
-            {
-              credentials: 'include',
-              method: 'POST',
-              body: JSON.stringify(payload),
-            }
-        );
-        */
+        if (disabled.value == false) { //prevent user frontend modify disabled button for multiple resubmit
+          const response = await $fetch(
+              // `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/submit`,
+              `https://dev-mtown.g.kuroco.app/rcms-api/3/${selectedOption}/${apiContent.module_id}`,
+              {
+                credentials: 'include',
+                method: 'POST',
+                body: JSON.stringify(payload),
+              }
+          );
+          if (response) {
+            changeMode('submited');
+            disabled.value = true;
 
-        // Set cookie
-        
-
-        changeMode('submited');
-        disabled.value = true;
-
-        console.log('submited');
-
-        localStorage.setItem("poll" + voteID, 'voted');
-
-        console.log('localstorage set');
+            // Set localstorage/cookie
+            localStorage.setItem("poll" + voteID, 'voted');
+          }
+        }
       }
     } catch (e) {
       errors.value = e?.data?.errors || [];
@@ -216,16 +167,18 @@ const changeMode = (modeToChange) => {
     mode.value = modeToChange;
 };
 const status = (data) => {
-  //If poll date is expired
-  console.log('');
-
   //If already voted
   mode.value = modeToChange;
 };
 
-const voteHistory = localStorage.getItem("poll" + voteID);
-if (voteHistory && voteHistory == 'voted') {
-  changeMode('voted');
-  disabled.value = true;
+if (process.client) {
+  const voteHistory = localStorage.getItem("poll" + voteID);
+  console.log(disabled.value);
+  if (voteHistory && voteHistory == 'voted') {
+    changeMode('voted');
+    disabled.value = true;
+    console.log('enter');
+    console.log(disabled.value);
+  };
 };
 </script>

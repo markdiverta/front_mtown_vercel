@@ -275,6 +275,50 @@
     }
 }
 
+.c-poll {
+    padding: 0 15px;
+
+    &_heading {
+        font-size: 22px;
+        border-bottom: 1px solid #000;
+        display: inline-block;
+    }
+    &_item {
+        // margin: 10px 0;
+        & .heading {
+            font-weight: bold;
+        }
+    }
+    &_progress {
+        width: 100%;
+        min-width: 0.1%;
+        height: 100%;
+        height: 15px;
+        background-color: $color_main;
+        /* background: linear-gradient(to right, #000 0%, #000 calc(attr(--percent) + 2px), #FFFFFF00 0%) no-repeat; */
+        
+        &-wrap {
+            border-bottom: 1px solid $color_greyLight2;
+            padding: 6px 0;
+
+            @at-root .c-poll .c-poll_item:last-child {
+                border: none;
+            }
+        }
+    }
+    &_form {
+        &-item {
+            padding: 5px 0;
+        }
+        & label {
+            cursor: pointer;
+        }
+        & input {
+            padding-right: 5px;
+        }
+    }
+}
+
 .fb-page, 
 .fb-page span, 
 .fb-page span iframe[style] { 
