@@ -3,7 +3,7 @@
 
       {{questionaire.subject}}
 
-      <section v-if="mode === 'result'">
+      <section v-if="mode === 'result' || mode === 'submited'">
 
         <div v-for="item in questionaire">
           <template v-if="item.title">
@@ -30,6 +30,11 @@
                 </label>
             </div>
 
+            <button type="submit" class="c-btn_main-dark c-btn submit-btn" :disabled='disabled'>
+                {{ isPollExpired ? '投票期限切れ' : 'あなたの意見を投票する' }}
+            </button>
+
+            <!--
             <div v-if="!hasVoted">
                 <div class="pollBtn">
                     <button type="submit" class="c-btn_main-dark c-btn submit-btn" @click="preventMultipleClicks" :disabled='disabled'>
@@ -50,8 +55,22 @@
                 <p v-if="isPollExpired" class="expired-text">この投票は期限切れです。</p>
                 <p v-if="hasVoted" class="voted-text">投票済みです</p>
             </div>
+            -->
+
         </form>
       
+      </section>
+
+      <section class="c-poll_msg">
+        <template v-if="mode === 'submited'">
+          投票ありがとうございます。集計結果は24時間内に反映されます。
+        </template>
+        <template v-else-if="mode === 'expired'">
+          この投票は期限切れです。
+        </template>
+        <template v-else="mode === 'voted'">
+          投票済みです
+        </template>
       </section>
 
     </section> 
@@ -79,6 +98,7 @@ const props = defineProps(['pollContent']);
 const apiContent = props.pollContent;
 const questionaire = ref('');
 const votePercentage = ref('');
+var voteID;
 
 if (apiContent.module_id) {
   try {
@@ -91,10 +111,14 @@ if (apiContent.module_id) {
       let contentDetails = content.value.details;
       let loop = [];
       let totalVote = 0;
+      voteID = apiContent.module_id;
 
       //Check if poll date expired
       let currentDate = new Date();
-      disabled.value = contentDetails.ext_1 ? new Date(contentDetails.ext_1) < currentDate : false;
+      if (contentDetails.ext_1 && new Date(contentDetails.ext_1) < currentDate) {
+        disabled.value = true;
+        changeMode('expired');
+      };
 
       console.log(contentDetails);
       // for (let item in contentDetails) {
@@ -157,6 +181,7 @@ const submitVote = async () => {
       if (selectedOption) {
         console.log('submitting');
         const payload = { num: 1 };
+        /*
         const response = await $fetch(
             // `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/submit`,
             `https://dev-mtown.g.kuroco.app/rcms-api/3/${selectedOption}/${apiContent.module_id}`,
@@ -166,10 +191,19 @@ const submitVote = async () => {
               body: JSON.stringify(payload),
             }
         );
-        changeMode('result');
+        */
+
+        // Set cookie
+        
+
+        changeMode('submited');
         disabled.value = true;
 
         console.log('submited');
+
+        localStorage.setItem("poll" + voteID, 'voted');
+
+        console.log('localstorage set');
       }
     } catch (e) {
       errors.value = e?.data?.errors || [];
@@ -183,9 +217,15 @@ const changeMode = (modeToChange) => {
 };
 const status = (data) => {
   //If poll date is expired
-  console.log();
+  console.log('');
 
   //If already voted
   mode.value = modeToChange;
+};
+
+const voteHistory = localStorage.getItem("poll" + voteID);
+if (voteHistory && voteHistory == 'voted') {
+  changeMode('voted');
+  disabled.value = true;
 };
 </script>
