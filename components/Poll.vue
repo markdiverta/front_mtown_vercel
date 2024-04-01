@@ -86,7 +86,7 @@ var voteID;
 if (apiContent && apiContent.module_id) {
   try {
       const { data: content } = await useFetch(
-          `https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/${apiContent.module_id}`,
+          `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${apiContent.module_id}`,
           {
               credentials: 'include',
           }
@@ -118,7 +118,7 @@ if (apiContent && apiContent.module_id) {
 
         };
       };
-      votePercentage.value = 100/totalVote; 
+      votePercentage.value = totalVote > 0 ? 100/totalVote : 0;
 
       for (let item in loop) {
         let roundUp = Math.round;

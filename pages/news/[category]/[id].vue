@@ -75,6 +75,7 @@ const pollAvailable = ref(false);
 const pollContent = ref('');
 
 if (apiContent && apiContent.questionnaire && apiContent.questionnaire.module_id) {
+  console.log(apiContent.questionnaire);
   pollAvailable.value = true;
   pollContent.value = apiContent.questionnaire;
 };
