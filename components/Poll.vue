@@ -156,8 +156,8 @@ const submitVote = async () => {
           }
         }
       }
-    } catch (e) {
-      errors.value = e?.data?.errors || [];
+    } catch (errors) {
+      errors.value = errors?.data?.errors || [];
     }
 };
 

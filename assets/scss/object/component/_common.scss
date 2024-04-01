@@ -300,6 +300,8 @@
         &-wrap {
             border-bottom: 1px solid $color_greyLight2;
             padding: 6px 0;
+            padding-right: 10px;
+            margin-right: 10px;
 
             @at-root .c-poll .c-poll_item:last-child {
                 border: none;
