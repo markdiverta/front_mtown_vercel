@@ -60,8 +60,8 @@ if (catAmount > 2 && lastChar != '/') { //If there is 2 category level, then cap
 
 //===== Main API content
 const { data: news } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${route.params.id}`,
-  // `https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/${route.params.id}`,
+  // `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${route.params.id}`,
+  `https://dev-mtown.g.kuroco.app/rcms-api/1/content/details/${route.params.id}`,
   // `https://mtown-vercel.g.kuroco.app/rcms-api/1/content/details/${route.params.id}`,
   {
     credentials: 'include',
@@ -75,7 +75,6 @@ const pollAvailable = ref(false);
 const pollContent = ref('');
 
 if (apiContent && apiContent.questionnaire && apiContent.questionnaire.module_id) {
-  console.log(apiContent.questionnaire);
   pollAvailable.value = true;
   pollContent.value = apiContent.questionnaire;
 };
