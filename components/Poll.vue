@@ -139,8 +139,8 @@ const submitVote = async () => {
         const payload = { num: 1 };
         if (disabled.value == false) { //prevent user frontend modify disabled button for multiple resubmit
           const response = await $fetch(
-              // `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/submit`,
-              `https://dev-mtown.g.kuroco.app/rcms-api/3/${selectedOption}/${apiContent.module_id}`,
+              `${config.public.kurocoApiDomain}/rcms-api/3/${selectedOption}/${apiContent.module_id}`,
+              // `https://dev-mtown.g.kuroco.app/rcms-api/3/${selectedOption}/${apiContent.module_id}`,
               {
                 credentials: 'include',
                 method: 'POST',
