@@ -173,12 +173,9 @@ const status = (data) => {
 
 if (process.client) {
   const voteHistory = localStorage.getItem("poll" + voteID);
-  console.log(disabled.value);
   if (voteHistory && voteHistory == 'voted') {
     changeMode('voted');
     disabled.value = true;
-    console.log('enter');
-    console.log(disabled.value);
   };
 };
 </script>
