@@ -15,7 +15,7 @@
             <div class="col c-poll_progress-wrap">
               <div class="row align-items-center">
                 <div class="col"><div class="c-poll_progress" :style="{ width: `${item.percentage}%` }"></div></div>
-                <div class="col-auto">{{item.percentage}}%</div>
+                <div class="col-auto c-poll_percent">{{item.percentage}}%</div>
               </div>
             </div>
           </template>
