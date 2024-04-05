@@ -166,6 +166,8 @@
 
 <script setup>
 //======== Global setting
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const config = useRuntimeConfig();
 
 useHead({
@@ -191,7 +193,8 @@ useHead({
 
 //Link function
 const goTo = (url) => {
-    window.location.href = url;
+    // window.location.href = url;
+    router.push(url);
 };
 
 //Carousel
