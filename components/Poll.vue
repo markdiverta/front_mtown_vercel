@@ -4,28 +4,6 @@
 
       <h3 class="c-poll_heading">{{questionaire.subject}}</h3>
 
-      <section class="c-poll pt-3" v-if="mode === 'result' || mode === 'submited' || mode === 'voted'">
-
-        <div class="row c-poll_item align-items-center" v-for="item in questionaire">
-          <template v-if="item.title">
-            <div class="col-4 heading">
-              {{item.title}}
-              <!--{{item.vote}}-->
-            </div>
-            <div class="col c-poll_progress-wrap">
-              <div class="row align-items-center">
-                <div class="col"><div class="c-poll_progress" :style="{ width: `${item.percentage}%` }"></div></div>
-                <div class="col-auto c-poll_percent">{{item.percentage}}%</div>
-              </div>
-            </div>
-          </template>
-        </div>
-
-        <div class="text-center pt-4">
-          <button type="button" class="c-btn_main-dark c-btn submit-btn" @click="changeMode('vote')" :disabled='disabled'>あなたの意見を投票する</button>
-        </div>
-
-      </section>
       <section v-if="mode === 'vote'">
 
         <form @submit.prevent="submitVote" class="c-poll_form">
@@ -51,6 +29,29 @@
         </form>
       
       </section>
+      <section class="c-poll pt-3" v-else>
+
+        <div class="row c-poll_item align-items-center" v-for="item in questionaire">
+          <template v-if="item.title">
+            <div class="col-4 heading">
+              {{item.title}}
+              <!--{{item.vote}}-->
+            </div>
+            <div class="col c-poll_progress-wrap">
+              <div class="row align-items-center">
+                <div class="col"><div class="c-poll_progress" :style="{ width: `${item.percentage}%` }"></div></div>
+                <div class="col-auto c-poll_percent">{{item.percentage}}%</div>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <div class="text-center pt-4">
+          <button type="button" class="c-btn_main-dark c-btn submit-btn" @click="changeMode('vote')" :disabled='disabled'>あなたの意見を投票する</button>
+        </div>
+
+      </section>
+      
 
       <section class="c-poll_msg text-center pt-2">
         <template v-if="mode === 'submited'">
@@ -82,6 +83,19 @@ const apiContent = props.pollContent;
 const questionaire = ref('');
 const votePercentage = ref('');
 var voteID;
+
+console.log(apiContent);
+
+const mode = ref('result');
+
+const changeMode = (modeToChange) => {
+    mode.value = modeToChange;
+};
+const status = (data) => {
+  //If already voted
+  mode.value = modeToChange;
+};
+
 
 if (apiContent && apiContent.module_id) {
   try {
@@ -162,16 +176,6 @@ const submitVote = async () => {
     }
 };
 
-const mode = ref('result');
-
-const changeMode = (modeToChange) => {
-    mode.value = modeToChange;
-};
-const status = (data) => {
-  //If already voted
-  mode.value = modeToChange;
-};
-
 if (process.client) {
   const voteHistory = localStorage.getItem("poll" + voteID);
   if (voteHistory && voteHistory == 'voted') {
@@ -179,4 +183,6 @@ if (process.client) {
     disabled.value = true;
   };
 };
+
+console.log(mode);
 </script>
