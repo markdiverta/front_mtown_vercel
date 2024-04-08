@@ -47,7 +47,8 @@ export default defineNuxtConfig({
   ssr: true,
   runtimeConfig: {
     public: {
-      kurocoApiDomain: 'https://api.mtown.my',
+      // kurocoApiDomain: 'https://api.mtown.my',
+      kurocoApiDomain: 'https://dev-mtown.g.kuroco.app',
       //kurocoApiDomain: 'https://mtown-vercel.g.kuroco.app',
       // kurocoApiDomain: 'https://dev-nuxt-corporate.g.kuroco.app',
     },
