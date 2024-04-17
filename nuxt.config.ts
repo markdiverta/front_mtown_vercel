@@ -44,8 +44,7 @@ export default defineNuxtConfig({
   ignore:  [
     // 'pages/eat/*',
   ],
-  ssr: false,
-  isr: true,
+  ssr: true,
   runtimeConfig: {
     public: {
       // kurocoApiDomain: 'https://api.mtown.my',
