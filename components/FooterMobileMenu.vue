@@ -87,11 +87,13 @@
                         <li><a href="/column/comics/">4コマ</a></li>
                         <li><a href="/column/malaysia-profiles/">マレーシア美人ライフ</a></li>
 
-                        <template v-if="dynamicMenu.length > 0">
+                        <!-- <template v-if="dynamicMenu.length > 0">
                             <li v-for="(item, index) in dynamicMenu" :key="index">
                                 <a :href="item.url">{{ item.title }}</a>
                             </li>
-                        </template>
+                        </template> -->
+                        <li><a href="column/j-league/">Jリーグ</a></li>
+                        <li><a href="column/malaysia-calendar/">マレーシアの暦</a></li>
                     </ul>
                     </div>
                 </template>
@@ -205,20 +207,20 @@ const items = [{
 
 
 //Dynamic header menu - コラム
-const menuAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=14`);
-var response = await fetch(menuAPI.value, {
-    credentials: 'include',
-});
-const menuData = await response.json();
-var dynamicMenu = [];
-for (let key in menuData.list) {
-    let item = menuData.list[key];
-    if (item.slug) {
-        dynamicMenu.push({
-            slug: item.slug,
-            url: '/column/' + item.slug + '/',
-            title: item.category_nm,
-        });
-    };
-};
+// const menuAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=14`);
+// var response = await fetch(menuAPI.value, {
+//     credentials: 'include',
+// });
+// const menuData = await response.json();
+// var dynamicMenu = [];
+// for (let key in menuData.list) {
+//     let item = menuData.list[key];
+//     if (item.slug) {
+//         dynamicMenu.push({
+//             slug: item.slug,
+//             url: '/column/' + item.slug + '/',
+//             title: item.category_nm,
+//         });
+//     };
+// };
 </script>

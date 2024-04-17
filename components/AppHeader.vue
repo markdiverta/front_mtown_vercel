@@ -110,11 +110,14 @@
                             <li :class="currentPage('/comics') ? 'active' : ''"><NuxtLink to="/column/comics/">4コマ</NuxtLink></li>
                             <li :class="currentPage('/malaysia-profiles') ? 'active' : ''"><NuxtLink to="/column/malaysia-profiles/">マレーシア美人ライフ</NuxtLink></li>
                             
-                            <template v-if="dynamicMenu.length > 0">
+                            <!-- <template v-if="dynamicMenu.length > 0"> 
                                 <li v-for="(item, index) in dynamicMenu" :key="index" :class="currentPage('/' + item.slug + '/') ? 'active' : ''">
                                     <NuxtLink :to="item.url">{{ item.title }}</NuxtLink>
                                 </li>
-                            </template>
+                            </template> -->
+
+                            <li :class="currentPage('/j-league') ? 'active' : ''"><NuxtLink to="column/j-league/">Jリーグ</NuxtLink></li>
+                            <li :class="currentPage('/malaysia-calendar') ? 'active' : ''"><NuxtLink to="column/malaysia-calendar/">マレーシアの暦</NuxtLink></li>
                         </ul>
                     </div>
                 </li>
@@ -193,21 +196,21 @@ const searchCatPath = (url) => {
 };
 
 //Dynamic header menu - コラム
-const menuAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=14`);
-var response = await fetch(menuAPI.value, {
-    credentials: 'include',
-});
-const menuData = await response.json();
-var dynamicMenu = [];
-for (let key in menuData.list) {
-    let item = menuData.list[key];
-    if (item.slug) {
-        dynamicMenu.push({
-            slug: item.slug,
-            url: '/column/' + item.slug + '/',
-            title: item.category_nm,
-        });
-    };
-};
+// const menuAPI = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/category?topics_group_id=14`);
+// var response = await fetch(menuAPI.value, {
+//     credentials: 'include',
+// });
+// const menuData = await response.json();
+// var dynamicMenu = [];
+// for (let key in menuData.list) {
+//     let item = menuData.list[key];
+//     if (item.slug) {
+//         dynamicMenu.push({
+//             slug: item.slug,
+//             url: '/column/' + item.slug + '/',
+//             title: item.category_nm,
+//         });
+//     };
+// };
 </script>
 
