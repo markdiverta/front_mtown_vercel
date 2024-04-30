@@ -52,13 +52,15 @@
             </div>
         </div>
         </div>
-
+        
+        <client-only>
         <!-- Twitter -->
         <div class="l-content_padding -xs">
         <div id="twitter-timeline" class="l-sidebar_twitter">
             <!-- Placeholder for Twitter component -->
         </div>
         </div>
+        </client-only>
 
         <div v-if="sidebarRelated && sidebarRelated.length > 0" class="l-content_padding -xs c-sidebar_ads">
             <h2 class="c-heading_bg --bg_grey c-heading_h3">関連メディア</h2>
