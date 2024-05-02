@@ -116,8 +116,8 @@
                                 </li>
                             </template> -->
 
-                            <li :class="currentPage('/j-league') ? 'active' : ''"><NuxtLink to="column/j-league/">Jリーグ</NuxtLink></li>
-                            <li :class="currentPage('/malaysia-calendar') ? 'active' : ''"><NuxtLink to="column/malaysia-calendar/">マレーシアの暦</NuxtLink></li>
+                            <li :class="currentPage('/j-league') ? 'active' : ''"><NuxtLink to="/column/j-league/">Jリーグ</NuxtLink></li>
+                            <li :class="currentPage('/malaysia-calendar') ? 'active' : ''"><NuxtLink to="/column/malaysia-calendar/">マレーシアの暦</NuxtLink></li>
                         </ul>
                     </div>
                 </li>

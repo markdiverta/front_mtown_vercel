@@ -92,8 +92,8 @@
                                 <a :href="item.url">{{ item.title }}</a>
                             </li>
                         </template> -->
-                        <li><a href="column/j-league/">Jリーグ</a></li>
-                        <li><a href="column/malaysia-calendar/">マレーシアの暦</a></li>
+                        <li><a href="/column/j-league/">Jリーグ</a></li>
+                        <li><a href="/column/malaysia-calendar/">マレーシアの暦</a></li>
                     </ul>
                     </div>
                 </template>
