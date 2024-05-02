@@ -238,8 +238,6 @@ const { data: newsContent } = await useFetch(
 );
 let topics = [];
 let data = newsContent.value;
-console.log('start');
-console.log(data);
 for (let key in data.list) {
     const item = data.list[key];
     let desc, url;
