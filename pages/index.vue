@@ -193,8 +193,11 @@ useHead({
 
 //Link function
 const goTo = (url) => {
-    // window.location.href = url;
-    router.push(url);
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        window.location.href = url;
+    } else {
+        router.push(url);
+    }
 };
 
 //Carousel
@@ -206,6 +209,7 @@ const articleFeature = ref([]);
 async function featureCarousel() {
   const urlCarousel = `${config.public.kurocoApiDomain}/rcms-api/1/content/details/47640`;
   const response = await fetch(urlCarousel, {
+        refreshInterval: 3000,
         credentials: 'include',
     });
     const newsData = await response.json();
@@ -234,6 +238,8 @@ const { data: newsContent } = await useFetch(
 );
 let topics = [];
 let data = newsContent.value;
+console.log('start');
+console.log(data);
 for (let key in data.list) {
     const item = data.list[key];
     let desc, url;
