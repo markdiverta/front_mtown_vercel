@@ -459,6 +459,7 @@ const handleOnSubmit = async () => {
         credentials: 'include',
         method: 'POST',
         body: submitData,
+        email_send_ng_flg: false,
       }
     );
     submitted.value = true;
