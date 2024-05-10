@@ -50,6 +50,17 @@ const authenticated = ref(false);
 const authenticate = () => {
   if (password.value === correctPassword) {
     authenticated.value = true;
+
+     // Set localstorage/cookie
+     localStorage.setItem("testpass", 'login');
   }
+};
+
+
+if (process.client) {
+  const passwordLogin = localStorage.getItem("testpass");
+  if (passwordLogin) {
+    authenticated.value = true;
+  };
 };
 </script>
