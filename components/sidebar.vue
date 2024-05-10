@@ -41,26 +41,26 @@
                 loading="lazy"
             >
         </div>
-
+        
         <!-- Facebook -->
-        <div class="l-content_padding -xs">
+        <!-- <div class="l-content_padding -xs">
         <h2 class="c-heading_bg --bg_grey c-heading_h3">SNS</h2>
         <div class="l-sidebar_fb">
             <div id="fb-root"></div>
             <div class="fb-page" data-href="https://www.facebook.com/weeklymtown" data-show-posts="true"  data-width="" data-height="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false">
             <!-- Placeholder for Facebook component -->
-            </div>
+            <!--</div>
         </div>
-        </div>
+        </div> -->
         
-        <client-only>
+        <!-- <client-only> -->
         <!-- Twitter -->
-        <div class="l-content_padding -xs">
-        <div id="twitter-timeline" class="l-sidebar_twitter">
+        <!-- <div class="l-content_padding -xs">
+        <div id="twitter-timeline" class="l-sidebar_twitter"> -->
             <!-- Placeholder for Twitter component -->
+        <!-- </div>
         </div>
-        </div>
-        </client-only>
+        </client-only> -->
 
         <div v-if="sidebarRelated && sidebarRelated.length > 0" class="l-content_padding -xs c-sidebar_ads">
             <h2 class="c-heading_bg --bg_grey c-heading_h3">関連メディア</h2>
@@ -97,6 +97,7 @@ const goTo = (url) => {
 };
 
 //Social Media feed
+/*
 onMounted(() => {
   // Load Facebook SDK
   window.fbAsyncInit = function () {
@@ -146,6 +147,7 @@ onMounted(() => {
     );
   }
 });
+*/
 
 //======== Ebook
 const sidebarEbook = ref({});
