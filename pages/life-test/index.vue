@@ -2,12 +2,12 @@
   <section class="p-page_blog l-content_maxWidth-lg l-container">
     <section class="row l-page_content-row">
       <section class="col-md-9 col-12" fluid>
-        <div v-if="authenticated" class="l-page_content">
+        <div class="l-page_content">
           <ArticleListLanding :catSlug="catSlug" :apiURLBase="apiURLBase" :apiURL="apiURL"/>
         </div>
-        <div v-else>
+        <!-- <div v-else>
           <input type="password" v-model="password" placeholder="Enter password" @keyup.enter="authenticate">
-        </div>
+        </div> -->
       </section>
       <Sidebar/>
     </section>
