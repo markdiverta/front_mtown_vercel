@@ -164,8 +164,9 @@ async function fetchData(url) {
   }
 };
 // Innitial API Content Function calling
+if (process.server) {
 fetchData();
-
+};
 
 
 //Get Category info for custom meta & page title setup
