@@ -72,7 +72,7 @@ const catSlug = catSlugProps.value
 const apiURLBase = ref(props.apiURLBase);
 const apiURL = ref(props.apiURL);
 
-var pageName;
+var pageName, url;
 var contentChecked = false;
 const topics = ref('[]');
 
@@ -102,6 +102,59 @@ const goTo = (url) => {
     // window.location.href = url;
     router.push(url);
 };
+
+//API Content for server
+apiURL.value = url ? url : apiURL.value; 
+const response = await fetch(apiURL.value, {
+    credentials: 'include',
+});
+const newsData = await response.json(); //Convert to json to use on content structuring
+
+if (newsData) {
+    let list = topics.value ? [] : topics.value;
+    pagiTotal.value = newsData.pageInfo.totalCnt;
+    const content = newsData;
+    if (!pageName) { //In case page name already set in server meta
+        pageName = content.list[0].group_nm;
+    };
+    contentChecked = true;
+    for (let key in content.list) {
+        const item = content.list[key];
+        let url;
+        let desc = item.contents;
+        let catURL = item.category_parent_id ? catSlug + item.contents_type_slug : catSlug;
+        desc = desc ? desc.replace(/<[^>]+>/g, '') : ''; //remove HTML
+        if (desc && desc.length > 120) {
+            desc = desc.substring(0, 120);
+            desc += '...';
+        };
+
+        //Check if has child category or just parent category
+        if (item.contents_type_slug && item.category_parent_id) {
+            url = catSlug + item.contents_type_slug + '/';
+        } else {
+            url = catSlug;
+        };
+        //Check if has page slug else use page id
+        if (item.slug) {
+            url += item.slug;
+        } else {
+            url += item.topics_id;
+        };
+        list.push({
+            date: item.ymd.substring(0, 10).replaceAll('-', '.'),
+            title: item.subject,
+            desc: desc,
+            cat: item.contents_type_nm,
+            catURL: catURL,
+            id: item.topics_id,
+            url: url,
+            thumb: item.ext_1,
+        });
+    };
+    topics.value = list;
+};
+
 
 //API Content Function
 async function fetchData(url) {
@@ -161,10 +214,6 @@ async function fetchData(url) {
     console.error('Error in fetchData:', error);
   }
 };
-// Innitial API Content Function calling
-fetchData();
-
-
 
 //Get Category info for custom meta & page title setup
 var catAPIGroupID;
@@ -212,4 +261,5 @@ try { //Not using async function as it run on frontend, this need run on backend
 } catch (error) {
   console.error('An error occurred while fetching data:', error);
 }
+
 </script>
