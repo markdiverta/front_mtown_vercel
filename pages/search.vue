@@ -23,13 +23,16 @@ const config = useRuntimeConfig(); //API route
 const catSlug = '/news/';
 const topicID = '1';
 
-
 //Get search keywords
 const route = useRoute();
 var searchKeyword;
 if (typeof route.query?.keyword != 'undefined' && route.query?.keyword != ''){
+    console.log('keyword detected');
     searchKeyword = route.query.keyword;
 };
+
+console.log(searchKeyword);
+console.log(route.query);
 
 //API Content setting
 const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_keyword=${searchKeyword}`);

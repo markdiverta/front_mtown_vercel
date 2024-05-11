@@ -71,9 +71,12 @@ export default defineNuxtConfig({
   },
   routeRules: {
     // all routes (by default) will be revalidated every 60 seconds, in the background
-    '/**': { isr: 600 }
+    '/**': { isr: 600 },
   },
-
+  router: {
+    //Prevent parameters remove automatically from the URL
+    preserveQuery: true
+  },
   devtools: { enabled: true },
   css: [
     '@/assets/scss/style.scss',
