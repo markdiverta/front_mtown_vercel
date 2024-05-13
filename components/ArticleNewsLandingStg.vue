@@ -48,10 +48,26 @@
 
       </section>
       <section v-else-if="searchNotFound && contentChecked || contentChecked && !topics.length || contentChecked">
+
+        <template v-if="searchNotFound && contentChecked">
+            searchNotFound && contentChecked
+        </template>
+        <template v-else-if="contentChecked && !topics.length">
+            contentChecked && !topics.length
+        </template>
+        <template v-else-if="contentChecked">
+            contentChecked
+        </template>
+        <template v-else-if="searchNotFound">
+            searchNotFound
+        </template>
+        <template v-else-if="!topics.length">
+            !topics.length
+        </template>
           
             <template v-if="searchNotFound">
                 <p class="text-center">Couldn't find any content. Please try searching for different keywords.</p>
-                <form class="c-form row pt-4" action="/search/">
+                <form class="c-form row pt-4" action="/searchstg/">
                     <div class="col-auto ml-auto">
                         <input
                             type="text"
