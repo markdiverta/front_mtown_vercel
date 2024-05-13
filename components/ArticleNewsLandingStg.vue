@@ -95,6 +95,8 @@
             
       </section>
 
+      {{topics}}
+
     </section>
     <PageMeta v-if="catAPILoaded" :apiContent="catAPIContent"/>
 </template>
@@ -253,16 +255,19 @@ const goTo = (url) => {
 // API Content Function async for pagination
 async function fetchData(url) {
   try {
+    console.log('access');
     apiURL.value = url ? url : apiURL.value; 
     const response = await fetch(apiURL.value, {
       credentials: 'include',
     });
     const newsData = await response.json(); //Convert to json to use on content structuring
     if (newsData.list && newsData.list.length < 1) {
+        console.log('access 1');
         searchNotFound.value = isSearch ? true : false;
         contentChecked.value = true;
     }
     else if (newsData) {
+        console.log('access 2');
         let list = topics.value ? [] : topics.value;
         pagiTotal.value = newsData.pageInfo.totalCnt;
         pagiCount.value = newsData.pageInfo.totalPageCnt;
