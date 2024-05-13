@@ -27,18 +27,11 @@ const topicID = '1';
 const route = useRoute();
 var searchKeyword;
 if (typeof route.query?.keyword != 'undefined' && route.query?.keyword != ''){
-    console.log('keyword detected');
     searchKeyword = route.query.keyword;
-
-    console.log(searchKeyword);
     if (searchKeyword.charAt(searchKeyword.length - 1) === '/') {
-        console.log('/ detected');
         searchKeyword = searchKeyword.slice(0, -1);
     };
 };
-
-console.log(searchKeyword);
-console.log(route.query);
 
 //API Content setting
 const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_keyword=${searchKeyword}`);
