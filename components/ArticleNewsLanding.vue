@@ -43,7 +43,7 @@
           />
 
       </section>
-      <section v-else-if="searchNotFound || contentChecked && !topics.length || contentChecked">
+      <section v-else-if="searchNotFound && contentChecked || contentChecked && !topics.length || contentChecked">
           
             <template v-if="searchNotFound">
                 <p class="text-center">Couldn't find any content. Please try searching for different keywords.</p>
