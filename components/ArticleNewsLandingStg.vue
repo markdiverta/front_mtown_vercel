@@ -16,7 +16,9 @@
       contentChecked: {{contentChecked}}<br>
 
       searchNotFound: {{searchNotFound}}<br>
-    
+      
+      <client-only>
+        
       <UProgress animation="carousel" v-if="!contentChecked" size="sm" class="c-loadingbar"/>
 
       <section v-if="topics[0].title">
@@ -96,6 +98,8 @@
       </section>
 
       {{topics}}
+
+      </client-only>
 
     </section>
     <PageMeta v-if="catAPILoaded" :apiContent="catAPIContent"/>
