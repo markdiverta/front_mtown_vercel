@@ -149,106 +149,106 @@ const goTo = (url) => {
 };
 
 //API function standard
-apiURL.value = url ? url : apiURL.value; 
-const response = await fetch(apiURL.value, {
-    credentials: 'include',
-});
-const newsData = await response.json(); //Convert to json to use on content structuring
-console.log('newsData');
-console.log(newsData);
-if (newsData.list && newsData.list.length < 1) {
-    console.log('enter');
-    // searchNotFound.value = isSearch ? true : false;
-    contentChecked.value = true;
-    console.log('enter end');
-}
-else if (newsData) {
-    console.log('enter 2');
-    let list = topics.value ? [] : topics.value;
-    pagiTotal.value = newsData.pageInfo.totalCnt;
-    pagiCount.value = newsData.pageInfo.totalPageCnt;
-    const content = newsData;
-    if (!pageName) {
-        pageName = isSubCategory ? content.list[0].contents_type_nm : content.list[0].group_nm;
-    };
-    parentCat = isSubCategory ? content.list[0].group_nm : '';
+// apiURL.value = url ? url : apiURL.value; 
+// const response = await fetch(apiURL.value, {
+//     credentials: 'include',
+// });
+// const newsData = await response.json(); //Convert to json to use on content structuring
+// console.log('newsData');
+// console.log(newsData);
+// if (newsData.list && newsData.list.length < 1) {
+//     console.log('enter');
+//     // searchNotFound.value = isSearch ? true : false;
+//     contentChecked.value = true;
+//     console.log('enter end');
+// }
+// else if (newsData) {
+//     console.log('enter 2');
+//     let list = topics.value ? [] : topics.value;
+//     pagiTotal.value = newsData.pageInfo.totalCnt;
+//     pagiCount.value = newsData.pageInfo.totalPageCnt;
+//     const content = newsData;
+//     if (!pageName) {
+//         pageName = isSubCategory ? content.list[0].contents_type_nm : content.list[0].group_nm;
+//     };
+//     parentCat = isSubCategory ? content.list[0].group_nm : '';
     
-    contentChecked.value = true;
-    console.log('enter 2 ned');
-    for (let key in content.list) {
-        const item = content.list[key];
-        let url, thumb;
-        let desc = item.contents;
-        let catURL = item.category_parent_id ? catSlug + item.contents_type_slug : catSlug;
-        desc = desc ? desc.replace(/<[^>]+>/g, '') : ''; //remove HTML
-        if (desc && desc.length > 120) {
-            desc = desc.substring(0, 120);
-            desc += '...';
-        };
-        //Check if has child category or just parent category
-        if (item.contents_type_slug && item.category_parent_id) {
-            url = catSlug + item.contents_type_slug + '/';
-        } else {
-            url = catSlug;
-        };
-        //Check if is parent & has specific category props  *for columns landing page, not for news as news has parent
-        if (isSubCategory && !item.category_parent_id) {
-            url += isSubCategory + '/';
-        };
-        //For column landing (static *above is dynamic category folder)
-        if (isSubCategory == 'column' && item.contents_type_slug) {
-            url = item.contents_type_slug + '/';
-        };
-        //Check if has page slug else use page id
-        if (item.slug) {
-            url += item.slug;
-        } else {
-            url += item.topics_id;
-        };
-        //Thumbnail check
-        if (item.ext_1 && item.ext_1.includes('http://') || item.ext_1 && item.ext_1.includes('https://') ) {
-            thumb = item.ext_1;
-        } else if (item.ext_2 && item.ext_2.includes('http://') || item.ext_2 && item.ext_2.includes('https://') ) {
-            thumb = item.ext_2;
-        };
-        //For search page only
-        if (isSearch) {
-            let path;
-            if (item.topics_group_id) {
-                let parentID = item.topics_group_id;
-                path = parentID == '1' ? '/news/'
-                    : parentID == '7' ? '/eat/'
-                    : parentID == '8' ? '/life/'
-                    : parentID == '9' ? '/feature/'
-                    : parentID == '10' ? '/interview/'
-                    : parentID == '11' ? '/comics/'
-                    : parentID == '12' ? '/community/'
-                    : parentID == '13' ? '/malaysia-profiles/'
-                    : parentID == '14' ? '/j-league/'
-                    : parentID == '15' ? '/backnumber/'
-                    : '';
-            };
-            if (path == '/news/') {
-                url = item.contents_type_slug ? path + item.contents_type_slug + '/' : path + 'uncategories/';
-            } else {
-                url = path;
-                catURL = path; //No category in others topics except news
-            };
-            url = item.slug ? url + item.slug : url + item.topics_id;
-        };
-        list.push({
-            date: item.ymd ? item.ymd.substring(0, 10).replaceAll('-', '.') : '',
-            title: item.subject,
-            desc: desc,
-            cat: item.contents_type_nm,
-            catURL: catURL,
-            id: item.topics_id,
-            url: url,
-            thumb: item.ext_1,
-        });
-    };
-    topics.value = list;
-};
+//     contentChecked.value = true;
+//     console.log('enter 2 ned');
+//     for (let key in content.list) {
+//         const item = content.list[key];
+//         let url, thumb;
+//         let desc = item.contents;
+//         let catURL = item.category_parent_id ? catSlug + item.contents_type_slug : catSlug;
+//         desc = desc ? desc.replace(/<[^>]+>/g, '') : ''; //remove HTML
+//         if (desc && desc.length > 120) {
+//             desc = desc.substring(0, 120);
+//             desc += '...';
+//         };
+//         //Check if has child category or just parent category
+//         if (item.contents_type_slug && item.category_parent_id) {
+//             url = catSlug + item.contents_type_slug + '/';
+//         } else {
+//             url = catSlug;
+//         };
+//         //Check if is parent & has specific category props  *for columns landing page, not for news as news has parent
+//         if (isSubCategory && !item.category_parent_id) {
+//             url += isSubCategory + '/';
+//         };
+//         //For column landing (static *above is dynamic category folder)
+//         if (isSubCategory == 'column' && item.contents_type_slug) {
+//             url = item.contents_type_slug + '/';
+//         };
+//         //Check if has page slug else use page id
+//         if (item.slug) {
+//             url += item.slug;
+//         } else {
+//             url += item.topics_id;
+//         };
+//         //Thumbnail check
+//         if (item.ext_1 && item.ext_1.includes('http://') || item.ext_1 && item.ext_1.includes('https://') ) {
+//             thumb = item.ext_1;
+//         } else if (item.ext_2 && item.ext_2.includes('http://') || item.ext_2 && item.ext_2.includes('https://') ) {
+//             thumb = item.ext_2;
+//         };
+//         //For search page only
+//         if (isSearch) {
+//             let path;
+//             if (item.topics_group_id) {
+//                 let parentID = item.topics_group_id;
+//                 path = parentID == '1' ? '/news/'
+//                     : parentID == '7' ? '/eat/'
+//                     : parentID == '8' ? '/life/'
+//                     : parentID == '9' ? '/feature/'
+//                     : parentID == '10' ? '/interview/'
+//                     : parentID == '11' ? '/comics/'
+//                     : parentID == '12' ? '/community/'
+//                     : parentID == '13' ? '/malaysia-profiles/'
+//                     : parentID == '14' ? '/j-league/'
+//                     : parentID == '15' ? '/backnumber/'
+//                     : '';
+//             };
+//             if (path == '/news/') {
+//                 url = item.contents_type_slug ? path + item.contents_type_slug + '/' : path + 'uncategories/';
+//             } else {
+//                 url = path;
+//                 catURL = path; //No category in others topics except news
+//             };
+//             url = item.slug ? url + item.slug : url + item.topics_id;
+//         };
+//         list.push({
+//             date: item.ymd ? item.ymd.substring(0, 10).replaceAll('-', '.') : '',
+//             title: item.subject,
+//             desc: desc,
+//             cat: item.contents_type_nm,
+//             catURL: catURL,
+//             id: item.topics_id,
+//             url: url,
+//             thumb: item.ext_1,
+//         });
+//     };
+//     topics.value = list;
+// };
 
 // API Content Function async for pagination
 async function fetchData(url) {
