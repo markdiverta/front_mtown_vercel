@@ -3,15 +3,11 @@
       
       <div class="l-breadcum">
             <a href="/" class="item">ホーム</a>
-            <template v-if="parentCat">
-                <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-                <a :href="catSlug" class="item">{{parentCat}}</a>
-            </template>
             <i aria-hidden="true" class="icon item arrow mdi mdi-chevron-right"></i>
-            <span class="item">{{pageName}}</span>
+            <span class="item">検索</span>
       </div>
 
-      <h1 class="p-heading">{{pageName}}</h1>
+      <h1 class="p-heading">検索</h1>
       
       <client-only>
         

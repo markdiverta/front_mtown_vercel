@@ -5,7 +5,7 @@
 
     <div class="l-page_content">
           
-        <ArticleNewsLanding :catSlug="catSlug" :apiURLBase="apiURLBase" :apiURL="apiURL" :isSearch="1"/>
+        <ArticleNewsLandingSearch :catSlug="catSlug" :apiURLBase="apiURLBase" :apiURL="apiURL" :isSearch="1"/>
 
     </div>
 
