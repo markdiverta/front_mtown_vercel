@@ -50,10 +50,10 @@
       <section v-else-if="searchNotFound && contentChecked || contentChecked && !topics.length || contentChecked">
 
         <template v-if="searchNotFound && contentChecked">
-            searchNotFound && contentChecked
+            searchNotFound & contentChecked
         </template>
         <template v-else-if="contentChecked && !topics.length">
-            contentChecked && !topics.length
+            contentChecked & !topics.length
         </template>
         <template v-else-if="contentChecked">
             contentChecked
@@ -158,7 +158,7 @@ console.log('newsData');
 console.log(newsData);
 if (newsData.list && newsData.list.length < 1) {
     console.log('enter');
-    searchNotFound.value = isSearch ? true : false;
+    // searchNotFound.value = isSearch ? true : false;
     contentChecked.value = true;
     console.log('enter end');
 }
