@@ -352,8 +352,8 @@ async function fetchData(url) {
     console.error('Error in fetchData:', error);
   }
 };
-// Innitial API Content Function calling
-// fetchData();
+//Innitial API Content Function calling
+fetchData();
 
 // NOTED: Not converting from async function as it needed for pagination (to re-run async function for pagination trigger)
 // try {
