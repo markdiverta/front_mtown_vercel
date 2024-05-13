@@ -20,7 +20,7 @@
                         <NuxtLink to="/inquiry/" class="c-btn c-btn_main-dark">お問い合わせ<span class="d-sm-inline d-none">はこちら</span></NuxtLink>
                     </div>
                     <div class="col-12 pt-0">
-                        <form class="c-form row pt-4" action="/search">
+                        <form class="c-form row pt-4" action="/search/">
                             <div class="col">
                                 <input
                                     type="text"

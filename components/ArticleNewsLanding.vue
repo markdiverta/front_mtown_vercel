@@ -47,7 +47,7 @@
           
             <template v-if="searchNotFound">
                 <p class="text-center">Couldn't find any content. Please try searching for different keywords.</p>
-                <form class="c-form row pt-4" action="/search">
+                <form class="c-form row pt-4" action="/search/">
                     <div class="col-auto ml-auto">
                         <input
                             type="text"
