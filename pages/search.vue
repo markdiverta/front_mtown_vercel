@@ -38,10 +38,10 @@ const apiURLBase = ref(`${config.public.kurocoApiDomain}/rcms-api/1/content/sear
 const apiURL = ref(apiURLBase.value);
 const topics = ref('[]');
 
-
 //If coming from footer mobile menu
-if (typeof route.query?.filter != 'undefined' && route.query?.filter == 'topics') {
-    apiURL.value = `${config.public.kurocoApiDomain}/rcms-api/1/content/search?topics_group_id%5B%5D=10&topics_group_id%5B%5D=7&topics_group_id%5B%5D=8`;
+if (typeof route.query?.filter != 'undefined' && route.query?.filter.includes('topics')) {
+    apiURL.value = `${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id%5B%5D=10&topics_group_id%5B%5D=7&topics_group_id%5B%5D=8`;
+    apiURLBase.value = apiURL.value;
 };
 
 //Link function
