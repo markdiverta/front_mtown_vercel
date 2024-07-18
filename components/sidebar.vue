@@ -1,7 +1,7 @@
 <template>
     <section class="col-md-3 col-12 l-sidebar" fluid>
 
-        <div v-if="sidebarEbook.loaded && sidebarEbook.url" class="l-content_padding -sm pt-0 c-sidebar_ebook">
+        <div v-if="sidebarEbook && sidebarEbook.loaded && sidebarEbook.url" class="l-content_padding -sm pt-0 c-sidebar_ebook">
             <h2 class="c-heading_bg --bg_grey c-heading_h3">最新号eBook</h2>
             <img class="c-img_fluid c-clickable mb-3" 
                 @click="goTo(sidebarEbook.url)"
@@ -151,118 +151,131 @@ onMounted(() => {
 
 //======== Ebook
 const sidebarEbook = ref({});
-const { data: news } = await useFetch(
+const { data: news, error } = await useFetch(
 `${config.public.kurocoApiDomain}/rcms-api/1/content/details/47641`,
 {
     credentials: 'include',
 }
 );
-let item = news.value.details;
-let sidebarEbookContent = sidebarEbook.value;
-sidebarEbookContent.url = item.ext_1;
-sidebarEbookContent.thumb = item.ext_2;
-sidebarEbookContent.loaded = true;
-sidebarEbook.value = sidebarEbookContent;
+if (!error.value) {
+    let item = news.value.details;
+    let sidebarEbookContent = sidebarEbook.value;
+    sidebarEbookContent.url = item.ext_1;
+    sidebarEbookContent.thumb = item.ext_2;
+    sidebarEbookContent.loaded = true;
+    sidebarEbook.value = sidebarEbookContent;
+} else {
+  console.error('Fetch error:', error.value);
+};
 
 
 //======== Ranking
 const sidebarRanking = ref({});
-const { data: ranking } = await useFetch(
+const { data: ranking, error: errorRanking  } = await useFetch(
 `${config.public.kurocoApiDomain}/rcms-api/1/content/ranking?cnt=5`,
 {
     credentials: 'include',
 }
 );
-let topics = [];
-let topicsCategory = [
-    {
-        catSlug: '/news/',
-        catID: 1
-    },
-    {
-        catSlug: '/eat/',
-        catID: 7
-    },
-    {
-        catSlug: '/life/',
-        catID: 8
-    },
-    {
-        catSlug: '/feature/',
-        catID: 9
-    },
-    {
-        catSlug: '/interview/',
-        catID: 10
-    },
-    {
-        catSlug: '/j-league/',
-        catID: 14
-    },
-];
-for (let key in ranking.value.list) {
-    let item = ranking.value.list[key];
-    let newsSlug = item.contents_type_slug ? item.contents_type_slug + '/' : '';
-    let title = item.subject;
-    let catSlug = '';
-    let url;
-    if (title.length > 35) {
-        title = title.substring(0, 35);
-        title += '...';
+if (!errorRanking.value) {
+    let topics = [];
+    let topicsCategory = [
+        {
+            catSlug: '/news/',
+            catID: 1
+        },
+        {
+            catSlug: '/eat/',
+            catID: 7
+        },
+        {
+            catSlug: '/life/',
+            catID: 8
+        },
+        {
+            catSlug: '/feature/',
+            catID: 9
+        },
+        {
+            catSlug: '/interview/',
+            catID: 10
+        },
+        {
+            catSlug: '/j-league/',
+            catID: 14
+        },
+    ];
+    for (let key in ranking.value.list) {
+        let item = ranking.value.list[key];
+        let newsSlug = item.contents_type_slug ? item.contents_type_slug + '/' : '';
+        let title = item.subject;
+        let catSlug = '';
+        let url;
+        if (title.length > 35) {
+            title = title.substring(0, 35);
+            title += '...';
+        };
+        for (let cat in topicsCategory) {
+            if (topicsCategory[cat].catID == item.topics_group_id) {
+                catSlug = topicsCategory[cat].catSlug;
+                break;
+            }
+        };
+        url = catSlug + newsSlug + item.slug;
+        if (url.includes('//')) {
+            url = url.replace(/\/{2,}/g, '/');
+        };
+        topics.push({
+            title: title,
+            url: url,
+            thumb: item.ext_1,
+        });
     };
-    for (let cat in topicsCategory) {
-        if (topicsCategory[cat].catID == item.topics_group_id) {
-            catSlug = topicsCategory[cat].catSlug;
-            break;
-        }
-    };
-    url = catSlug + newsSlug + item.slug;
-    if (url.includes('//')) {
-        url = url.replace(/\/{2,}/g, '/');
-    };
-    topics.push({
-        title: title,
-        url: url,
-        thumb: item.ext_1,
-    });
+    sidebarRanking.value = topics;
+} else {
+    console.error('Fetch error:', errorRanking.value);
 };
-sidebarRanking.value = topics;
-
 
 //======== PR
 const sidebarPR = ref({});
 const sidebarRelated = ref({});
-const { data: prContent } = await useFetch(
+const { data: prContent, error: errorPrContent } = await useFetch(
 `${config.public.kurocoApiDomain}/rcms-api/1/content/details/47640`,
 {
     credentials: 'include',
 }
 );
-topics = [];
-item = prContent.value.details;
-let topicsRelated = [];
-if (item.ext_2) {
-    for (let key in item.ext_2) {
-        let thumb = item.ext_2[key];
-        topics.push({
-            title: item.ext_3[key].title,
-            url: item.ext_3[key].url,
-            thumb: thumb,
-        });
+if (!errorPrContent.value) {
+    let topics = [];
+    if (prContent) {
+        let item = prContent.value.details;
+        let topicsRelated = [];
+        if (item.ext_2) {
+            for (let key in item.ext_2) {
+                let thumb = item.ext_2[key];
+                topics.push({
+                    title: item.ext_3[key].title,
+                    url: item.ext_3[key].url,
+                    thumb: thumb,
+                });
+            };
+        };
+        if (item.ext_4) {
+            for (let key in item.ext_4) {
+                let thumb = item.ext_4[key];
+                topicsRelated.push({
+                    title: item.ext_5[key].title,
+                    url: item.ext_5[key].url,
+                    thumb: thumb,
+                });
+            };
+        };
+        sidebarPR.value = topics;
+        sidebarRelated.value = topicsRelated;
     };
+} else {
+    console.error('Fetch error:', errorPrContent.value);
 };
-if (item.ext_4) {
-    for (let key in item.ext_4) {
-        let thumb = item.ext_4[key];
-        topicsRelated.push({
-            title: item.ext_5[key].title,
-            url: item.ext_5[key].url,
-            thumb: thumb,
-        });
-    };
-};
-sidebarPR.value = topics;
-sidebarRelated.value = topicsRelated;
 
 
 </script>
