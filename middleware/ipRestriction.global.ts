@@ -14,10 +14,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
         console.log('clientIP check');
         console.log(clientIP);
-        let homeURL = '/';
-        if (process.client) {
-          homeURL = window.location.origin;
-        };
+        let homeURL = process.client ? window.location.origin : '/';
 
         if (!allowedIPs.includes(clientIP)) { //User IP not on the allowed list
           console.log('not allowed');
@@ -25,12 +22,16 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             return navigateTo('/403', { redirectCode: 301 });
           };
         } else { //User IP is allowed
+          console.log(to);
           console.log('allowed');
+          console.log(homeURL);
           if (to.name == '403') {
-            return navigateTo(homeURL, { redirectCode: 301 });
+            return navigateTo(homeURL, { external: process.client, redirectCode: 301 });
           };
         };
     } catch (error) {
+        console.log(to);
+        console.log('access errors');
         console.error('Error fetching client IP:', error);
         if (to.name !== '403') {
           return navigateTo('/403', { redirectCode: 301 });
