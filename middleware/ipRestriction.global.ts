@@ -17,12 +17,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
         if (!allowedIPs.includes(clientIP)) {
           if (to.name !== '403') {
-          console.log('access 403');
             return navigateTo('/403', { redirectCode: 301 });
           };
         } else {
           if (to.name == '403') {
-            console.log('access home');
             return navigateTo('/', { redirectCode: 301 });
           };
         };
