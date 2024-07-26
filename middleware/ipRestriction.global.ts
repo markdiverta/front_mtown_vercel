@@ -14,6 +14,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
         // console.log('clientIP check');
         // console.log(clientIP);
+        let homeURL = '/';
+        if (process.client) {
+          homeURL = window.location.origin;
+        };
 
         if (!allowedIPs.includes(clientIP)) {
           if (to.name !== '403') {
@@ -21,11 +25,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           };
         } else {
           if (to.name == '403') {
-            return navigateTo('/', { redirectCode: 301 });
+            return navigateTo(homeURL, { redirectCode: 301 });
           };
         };
     } catch (error) {
         console.error('Error fetching client IP:', error);
-        return navigateTo('/'); // Redirect to a forbidden page in case of error
+        return navigateTo('/403');
     }
 });
