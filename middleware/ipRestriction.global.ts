@@ -25,9 +25,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           console.log(to);
           console.log('allowed');
           console.log(homeURL);
-          if (to.name == '403') {
-            return navigateTo(homeURL, { external: process.client, redirectCode: 301 });
-          };
+          console.log(to.name);
+          console.log(to.name == '403');
+          // if (to.name == '403') {
+          //   return navigateTo(homeURL, { external: process.client, redirectCode: 301 });
+          // };
         };
     } catch (error) {
         console.log(to);
