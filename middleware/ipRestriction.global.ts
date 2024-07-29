@@ -19,7 +19,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         if (!allowedIPs.includes(clientIP)) { //User IP not on the allowed list
           console.log('not allowed');
           if (to.name !== '403') {
-            return navigateTo('/403', { redirectCode: 301 });
+            // return navigateTo('/403', { redirectCode: 301 });
           } else {
             return true;
           }
