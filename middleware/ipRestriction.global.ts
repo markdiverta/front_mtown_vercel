@@ -20,7 +20,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           console.log('not allowed');
           if (to.name !== '403') {
             return navigateTo('/403', { redirectCode: 301 });
-          };
+          } else {
+            return true;
+          }
         } else { //User IP is allowed
           console.log(to);
           console.log('allowed');
@@ -29,7 +31,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           console.log(to.name == '403');
           if (to.name === '403') {
             return navigateTo(homeURL, { external: process.client, redirectCode: 301 });
-          };
+          } else {
+            return true;
+          }
         };
     } catch (error) {
         console.log(to);
