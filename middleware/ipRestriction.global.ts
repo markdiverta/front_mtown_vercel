@@ -33,7 +33,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             console.log('enter 1');
             if (process.client) {
               console.log('enter 1-1');
-              window.location.href = homeURL;
+              // window.location.href = homeURL;
             } else {
               console.log('enter 1-2');
               // return navigateTo('/', { redirectCode: 301 });
