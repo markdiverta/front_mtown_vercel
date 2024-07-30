@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  if (process.client) {
+  // if (process.client) {
     const allowedIPs = 
       [
           '123.45.67.89', 
@@ -55,5 +55,5 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           //   return navigateTo('/403', { redirectCode: 301 });
           // };
       }
-  }
+  // }
 });
