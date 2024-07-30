@@ -15,8 +15,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
           // console.log('clientIP check');
           // console.log(clientIP);
-          let homeURL= '/';
-          // let homeURL= window.location.origin;
+          // let homeURL= '/';
+          let homeURL= window.location.origin;
           // let homeURL = process.client ? window.location.origin : '/';
 
           if (clientIP && !allowedIPs.includes(clientIP)) { //User IP not on the allowed list
