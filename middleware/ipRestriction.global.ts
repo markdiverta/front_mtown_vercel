@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  if (process.server) {
+  if (process.client) {
     const allowedIPs = 
       [
           '123.45.67.89', 
@@ -15,14 +15,16 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
           console.log('clientIP check');
           console.log(clientIP);
-          homeURL= '/';
+          let homeURL= window.location.origin;
           // let homeURL = process.client ? window.location.origin : '/';
 
-          if (!allowedIPs.includes(clientIP)) { //User IP not on the allowed list
+          if (clientIP && !allowedIPs.includes(clientIP)) { //User IP not on the allowed list
             console.log('not allowed');
             if (to.name !== '403') {
+              console.log('not 403 page then go to 403');
               return navigateTo('/403', { redirectCode: 301 });
             } else {
+              console.log('already 403 page then stay');
               return true;
             };
           } else { //User IP is allowed
@@ -32,7 +34,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             console.log(to.name);
             console.log(to.name == '403');
             if (to.name === '403') {
-              console.log('enter 1');
+              console.log('is 403 page then go to home page');
+              
               if (process.client) {
                 console.log('enter 1-1');
                 // window.location.href = homeURL;
@@ -42,14 +45,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
               };
               // return navigateTo(homeURL, { external: process.client, redirectCode: 301 });
             } else {
-              console.log('enter 2');
+              console.log('not 304 page then remain at current page');
               return true;
             }
           };
       } catch (error) {
-          console.log(to);
-          console.log('access errors');
-          console.error('Error fetching client IP:', error);
+          console.error('Error process logic or fetch client IP:', error);
           // if (to.name !== '403') {
           //   return navigateTo('/403', { redirectCode: 301 });
           // };
