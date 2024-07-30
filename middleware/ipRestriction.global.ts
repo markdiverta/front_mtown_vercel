@@ -35,14 +35,14 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             console.log(to.name == '403');
             if (to.name === '403') {
               console.log('is 403 page then go to home page');
-              
-              if (process.client) {
-                console.log('enter 1-1');
-                // window.location.href = homeURL;
-              } else {
-                console.log('enter 1-2');
-                // return navigateTo('/', { redirectCode: 301 });
-              };
+              window.location.href = homeURL;
+              // if (process.client) {
+              //   console.log('enter 1-1');
+              //   // window.location.href = homeURL;
+              // } else {
+              //   console.log('enter 1-2');
+              //   // return navigateTo('/', { redirectCode: 301 });
+              // };
               // return navigateTo(homeURL, { external: process.client, redirectCode: 301 });
             } else {
               console.log('not 304 page then remain at current page');
