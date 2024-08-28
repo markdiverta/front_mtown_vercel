@@ -5,7 +5,7 @@ import generateSitemap from './sitemap';
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
-    'nuxt-gtag',
+    // 'nuxt-gtag',
     // '@nuxtjs/sitemap',
   ],
   hooks: {
@@ -21,15 +21,15 @@ export default defineNuxtConfig({
     },
   },
   buildModules: ['@nuxt/router'],
-  gtag: {
-    id: 'G-50K7BNS543',
-    config: {
-        anonymize_ip: true, // anonymize IP
-        send_page_view: false // might be necessary to avoid duplicated page track on page reload
-    },
-    debug: true, // enable to track in dev mode
-    disableAutoPageTrack: true, // disable if you don't want to track each page route with router.afterEach(...).
-  },
+  // gtag: {
+  //   id: 'G-50K7BNS543',
+  //   config: {
+  //       anonymize_ip: true, // anonymize IP
+  //       send_page_view: false // might be necessary to avoid duplicated page track on page reload
+  //   },
+  //   debug: true, // enable to track in dev mode
+  //   disableAutoPageTrack: true, // disable if you don't want to track each page route with router.afterEach(...).
+  // },
   colorMode: {
     preference: 'light'
   },
@@ -75,7 +75,8 @@ export default defineNuxtConfig({
   },
   router: {
     //Prevent parameters remove automatically from the URL
-    preserveQuery: true
+    preserveQuery: true,
+    // middleware: 'ipRestriction'
   },
   devtools: { enabled: true },
   css: [
