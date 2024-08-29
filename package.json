@@ -22,7 +22,7 @@
     "@nuxtjs/google-gtag": "^1.0.4",
     "@nuxtjs/sitemap": "^5.1.0",
     "@vercel/analytics": "^1.1.1",
-    "axios": "^1.6.2",
+    "axios": "^1.7.2",
     "lightbox2": "^2.11.4",
     "vue-axios": "^3.5.2",
     "vue-cool-lightbox": "^2.7.5",

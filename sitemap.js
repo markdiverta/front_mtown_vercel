@@ -6,6 +6,8 @@ var testMode = false; //Change to true or false if you want to enable dev mode f
 const generateLimit = testMode ? 50 : 999; //Maximum topics per pagination is 999
 const routes = [];
 
+console.log('sitemap run 2');
+
 // Generate sitemap.xml content
 function generateSitemapXml() {
   const sitemapXml = `
