@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { generateSitemapXml, fetchDynamicRoutes } from '../sitemap'; // Assuming your helper functions are in the root
 
+export default function handler(req, res) {
+    res.status(200).json({ message: 'Sitemap function is working!' });
+}
+
 export default async function handler(req, res) {
   try {
     // Fetch dynamic routes
