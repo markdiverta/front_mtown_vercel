@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const allowedIPs = 
       [
           '123.45.67.89', 
-          '161.142.139.157'   //Mark
+          '161.142.139.160'   //Mark
       ];
     // console.log('access');
       try {
