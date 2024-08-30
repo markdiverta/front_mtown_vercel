@@ -73,6 +73,8 @@ export default defineNuxtConfig({
   routeRules: {
     // all routes (by default) will be revalidated every 60 seconds, in the background
     '/**': { isr: 600 },
+    '/api/sitemap': { isr: false },
+    '/sitemap.xml': { redirect: '/api/sitemap' },
   },
   router: {
     //Prevent parameters remove automatically from the URL
