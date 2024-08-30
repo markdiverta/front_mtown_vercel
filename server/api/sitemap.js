@@ -8,6 +8,14 @@ const apiDomain = config.public.kurocoApiDomain;
 const testMode = false; // Change to true or false if you want to enable dev mode for quick generate
 const generateLimit = testMode ? 50 : 999; // Maximum topics per pagination is 999
 
+console.log('run');
+
+const now = new Date();
+const day = now.getDay(); // returns a number representing the day of the week, starting with 0 for Sunday
+const hours = now.getHours();
+const minutes = now.getMinutes();
+console.log(`Today is day ${day} and the time is ${hours}:${minutes}.`);
+
 // Function to fetch dynamic routes
 async function fetchDynamicRoutes() {
   const routes = [];
