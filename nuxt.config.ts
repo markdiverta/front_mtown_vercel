@@ -1,5 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config';
-import generateSitemap from './sitemap';
+// import generateSitemap from './sitemap';
 // import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'; //Vuetify
 
 export default defineNuxtConfig({
@@ -10,15 +10,15 @@ export default defineNuxtConfig({
   ],
   hooks: {
     // Run the sitemap generation script before the build process
-    'build:before': async () => {
-      try {
-        // Generate the sitemap.xml file
-        await generateSitemap();
-      } catch (error) {
-        console.error('Error generating sitemap:', error);
-        process.exit(1); // Exit the process with an error code
-      }
-    },
+    // 'build:before': async () => {
+    //   try {
+    //     // Generate the sitemap.xml file
+    //     await generateSitemap();
+    //   } catch (error) {
+    //     console.error('Error generating sitemap:', error);
+    //     process.exit(1); // Exit the process with an error code
+    //   }
+    // },
   },
   buildModules: ['@nuxt/router'],
   // gtag: {
@@ -47,10 +47,11 @@ export default defineNuxtConfig({
   ssr: true,
   runtimeConfig: {
     public: {
-      kurocoApiDomain: 'https://api.mtown.my',
-      // kurocoApiDomain: 'https://dev-mtown.g.kuroco.app',
+      // kurocoApiDomain: 'https://api.mtown.my',
+      kurocoApiDomain: 'https://dev-mtown.g.kuroco.app',
       //kurocoApiDomain: 'https://mtown-vercel.g.kuroco.app',
       // kurocoApiDomain: 'https://dev-nuxt-corporate.g.kuroco.app',
+      domainName: 'https://www.mtown.my'
     },
   },
   app: {

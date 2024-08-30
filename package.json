@@ -24,6 +24,7 @@
     "@vercel/analytics": "^1.1.1",
     "axios": "^1.7.2",
     "lightbox2": "^2.11.4",
+    "sitemap": "^8.0.0",
     "vue-axios": "^3.5.2",
     "vue-cool-lightbox": "^2.7.5",
     "vue-easy-lightbox": "^1.18.0",
