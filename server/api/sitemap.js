@@ -34,9 +34,9 @@ async function fetchDynamicRoutes() {
       articles.forEach(article => {
         let slug = article.slug || article.topics_id;
         if (/%[0-9a-fA-F]{2}/.test(slug)) slug = article.topics_id;
-        let category = article.contents_type_slug ? article.contents_type_slug : '';
+        let category = article.contents_type_slug ? article.contents_type_slug + '/' : '';
         if (topic.catID !== '1' && topic.catID !== '11' && topic.catID !== '14') category = '';
-        const url = `${topic.catSlug}${article.contents_type_slug ? article.contents_type_slug + '/' : ''}${slug}/`;
+        const url = `${topic.catSlug}${category}${slug}/`;
         routes.push(url);
       });
 
