@@ -29,12 +29,13 @@ async function fetchDynamicRoutes() {
       const apiUrl = `${apiDomain}/rcms-api/1/content/list?topics_group_id=${topic.catID}&cnt=${generateLimit}`;
       const response = await axios.get(apiUrl);
       const articles = response.data.list;
-
+      
       routes.push(topic.catSlug);
-
       articles.forEach(article => {
         let slug = article.slug || article.topics_id;
         if (/%[0-9a-fA-F]{2}/.test(slug)) slug = article.topics_id;
+        let category = article.contents_type_slug ? article.contents_type_slug : '';
+        if (topic.catID !== '1' && topic.catID !== '11' && topic.catID !== '14') category = '';
         const url = `${topic.catSlug}${article.contents_type_slug ? article.contents_type_slug + '/' : ''}${slug}/`;
         routes.push(url);
       });
@@ -62,8 +63,19 @@ async function fetchDynamicRoutes() {
 
 export default defineEventHandler(async (event) => {
   const staticRoutes = [
-    { url: '/', changefreq: 'daily' },
-    { url: '/about/', changefreq: 'daily' },
+    { url: '/', changefreq: 'weekly' },
+    { url: '/newsletter/', changefreq: 'weekly' },
+    { url: '/inquiry/', changefreq: 'weekly' },
+    { url: '/search/', changefreq: 'weekly' },
+    { url: '/about-us/', changefreq: 'weekly' },
+    { url: '/media/', changefreq: 'weekly' },
+    { url: '/column/j-league/', changefreq: 'weekly' },
+    { url: '/column/malaysia-calendar/', changefreq: 'weekly' },
+    { url: '/news/economic/', changefreq: 'weekly' },
+    { url: '/news/politics/', changefreq: 'weekly' },
+    { url: '/news/nikkei/', changefreq: 'weekly' },
+    { url: '/news/others/', changefreq: 'weekly' },
+    { url: '/news/covid-19/', changefreq: 'weekly' },
   ];
 
   const dynamicRoutes = await fetchDynamicRoutes();
