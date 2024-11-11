@@ -3,7 +3,7 @@
   <section class="row l-page_content-row">
   <section class="col-md-9 col-12" fluid>
 
-    <div class="l-page_content">1
+    <div class="l-page_content">
       
         <Carousel 
             autoplay="3000" 
