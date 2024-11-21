@@ -160,10 +160,10 @@ async function fetchData(url) {
                 url += item.topics_id;
             };
             //Thumbnail check (For backnumber it is ext_1 for cover photo while ext_2 for sub-pages)
-            if (item.ext_2 && item.ext_2.includes('http://') || item.ext_2 && item.ext_2.includes('https://') ) {
-                thumb = item.ext_2;
+            if (item.ext_2 && item.ext_2?.url?.includes('http://') || item.ext_2?.url && item.ext_2?.url?.includes('https://') ) {
+                thumb = item.ext_2.url;
             }
-            else if (item.ext_1[0] && item.ext_1[0].includes('http://') || item.ext_1[0] && item.ext_1[0].includes('https://') ) {
+            else if (item.ext_1[0] && item.ext_1[0]?.includes('http://') || item.ext_1[0] && item.ext_1[0]?.includes('https://') ) {
                 thumb = item.ext_1[0];
             };
             list.push({
