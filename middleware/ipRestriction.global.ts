@@ -2,6 +2,14 @@
 import axios from 'axios';
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
+
+  const bypassIPCheck = true; // Set this to `true` to disable IP restriction temporarily
+
+  if (bypassIPCheck) {
+    console.log('IP restriction is temporarily disabled');
+    return true; // Allow all navigation
+  }
+
   // if (process.client) {
     const allowedIPs = 
       [
