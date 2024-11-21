@@ -164,7 +164,7 @@ async function fetchData(url) {
             if (item.ext_2?.url && item.ext_2?.url.includes('http') || item.ext_2 && item.ext_2.includes('http')) {
                 thumb = item.ext_2.url ? item.ext_2.url : item.ext_2;
             }
-            else if (item.ext_1[0].url && item.ext_1[0]?.url.includes('http') || item.ext_1[0] && item.ext_1[0].includes('http')) {
+            else if (item.ext_1[0]?.url && item.ext_1[0]?.url.includes('http') || item.ext_1[0] && item.ext_1[0].includes('http')) {
                 thumb = item.ext_1[0].url ? item.ext_1[0].url : item.ext_1[0];
             };
 
