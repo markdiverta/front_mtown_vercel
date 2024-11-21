@@ -159,13 +159,21 @@ async function fetchData(url) {
             } else {
                 url += item.topics_id;
             };
-            //Thumbnail check (For backnumber it is ext_1 for cover photo while ext_2 for sub-pages)
-            if (item.ext_2 && item.ext_2?.url?.includes('http://') || item.ext_2?.url && item.ext_2?.url?.includes('https://') ) {
-                thumb = item.ext_2.url;
+            console.log(item.ext_2);
+            //Thumbnail check (For backnumber it is ext_2 for cover photo while ext_1 for sub-pages, if ext_2 is empty, then use ext_1)
+            if (item.ext_2?.url && item.ext_2?.url.includes('http') || item.ext_2 && item.ext_2.includes('http')) {
+                thumb = item.ext_2.url ? item.ext_2.url : item.ext_2;
             }
-            else if (item.ext_1[0] && item.ext_1[0]?.includes('http://') || item.ext_1[0] && item.ext_1[0]?.includes('https://') ) {
-                thumb = item.ext_1[0];
+            else if (item.ext_1[0].url && item.ext_1[0]?.url.includes('http') || item.ext_1[0] && item.ext_1[0].includes('http')) {
+                thumb = item.ext_1[0].url ? item.ext_1[0].url : item.ext_1[0];
             };
+
+            // if (item.ext_2 && item.ext_2?.url?.includes('http://') || item.ext_2?.url && item.ext_2?.url?.includes('https://') ) {
+            //     thumb = item.ext_2.url;
+            // }
+            // else if (item.ext_1[0] && item.ext_1[0]?.includes('http://') || item.ext_1[0] && item.ext_1[0]?.includes('https://') ) {
+            //     thumb = item.ext_1[0];
+            // };
             list.push({
                 date: item.ymd ? item.ymd.substring(0, 10).replaceAll('-', '.') : '',
                 title: item.subject,
