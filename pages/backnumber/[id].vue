@@ -24,7 +24,7 @@
                   <a :href="image" data-lightbox="example-set">
                   <img
                       class="image"
-                      :src="image + '?width=250'"
+                      :src="(image?.url || image) + '?width=250'"
                   >
                   </a>
                   </div>
@@ -85,6 +85,8 @@ const { data: news } = await useFetch(
 );
 const items = ref('');
 var apiContent = news.value.details;
+console.log('hi');
+console.log(apiContent);
 if (apiContent) {
   let content = apiContent;
   let item = [];
@@ -102,7 +104,7 @@ if (apiContent) {
   items.value = item;
 };
 
-
+console.log('end');
 //===== Next & Prev link
 const { data: nextPrevContent } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/content/list?topics_group_id=` + 
